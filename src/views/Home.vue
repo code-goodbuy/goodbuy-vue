@@ -50,15 +50,12 @@ export default {
         if (data.codeResult.code.length === 13) {
             this.show = false
             if (this.goodList.includes(data.codeResult.code)) {
-                // eslint-disable-next-line
                 console.log('isGood')
                 this.isGood = true
             } else if (this.badList.includes(data.codeResult.code)) {
-                // eslint-disable-next-line
                 console.log('isBad')
                 this.isBad = true
             }
-            // eslint-disable-next-line
             console.log(data.codeResult.code)
             }
     },
