@@ -43,7 +43,12 @@ export default {
             },
           },
           decoder : {
-            readers : ['ean_8_reader'],
+            readers : ['ean_reader'],
+          },
+          multiple: true,
+          locator: {
+            halfSample: true,
+            patchSize: "x-large"
           }
         },
         () => this.start())
@@ -61,7 +66,6 @@ export default {
     },
     onDetected(data) {
       let code = data.codeResult.code
-      console.log(data)
       if (code.length === 13) {
         this.results.push(code)
       }
