@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <Home/>
+    <WelcomeScreen/>
   </div>
 </template>
 
 <script>
-import Home from '@/components/Home'
+import WelcomeScreen from '@/components/welcome_screen/WelcomeScreen'
 
 export default {
   name: 'app',
   components: {
-    Home
+    WelcomeScreen
   }
 }
 </script>
@@ -18,9 +18,8 @@ export default {
 <style>
 body { margin: 0; }
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
 }
 </style>
