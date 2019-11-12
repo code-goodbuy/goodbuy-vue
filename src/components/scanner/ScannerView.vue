@@ -1,7 +1,7 @@
 <template>
   <div class="scanner-view">
     <div :class="{'blur-content': showModal}">
-      <div class="info-button" @click="showInfo">
+      <div v-if="!showModal" class="info-button" @click="showInfo">
         i
       </div>
       <div class="overlay" />
@@ -34,15 +34,12 @@ export default {
   },
   methods: {
     updateBarcode(barcode) {
-      console.log(barcode)
-      this.barcode = barcode
+      this.$router.push({ name: 'product-info', params: { code: barcode } })
     },
     showInfo() {
-      console.log('here')
       this.showModal = true
     },
     hideInfo() {
-      console.log('hide')
       this.showModal = false
     }
   }
