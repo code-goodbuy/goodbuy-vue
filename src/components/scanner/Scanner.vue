@@ -38,7 +38,7 @@ export default {
             target: this.$refs.quagga,
             constraints: {
               width: this.$vssWidth,
-              height: this.$vssHeight / 2,
+              height: this.$vssHeight,
               facingMode: "environment" // or user
             },
           },

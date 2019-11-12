@@ -1,17 +1,19 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './components/Home.vue'
+
+import WelcomeScreen from './components/welcome_screen/WelcomeScreen.vue'
+import ScannerView from './components/scanner/ScannerView.vue'
 
 Vue.use(Router)
 
-export default new Router({
+export const routes=[
+    { path: '' , component: WelcomeScreen },
+    { path: '/scanner', name:'scanner', component: ScannerView }
+]
+
+const router = new Router({
   mode: 'history',
-  base: process.env.BASE_URL,
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    }
-  ]
+  routes,
 })
+
+export default router
