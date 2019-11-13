@@ -24,19 +24,21 @@ export default {
     position: relative;
     h1 {
       font-size: 30px;
-      font-family: 'Work Sans', sans-serif;
+      font-family: 'Work Sans Semibold', sans-serif;
       text-align: left;
       position: relative;
       margin: 0;
       margin-left: 1rem;
       margin-bottom: .25rem;
       z-index: 1;
+      line-height: 35px;
+      line-height: 100%;
     }
     &:after {
       content: "";
       display: inline-block;
       position: absolute;
-      width: 100%;
+      width: 102%;
       height: .8rem;
       bottom: 0;
       background: #90D2D9;
