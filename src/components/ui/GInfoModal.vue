@@ -27,7 +27,7 @@
 
     <div class="btn-container">
       <GButton @click="test">
-        <slot slot="title">Close</slot>
+        <slot slot="title">Let's Go!</slot>
       </GButton>
     </div>
 

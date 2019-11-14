@@ -8,13 +8,13 @@ import ProductScreen from './components/product_info/ProductScreen.vue'
 Vue.use(Router)
 
 export const routes=[
-    { path: '' , component: WelcomeScreen },
+    { path: '/' , component: WelcomeScreen },
     { path: '/scanner', name:'scanner', component: ScannerView },
     { path: '/scanner/:code', name:'product-info', component: ProductScreen }
 ]
 
 const router = new Router({
-  mode: 'history',
+  mode: 'hash',
   routes,
 })
 

@@ -94,7 +94,7 @@ export default {
       }, {});
       let mode = Object.keys(counted).reduce((a, b) => counted[a] > counted[b] ? a : b);
       return mode;
-    }
+    },
   }
 }
 </script>
