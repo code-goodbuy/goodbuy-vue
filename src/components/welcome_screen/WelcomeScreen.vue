@@ -60,14 +60,18 @@ export default {
     padding: 1rem;
     overflow: hidden;
     background-color: #272727;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     .logo {
       position: absolute;
       svg {
-        width: 60px;
-        height: 60px;
+        width: 40px;
+        height: 40px;
       }
     }
     .title {
+      margin: auto;
       text-align: center;
       font-family: 'Avenir';
       color: white;
