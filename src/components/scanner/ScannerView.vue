@@ -35,7 +35,7 @@ export default {
   methods: {
     updateBarcode(barcode) {
       console.log(barcode)
-      this.$router.push({ name: 'product-info', params: {code: barcode}})
+      this.$router.push({ name: 'product-screen', params: {code: barcode}})
     },
     showInfo() {
       this.showModal = true

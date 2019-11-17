@@ -80,7 +80,7 @@ export default {
   .btn-container {
     position: fixed;
     left: 50%;
-    bottom: 1rem;
+    bottom: 0;
     transform: translate(-50%, -50%);
     margin: 0 auto;
   }

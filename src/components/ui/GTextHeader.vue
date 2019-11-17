@@ -1,11 +1,16 @@
 <template>
   <div class="g-text-header">
-    <div class="container">
+    <div
+      class="container"
+      :class="{
+        'container--centered': centered,
+        'container--big': big,
+      }">
       <h1>
         <slot name="title" />
       </h1>
     </div>
-    <div class="content">
+    <div class="content" :class="{'content--big': big}">
       <slot name="content" />
     </div>
   </div>
@@ -14,6 +19,16 @@
 <script>
 export default {
   name: 'GTextHeader',
+  props: {
+    centered: {
+      type: Boolean,
+      default: false,
+    },
+    big: {
+      type: Boolean,
+      default: false,
+    }
+  }
 }
 </script>
 
@@ -22,6 +37,20 @@ export default {
   .container {
     display: inline-block;
     position: relative;
+
+    &--centered {
+      width: 65%;
+      h1 {
+        text-align: right !important;
+      }
+    }
+    &--big {
+      h1 {
+        font-weight: 600 !important;
+        font-size: 60px !important;
+        line-height: 48px !important;
+      }
+    }
     h1 {
       font-size: 30px;
       font-family: 'Work Sans Semibold', sans-serif;
@@ -52,6 +81,12 @@ export default {
     font-size: 12px;
     line-height: 16px;
     margin: 1rem 1rem 0 1rem;
+
+    &--big {
+      font-size: 20px !important;
+      line-height: 27px !important;
+      text-align: center !important;
+    }
   }
 }
 </style>
