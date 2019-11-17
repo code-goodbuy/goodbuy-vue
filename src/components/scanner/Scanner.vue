@@ -1,6 +1,8 @@
 <template>
   <div class="scanner">
-    <div ref="quagga" class="viewport" />
+    <div ref="quagga" class="viewport">
+      <video :style="`height: ${$vssHeight}px;`" />
+    </div>
   </div>
 </template>
 
@@ -94,7 +96,13 @@ export default {
       }, {});
       let mode = Object.keys(counted).reduce((a, b) => counted[a] > counted[b] ? a : b);
       return mode;
-    },
+    }
   }
 }
 </script>
+
+<style lang="scss">
+.scanner {
+  overflow: hidden;
+}
+</style>
