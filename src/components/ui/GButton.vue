@@ -12,6 +12,7 @@ export default {
 
 <style lang="scss" scoped>
 button {
+  border: 0;
   display: inline-block;
   text-align: center;
   white-space: nowrap;
