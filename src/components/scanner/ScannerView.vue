@@ -6,7 +6,7 @@
       </div>
       <div class="overlay" />
       <scanner
-      @updateBarcode="updateBarcode"
+        @updateBarcode="updateBarcode"
       />
       <div class="info-banner">
         Point you camera at a barcode
@@ -35,14 +35,12 @@ export default {
   methods: {
     updateBarcode(barcode) {
       console.log(barcode)
-      this.barcode = barcode
+      this.$router.push({ name: 'product-info', params: {code: barcode}})
     },
     showInfo() {
-      console.log('here')
       this.showModal = true
     },
     hideInfo() {
-      console.log('hide')
       this.showModal = false
     }
   }
@@ -87,7 +85,10 @@ export default {
     height: 150px;
 
     box-shadow: 0px 0px 0px 2000px black;
-    opacity: 50%;
+    opacity: 0.5; /* Standard compliant browsers */
+    -moz-opacity: 0.5; /* Firefox and Mozilla browsers */
+    -webkit-opacity: 0.5; /* WebKit browser e.g. Safari */
+    filter: alpha(opacity=50); /* For IE8 and earlier */
     border-radius: 15px;
     border: solid white;
   }
