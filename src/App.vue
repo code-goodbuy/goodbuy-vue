@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
     <router-view />
   </div>
 </template>
