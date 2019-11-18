@@ -53,7 +53,7 @@ export default {
     }
     h1 {
       font-size: 30px;
-      font-family: 'Work Sans Semibold', sans-serif;
+      font-family: 'Work Sans', sans-serif;
       text-align: left;
       position: relative;
       margin: 0;

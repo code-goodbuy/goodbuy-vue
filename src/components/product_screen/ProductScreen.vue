@@ -1,15 +1,17 @@
 <template lang="html">
   <div class="product-screen">
     <div class="icon">
-      <PosFeedbackIcon></PosFeedbackIcon>
+      <PosFeedbackIcon v-if="goodItem"/>
+      <NegFeedbackIcon v-else-if="badItem"/>
+      <MissingItemIcon v-else />
     </div>
     <div class="content">
       <GTextHeader centered big>
-        <slot slot="title">Yah!</slot>
-        <slot slot="content">The product that you scanned is not from one of the 10 big concerns.</slot>
+        <slot slot="title">{{ feedbackTitle }}</slot>
+        <slot slot="content">{{ feedbackMessage }}</slot>
       </GTextHeader>
       <InfoButton @click="showInfo">
-        <slot slot="title">I want to know more</slot>
+        <slot slot="title">{{ infoButtonTitle }}</slot>
       </InfoButton>
     </div>
     <div class="back-button">
@@ -23,6 +25,8 @@
 <script>
 import GButton from '../ui/GButton'
 import PosFeedbackIcon from '../../assets/feedback/PosFeebackIcon'
+import NegFeedbackIcon from '../../assets/feedback/NegFeedbackIcon'
+import MissingItemIcon from '../../assets/feedback/MissingItemIcon'
 import GTextHeader from '../ui/GTextHeader'
 import InfoButton from './InfoButton'
 
@@ -31,15 +35,52 @@ export default {
   components: {
     GButton,
     PosFeedbackIcon,
+    NegFeedbackIcon,
+    MissingItemIcon,
     GTextHeader,
     InfoButton,
   },
+  data() {
+    return {
+      goodItem: false,
+      badItem: false,
+      feedbackTitle: '',
+      feedbackMessage: '',
+      infoButtonTitle: '',
+    }
+  },
+  created() {
+    this.getProductInfo()
+    this.updateContent()
+  },
   methods: {
+    getProductInfo() {
+      this.badItem = false
+    },
+    updateContent() {
+      if (this.goodItem) {
+        this.feedbackTitle = 'Yah!'
+        this.feedbackMessage = 'The product that you scanned is not from one of the 10 big concerns.'
+        this.infoButtonTitle = 'I want to know more'
+      } else if (this.badItem) {
+        this.feedbackTitle = 'Nah...'
+        this.feedbackMessage = 'The product that you scanned is from one of the 10 big concerns.'
+        this.infoButtonTitle = 'I want to know more'
+      } else {
+        this.feedbackTitle = 'Well...'
+        this.feedbackMessage = 'We are sorry the product that you scanned is currently not in our database'
+        this.infoButtonTitle = 'Enter product data'
+      }
+    },
     goBack() {
       this.$router.push('/scanner')
     },
     showInfo() {
-      this.$router.push({ name: 'product-info', params: {code: this.$route.params.code}})
+      if (this.goodItem || this.badItem) {
+        this.$router.push({ name: 'product-info', params: {code: this.$route.params.code}})
+      } else {
+        this.$router.push({ name: 'enter-product-data', params: {code: this.$route.params.code}})
+      }
     }
   }
 }
