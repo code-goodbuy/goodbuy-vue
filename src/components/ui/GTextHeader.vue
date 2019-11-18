@@ -38,19 +38,6 @@ export default {
     display: inline-block;
     position: relative;
 
-    &--centered {
-      width: 65%;
-      h1 {
-        text-align: right !important;
-      }
-    }
-    &--big {
-      h1 {
-        font-weight: 600 !important;
-        font-size: 60px !important;
-        line-height: 48px !important;
-      }
-    }
     h1 {
       font-size: 30px;
       font-family: 'Work Sans', sans-serif;
@@ -73,6 +60,19 @@ export default {
       background: #90D2D9;
       opacity: 80%;
     }
+    &--centered {
+      width: 65%;
+      h1 {
+        text-align: right;
+      }
+    }
+    &--big {
+      h1 {
+        font-weight: 600;
+        font-size: 60px;
+        line-height: 48px;
+      }
+    }
   }
   .content {
     font-family: "Open Sans", sans-serif;
@@ -83,9 +83,10 @@ export default {
     margin: 1rem 1rem 0 1rem;
 
     &--big {
-      font-size: 20px !important;
-      line-height: 27px !important;
-      text-align: center !important;
+      font-size: 20px;
+      line-height: 27px;
+      text-align: center;
+      margin: 1.5rem 1rem;
     }
   }
 }

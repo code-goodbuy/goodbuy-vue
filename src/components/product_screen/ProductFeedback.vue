@@ -31,7 +31,7 @@ import GTextHeader from '../ui/GTextHeader'
 import InfoButton from './InfoButton'
 
 export default {
-  name: 'ProductScreen',
+  name: 'ProductFeedback',
   components: {
     GButton,
     PosFeedbackIcon,
@@ -47,15 +47,17 @@ export default {
       feedbackTitle: '',
       feedbackMessage: '',
       infoButtonTitle: '',
+      productName: '',
     }
   },
   created() {
-    this.getProductInfo()
+    this.isBigTen()
     this.updateContent()
   },
   methods: {
-    getProductInfo() {
-      this.badItem = false
+    isBigTen() {
+      this.badItem = true
+      this.productName = 'test-name'
     },
     updateContent() {
       if (this.goodItem) {
@@ -77,9 +79,19 @@ export default {
     },
     showInfo() {
       if (this.goodItem || this.badItem) {
-        this.$router.push({ name: 'product-info', params: {code: this.$route.params.code}})
+        this.$router.push({
+          name: 'product-info',
+          params: {
+            code: this.$route.params.code,
+          }
+        })
       } else {
-        this.$router.push({ name: 'enter-product-data', params: {code: this.$route.params.code}})
+        this.$router.push({
+          name: 'enter-product-data',
+          params: {
+            code: this.$route.params.code
+          }
+        })
       }
     }
   }
@@ -95,7 +107,7 @@ export default {
   }
   .content {
     button {
-      margin: 1rem auto;
+      margin: 1.5rem auto;
       display: block;
     }
   }
