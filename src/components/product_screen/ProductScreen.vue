@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.back()
+      this.$router.push('/scanner')
     },
     showInfo() {
       this.$router.push({ name: 'product-info', params: {code: this.$route.params.code}})

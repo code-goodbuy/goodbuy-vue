@@ -31,8 +31,7 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.back()
-      this.$router.back()
+      this.$router.push('/scanner')
     }
   },
 }
