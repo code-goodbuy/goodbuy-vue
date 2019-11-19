@@ -1,24 +1,32 @@
 <template>
   <div class="scanner-view">
-    <div :class="{'blur-content': showModal}">
-      <div class="info-button" @click="showInfo">
-        i
-      </div>
-      <div class="overlay" />
+    <div class="content" :class="{'blur-content': showModal || !scannerStarted}">
+      <InfoButton @showInfo="showInfo" />
+      <Overlay />
       <scanner
+        v-show="scannerStarted"
         @updateBarcode="updateBarcode"
+        @scannerStarted="scannerStarted = true"
       />
-      <div class="info-banner">
-        Point you camera at a barcode
-      </div>
+      <div style="background-color: black; width: 100%; height: 100%;"/>
+      <InfoBanner />
     </div>
-    <GInfoModal v-if="showModal" @closeModal="hideInfo" />
+
+    <transition name="modal">
+      <GInfoModal v-if="showModal" @closeModal="hideInfo" />
+    </transition>
+
+    <GLoadingAnimation white v-show="!scannerStarted"/>
   </div>
 </template>
 
 <script>
 import Scanner from './Scanner'
 import GInfoModal from '../ui/GInfoModal'
+import InfoButton from './InfoButton'
+import Overlay from './Overlay'
+import InfoBanner from './InfoBanner.vue'
+import GLoadingAnimation from '../ui/GLoadingAnimation.vue'
 
 export default {
   name: 'ScannerView',
@@ -26,19 +34,25 @@ export default {
     return {
       barcode: '',
       showModal: true,
+      scannerStarted: false,
     }
   },
   components: {
     Scanner,
     GInfoModal,
+    InfoButton,
+    Overlay,
+    InfoBanner,
+    GLoadingAnimation,
   },
   mounted() {
     this.showModal = this.$route.params.firstVisit
   },
   methods: {
     updateBarcode(barcode) {
-      console.log(barcode)
-      this.$router.push({ name: 'product-screen', params: {code: barcode}})
+      if (!this.showModal) {
+        this.$router.push({ name: 'product-screen', params: {code: barcode}})
+      }
     },
     showInfo() {
       this.showModal = true
@@ -52,68 +66,39 @@ export default {
 
 <style lang="scss">
 .scanner-view {
+  width: 100%;
+  height: 100%;
   background-color: black;
-  .blur-content {
-    filter: blur(3px);
-  }
-  .info-button {
-    height: 23px;
-    width: 23px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
 
-    position: absolute;
-    border-radius: 50%;
-    border: 2px solid white;
-    color: white;
-
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    font-size: 20px;
-
-    z-index: 1;
-}
-  .overlay:after{
-    content:'';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    max-width: 80%;
-    width: 10000px;
-    padding: 0 -1rem;
-    height: 150px;
-
-    box-shadow: 0px 0px 0px 2000px black;
-    opacity: 0.5; /* Standard compliant browsers */
-    -moz-opacity: 0.5; /* Firefox and Mozilla browsers */
-    -webkit-opacity: 0.5; /* WebKit browser e.g. Safari */
-    filter: alpha(opacity=50); /* For IE8 and earlier */
-    border-radius: 15px;
-    border: solid white;
-  }
-
-  .info-banner {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
+  .content {
     width: 100%;
-    transform: translate(-50%, -50%);
+    height: 100%;
+  }
+  .loading-animation {
+    position: fixed;
+    left: 50%;
+    bottom: 50%;
+    transform: translate(-50%, -0%);
+  }
+  .blur-content {
+    filter: blur(2px);
+  }
 
-    padding: .5rem 0;
+  .modal-enter {
+    opacity: 0;
+  }
 
-    font-family: "Open Sans", sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 15px;
-    line-height: 20px;
+  .modal-leave-active {
+    opacity: 0;
+  }
 
-    text-align: center;
-    white-space: nowrap;
-    background-color: #90D2D9;
+  .modal-enter .modal-container,
+  .modal-leave-active .modal-container {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  .modal-enter-active, .modal-leave-active {
+    transition: opacity .2s
   }
 }
 </style>

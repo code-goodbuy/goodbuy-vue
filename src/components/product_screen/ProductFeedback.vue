@@ -1,23 +1,28 @@
 <template lang="html">
   <div class="product-screen">
-    <div class="icon">
-      <PosFeedbackIcon v-if="goodItem"/>
-      <NegFeedbackIcon v-else-if="badItem"/>
-      <MissingItemIcon v-else />
+    <div v-if="!feedbackTitle" class="loading-animation">
+      <GLoadingAnimation />
     </div>
-    <div class="content">
-      <GTextHeader centered big>
-        <slot slot="title">{{ feedbackTitle }}</slot>
-        <slot slot="content">{{ feedbackMessage }}</slot>
-      </GTextHeader>
-      <InfoButton @click="showInfo">
-        <slot slot="title">{{ infoButtonTitle }}</slot>
-      </InfoButton>
-    </div>
-    <div class="back-button">
-      <GButton @click="goBack">
-        <slot slot="title">Scan Again</slot>
-      </GButton>
+    <div v-else>
+      <div class="icon">
+        <PosFeedbackIcon v-if="goodItem"/>
+        <NegFeedbackIcon v-else-if="badItem"/>
+        <MissingItemIcon v-else />
+      </div>
+      <div class="content">
+        <GTextHeader centered big>
+          <slot slot="title">{{ feedbackTitle }}</slot>
+          <slot slot="content">{{ feedbackMessage }}</slot>
+        </GTextHeader>
+        <InfoButton @click="showInfo">
+          <slot slot="title">{{ infoButtonTitle }}</slot>
+        </InfoButton>
+      </div>
+      <div class="back-button">
+        <GButton @click="goBack">
+          <slot slot="title">Scan Again</slot>
+        </GButton>
+      </div>
     </div>
   </div>
 </template>
@@ -29,6 +34,7 @@ import NegFeedbackIcon from '../../assets/feedback/NegFeedbackIcon'
 import MissingItemIcon from '../../assets/feedback/MissingItemIcon'
 import GTextHeader from '../ui/GTextHeader'
 import InfoButton from './InfoButton'
+import GLoadingAnimation from '../ui/GLoadingAnimation'
 
 export default {
   name: 'ProductFeedback',
@@ -39,6 +45,7 @@ export default {
     MissingItemIcon,
     GTextHeader,
     InfoButton,
+    GLoadingAnimation,
   },
   data() {
     return {
@@ -103,6 +110,12 @@ export default {
 
 <style lang="scss" scoped>
 .product-screen {
+  .loading-animation {
+    position: fixed;
+    left: 50%;
+    bottom: 50%;
+    transform: translate(-50%, -0%);
+  }
   .icon {
     display: flex;
     align-items: center;
