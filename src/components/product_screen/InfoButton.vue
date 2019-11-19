@@ -16,7 +16,7 @@ button {
   display: inline-block;
   text-align: center;
   white-space: nowrap;
-  font-family: 'Work Sans', sans-serif;;
+  font-family: 'Open Sans', sans-serif;;
   font-size: 12px;
   line-height: 16px;
   font-weight: 400;
