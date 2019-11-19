@@ -75,7 +75,10 @@ export default {
       }
     },
     goBack() {
-      this.$router.push('/scanner')
+      this.$router.push({
+        name: 'scanner',
+        params: { firstVisit: false },
+      })
     },
     showInfo() {
       if (this.goodItem || this.badItem) {

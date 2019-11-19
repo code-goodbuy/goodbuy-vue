@@ -59,7 +59,10 @@ export default {
       this.code = this.$route.params.code
     },
     goBack() {
-      this.$router.push('/scanner')
+      this.$router.push({
+        name: 'scanner',
+        params: { firstVisit: false },
+      })
     }
   },
 }

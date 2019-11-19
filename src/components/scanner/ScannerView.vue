@@ -25,12 +25,15 @@ export default {
   data() {
     return {
       barcode: '',
-      showModal: true
+      showModal: true,
     }
   },
   components: {
     Scanner,
     GInfoModal,
+  },
+  mounted() {
+    this.showModal = this.$route.params.firstVisit
   },
   methods: {
     updateBarcode(barcode) {

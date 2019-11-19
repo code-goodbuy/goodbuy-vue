@@ -48,7 +48,10 @@ export default {
   },
   methods: {
     pushScanner() {
-      this.$router.push('scanner')
+      this.$router.push({
+        name: 'scanner',
+        params: { firstVisit: true },
+      })
     }
   }
 }
