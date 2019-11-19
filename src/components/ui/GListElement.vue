@@ -24,23 +24,27 @@ export default {
 .g-list-element {
   .index {
     font-size: 30px;
-    font-family: 'Work Sans Semibold', sans-serif;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 600;
     line-height: 35px;
     margin-left: 1rem;
   }
 
   .title {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 500;
     font-size: 20px;
-    font-family: 'Work Sans Medium', sans-serif;
     line-height: 23px;
     margin-left: .3rem;
   }
 
   .content {
-    font-size: 14px;
-    font-family: 'Work Sans Semibold', sans-serif;
-    line-height: 19px;
-    margin-left: 2rem;
+    display: table-cell;
+    font-size: 15px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 0 2rem;
     color: #797979;
   }
 }

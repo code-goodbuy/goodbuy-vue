@@ -41,6 +41,7 @@ export default {
     h1 {
       font-size: 30px;
       font-family: 'Work Sans', sans-serif;
+      font-weight: 600;
       text-align: left;
       position: relative;
       margin: 0;
@@ -48,7 +49,6 @@ export default {
       margin-bottom: .25rem;
       z-index: 1;
       line-height: 35px;
-      line-height: 100%;
     }
     &:after {
       content: "";
@@ -69,17 +69,15 @@ export default {
     &--big {
       h1 {
         font-weight: 600;
-        font-size: 60px;
-        line-height: 48px;
+        font-size: 30px;
+        line-height: 35px;
       }
     }
   }
   .content {
     font-family: "Open Sans", sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 15px;
+    line-height: 20px;
     margin: 1rem 1rem 0 1rem;
 
     &--big {
