@@ -60,7 +60,7 @@ export default {
       Quagga.onDetected(this.onDetected)
       Quagga.onProcessed(this.onProcessed)
       Quagga.start()
-      console.log('Quagga started!')
+      this.$emit('scannerStarted')
     },
     onProcessed() {
       const drawingCanvas = Quagga.canvas.dom.overlay;
