@@ -69,7 +69,7 @@ export default {
     &--big {
       h1 {
         font-weight: 600;
-        font-size: 30px;
+        font-size: 60px;
         line-height: 35px;
       }
     }

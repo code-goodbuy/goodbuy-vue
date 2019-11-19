@@ -1,14 +1,14 @@
 <template>
   <div class="scanner-view">
     <div class="content" :class="{'blur-content': showModal || !scannerStarted}">
-      <InfoButton @showInfo="showInfo" />
+      <InfoButton v-if="!showModal" @showInfo="showInfo" />
       <Overlay />
       <scanner
         v-show="scannerStarted"
         @updateBarcode="updateBarcode"
         @scannerStarted="scannerStarted = true"
       />
-      <div style="background-color: black; width: 100%; height: 100%;"/>
+      <div class="loading-background"/>
       <InfoBanner />
     </div>
 
@@ -79,6 +79,11 @@ export default {
     left: 50%;
     bottom: 50%;
     transform: translate(-50%, -0%);
+  }
+  .loading-background {
+    background-color: black;
+    width: 100%;
+    height: 100%;
   }
   .blur-content {
     filter: blur(2px);

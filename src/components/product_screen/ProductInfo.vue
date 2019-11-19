@@ -3,18 +3,26 @@
     <div v-if="!name" class="loading-animation">
       <GLoadingAnimation />
     </div>
+
     <div v-else>
-      <div class="icon">
-        <FoodIcon></FoodIcon>
+      <div class="close-button" @click="$emit('closeInfoModal')" >
+        <CloseIcon />
       </div>
+
+      <div class="food-icon">
+        <FoodIcon />
+      </div>
+
       <div class="brand">
         <GTextHeader centered>
           <slot slot="title">{{ name }}</slot>
         </GTextHeader>
       </div>
+
       <div class="company-description">
         {{ description }}
       </div>
+
       <div class="info-box">
         <InfoBox
         :brand="brand"
@@ -35,6 +43,7 @@ import FoodIcon from '../../assets/feedback/FoodIcon'
 import GTextHeader from '../ui/GTextHeader'
 import InfoBox from './InfoBox'
 import GLoadingAnimation from '../ui/GLoadingAnimation'
+import CloseIcon from '../../assets/common/CloseIcon.vue'
 
 export default {
   name: 'ProductInfo',
@@ -44,6 +53,7 @@ export default {
     GTextHeader,
     InfoBox,
     GLoadingAnimation,
+    CloseIcon,
   },
   data() {
     return {
@@ -77,13 +87,26 @@ export default {
 
 <style lang="scss" scoped>
 .product-info {
+  background-color: white;
+
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  .close-button {
+    margin: .5rem;
+    position: absolute;
+  }
   .loading-animation {
     position: fixed;
     left: 50%;
     bottom: 50%;
     transform: translate(-50%, -0%);
   }
-  .icon {
+  .food-icon {
     display: flex;
     align-items: center;
     justify-content: center;

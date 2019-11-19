@@ -3,27 +3,35 @@
     <div v-if="!feedbackTitle" class="loading-animation">
       <GLoadingAnimation />
     </div>
+
     <div v-else>
-      <div class="icon">
+      <div class="feedback-icon">
         <PosFeedbackIcon v-if="goodItem"/>
         <NegFeedbackIcon v-else-if="badItem"/>
         <MissingItemIcon v-else />
       </div>
-      <div class="content">
+
+      <div class="feedback-content">
         <GTextHeader centered big>
           <slot slot="title">{{ feedbackTitle }}</slot>
           <slot slot="content">{{ feedbackMessage }}</slot>
         </GTextHeader>
+
         <InfoButton @click="showInfo">
           <slot slot="title">{{ infoButtonTitle }}</slot>
         </InfoButton>
       </div>
+
       <div class="back-button">
         <GButton @click="goBack">
           <slot slot="title">Scan Again</slot>
         </GButton>
       </div>
     </div>
+
+    <transition name="slide-up">
+      <ProductInfo v-if="isInfoModalActive" @closeInfoModal="isInfoModalActive = false"/>
+    </transition>
   </div>
 </template>
 
@@ -35,6 +43,7 @@ import MissingItemIcon from '../../assets/feedback/MissingItemIcon'
 import GTextHeader from '../ui/GTextHeader'
 import InfoButton from './InfoButton'
 import GLoadingAnimation from '../ui/GLoadingAnimation'
+import ProductInfo from './ProductInfo.vue'
 
 export default {
   name: 'ProductFeedback',
@@ -46,11 +55,13 @@ export default {
     GTextHeader,
     InfoButton,
     GLoadingAnimation,
+    ProductInfo,
   },
   data() {
     return {
       goodItem: false,
       badItem: false,
+      isInfoModalActive: false,
       feedbackTitle: '',
       feedbackMessage: '',
       infoButtonTitle: '',
@@ -89,12 +100,7 @@ export default {
     },
     showInfo() {
       if (this.goodItem || this.badItem) {
-        this.$router.push({
-          name: 'product-info',
-          params: {
-            code: this.$route.params.code,
-          }
-        })
+        this.isInfoModalActive = true
       } else {
         this.$router.push({
           name: 'enter-product-data',
@@ -116,12 +122,12 @@ export default {
     bottom: 50%;
     transform: translate(-50%, -0%);
   }
-  .icon {
+  .feedback-icon {
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .content {
+  .feedback-content {
     button {
       margin: 1.5rem auto;
       display: block;
@@ -133,6 +139,25 @@ export default {
     bottom: 0;
     transform: translate(-50%, -50%);
     margin: 0 auto;
+  }
+
+  .slide-up-enter {
+    transform: translateY(800px);
+  }
+  .slide-up-enter-to {
+    transform: translateY(0px);
+  }
+  .slide-up-enter-active {
+    transition: all .3s linear;
+  }
+  .slide-up-leave {
+    transform: translateY(0px);
+  }
+  .slide-up-leave-to {
+    transform: translateY(800px);
+  }
+  .slide-up-leave-active {
+    transition: all .3s linear;
   }
 }
 </style>
