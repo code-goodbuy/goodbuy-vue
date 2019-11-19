@@ -18,7 +18,7 @@ export default {
   props: {
     white: {
       type: Boolean,
-      default: true,
+      default: false,
     }
   }
 }

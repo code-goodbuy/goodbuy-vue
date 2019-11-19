@@ -4,7 +4,6 @@ import Router from 'vue-router'
 import WelcomeScreen from './components/welcome_screen/WelcomeScreen.vue'
 import ScannerView from './components/scanner/ScannerView.vue'
 import ProductFeedback from './components/product_screen/ProductFeedback.vue'
-import ProductInfo from './components/product_info/ProductInfo.vue'
 
 Vue.use(Router)
 
@@ -12,7 +11,6 @@ export const routes=[
     { path: '/' , component: WelcomeScreen },
     { path: '/scanner', name:'scanner', component: ScannerView },
     { path: '/scanner/:code', name:'product-screen', component: ProductFeedback },
-    { path: '/scanner/:code/info', name:'product-info', component: ProductInfo },
 ]
 
 const router = new Router({

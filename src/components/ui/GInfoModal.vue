@@ -1,6 +1,5 @@
 <template>
   <div class="modal">
-
     <GTextHeader class="text-box">
       <slot slot="title">
         How does it work ?
