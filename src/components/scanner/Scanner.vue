@@ -33,7 +33,7 @@ export default {
     initScanner() {
       this.$nextTick(() => {
         Quagga.init({
-          locate: false,
+          locate: true,
           inputStream : {
             name : "Live",
             type : "LiveStream",
@@ -72,7 +72,7 @@ export default {
         this.results.push(code)
       }
       if (this.results.length > 10) {
-        this.$emit('updateBarcode', this.getBarcode())
+        this.$emit('updateBarcode', this.findMost(this.results))
         this.results = []
       }
     },
@@ -81,9 +81,6 @@ export default {
       Quagga.stop()
       this.$refs.quagga.querySelector('video').remove()
       this.$refs.quagga.querySelector('canvas').remove()
-    },
-    getBarcode() {
-      return this.findMost(this.results)
     },
     findMost(numbers) {
       let counted = numbers.reduce((acc, curr) => {
