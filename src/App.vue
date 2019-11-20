@@ -25,23 +25,31 @@ export default {
   },
   watch: {
     $vssWidth() {
-      this.testWindow()
+      this.checkWindow()
     },
     $vssHeight() {
-      this.testWindow()
+      this.checkWindow()
     }
   },
   mounted() {
-    this.testWindow()
+    this.checkWindow()
   },
   methods: {
-    testWindow() {
+    checkWindow() {
       if (this.$vssWidth > this.$vssHeight) {
         this.isVertical = false
-      } else if (this.$vssWidth > 500 || this.$vssHeight > 900) {
+      } else {
+        this.isVertical = true
+      }
+      if (this.$vssWidth > 500 || this.$vssHeight > 900) {
         this.isMobile = false
-      } else if (this.$vssWidth < 320 || this.$vssHeight < 560) {
+      } else {
+        this.isMobile = true
+      }
+      if (this.$vssWidth < 320 || this.$vssHeight < 560) {
         this.isTooOld = true
+      } else {
+        this.isTooOld = false
       }
     }
   }
