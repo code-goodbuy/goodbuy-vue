@@ -75,7 +75,7 @@ export default {
       transform: translate(-50%, -50%);
     }
     .list-box {
-      margin: 2rem 0;
+      margin: 1rem 0;
     }
   }
 </style>

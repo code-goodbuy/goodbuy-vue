@@ -33,7 +33,7 @@ export default {
   .title {
     font-family: 'Work Sans', sans-serif;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 6vw;
     line-height: 23px;
     margin-left: .3rem;
   }
