@@ -2,11 +2,12 @@
   <div id="app">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
     <transition name="fade" mode="out-in">
-      <router-view v-if="isMobile && isVertical"/>
+      <router-view v-if="isMobile && isVertical && !isTooOld"/>
     </transition>
-    <div v-if="!isVertical">This app currently only works horizontally</div>
-    <div v-else-if="!isMobile">This app currently only works on mobile</div>
-    <div v-else-if="!isTooOld">This app currently only works on modern devices</div>
+    <!-- TODO - Refactor this into components -->
+    <div v-if="!isMobile">This app currently only works on mobile</div>
+    <div v-else-if="!isVertical">This app currently only works horizontally</div>
+    <div v-else-if="isTooOld">This app currently only works on modern devices</div>
   </div>
 </template>
 
@@ -25,23 +26,31 @@ export default {
   },
   watch: {
     $vssWidth() {
-      this.testWindow()
+      this.checkWindow()
     },
     $vssHeight() {
-      this.testWindow()
+      this.checkWindow()
     }
   },
   mounted() {
-    this.testWindow()
+    this.checkWindow()
   },
   methods: {
-    testWindow() {
+    checkWindow() {
       if (this.$vssWidth > this.$vssHeight) {
         this.isVertical = false
-      } else if (this.$vssWidth > 500 || this.$vssHeight > 900) {
+      } else {
+        this.isVertical = true
+      }
+      if (this.$vssWidth > 500 || this.$vssHeight > 900) {
         this.isMobile = false
-      } else if (this.$vssWidth < 320 || this.$vssHeight < 560) {
+      } else {
+        this.isMobile = true
+      }
+      if (this.$vssWidth < 300 || this.$vssHeight < 560) {
         this.isTooOld = true
+      } else {
+        this.isTooOld = false
       }
     }
   }
