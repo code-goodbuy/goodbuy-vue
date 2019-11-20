@@ -39,7 +39,7 @@ export default {
     position: relative;
 
     h1 {
-      font-size: 30px;
+      font-size: 8vw;
       font-family: 'Work Sans', sans-serif;
       font-weight: 600;
       text-align: left;
@@ -69,7 +69,7 @@ export default {
     &--big {
       h1 {
         font-weight: 600;
-        font-size: 60px;
+        font-size: 16vw;
         line-height: 35px;
       }
     }
