@@ -11,4 +11,7 @@ module.exports = {
       .use('vue-svg-loader')
       .loader('vue-svg-loader');
   },
+  devServer: {
+    proxy: process.env.BASE_API_URL,
+  },
 };

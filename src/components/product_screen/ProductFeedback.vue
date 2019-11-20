@@ -44,6 +44,7 @@ import GTextHeader from '../ui/GTextHeader'
 import InfoButton from './InfoButton'
 import GLoadingAnimation from '../ui/GLoadingAnimation'
 import ProductInfo from './ProductInfo.vue'
+import axios from 'axios'
 
 export default {
   name: 'ProductFeedback',
@@ -76,6 +77,16 @@ export default {
     isBigTen() {
       this.badItem = true
       this.productName = 'test-name'
+      console.log(process.env.NODE_ENV);
+      if (process.env.NODE_ENV === 'production') {
+        axios
+        .get('https://dev-goodbuy.herokuapp.com/feedback/90415296/')
+        .then(response => (console.log(response)))
+      } else if (process.env.NODE_ENV === 'development') {
+        axios
+        .get('/feedback/90415296/')
+        .then(response => (console.log(response)))
+      }
     },
     updateContent() {
       if (this.goodItem) {

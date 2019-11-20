@@ -47,7 +47,7 @@ export default {
       } else {
         this.isMobile = true
       }
-      if (this.$vssWidth < 300 || this.$vssHeight < 560) {
+      if (this.$vssWidth < 300 && this.$vssHeight < 560) {
         this.isTooOld = true
       } else {
         this.isTooOld = false
