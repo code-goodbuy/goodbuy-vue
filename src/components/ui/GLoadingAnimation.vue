@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import GLogoBlack from '../../assets/logo/GLogoBlack.vue'
-import GLogoWhite from '../../assets/logo/GLogoWhite.vue'
+import GLogoBlack from '@/assets/logo/GLogoBlack.vue'
+import GLogoWhite from '@/assets/logo/GLogoWhite.vue'
 
 export default {
   name: 'GLoadingAnimation',

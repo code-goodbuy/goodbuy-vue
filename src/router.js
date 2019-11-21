@@ -1,16 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import WelcomeScreen from './components/welcome_screen/WelcomeScreen.vue'
+import IntroView from './components/intro/IntroView.vue'
 import ScannerView from './components/scanner/ScannerView.vue'
-import ProductFeedback from './components/product_screen/ProductFeedback.vue'
+import ProductView from './components/product/ProductView.vue'
 
 Vue.use(Router)
 
 export const routes=[
-    { path: '/' , component: WelcomeScreen },
+    { path: '/' , component: IntroView },
     { path: '/scanner', name:'scanner', component: ScannerView },
-    { path: '/scanner/:code', name:'product-screen', component: ProductFeedback },
+    { path: '/scanner/:code', name:'product-screen', component: ProductView },
 ]
 
 const router = new Router({

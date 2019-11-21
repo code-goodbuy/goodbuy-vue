@@ -36,15 +36,16 @@
 </template>
 
 <script>
-import GLogoWhite from '../../assets/logo/GLogoWhite'
-import GTextHeader from '../ui/GTextHeader'
-import GButton from '../ui/GButton'
+import GButton from '@/components/ui/GButton'
+import GLogoWhite from '@/assets/logo/GLogoWhite'
+import GTextHeader from '@/components/ui/GTextHeader'
 
 export default {
+  name: 'IntroView',
   components: {
-    GTextHeader,
-    GLogoWhite,
     GButton,
+    GLogoWhite,
+    GTextHeader,
   },
   methods: {
     pushScanner() {

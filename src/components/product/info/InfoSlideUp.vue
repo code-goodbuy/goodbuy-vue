@@ -24,10 +24,10 @@
       </div>
 
       <div class="info-box">
-        <InfoBox
-        :brand="brand"
-        :category="category"
-        :code="code"
+        <InfoSlideUpInfoBox
+          :brand="brand"
+          :category="category"
+          :code="code"
         />
         <GButton class="back-button" @click="goBack">
           <slot slot="title">Scan again</slot>
@@ -38,30 +38,30 @@
 </template>
 
 <script>
-import GButton from '../ui/GButton'
-import FoodIcon from '../../assets/feedback/FoodIcon'
-import GTextHeader from '../ui/GTextHeader'
-import InfoBox from './InfoBox'
-import GLoadingAnimation from '../ui/GLoadingAnimation'
-import CloseIcon from '../../assets/common/CloseIcon.vue'
+import CloseIcon from '@/assets/common/CloseIcon.vue'
+import FoodIcon from '@/assets/product/FoodIcon.vue'
+import GButton from '@/components/ui/GButton.vue'
+import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
+import GTextHeader from '@/components/ui/GTextHeader.vue'
+import InfoSlideUpInfoBox from './InfoSlideUpInfoBox.vue'
 
 export default {
-  name: 'ProductInfo',
+  name: 'InfoSlideUp',
   components: {
-    GButton,
-    FoodIcon,
-    GTextHeader,
-    InfoBox,
-    GLoadingAnimation,
     CloseIcon,
+    FoodIcon,
+    GButton,
+    GLoadingAnimation,
+    GTextHeader,
+    InfoSlideUpInfoBox,
   },
   data() {
     return {
-      description: '',
-      name: '',
       brand: '',
       category: '',
       code: '',
+      description: '',
+      name: '',
     }
   },
   mounted() {

@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'InfoButton'
+  name: 'ScannerViewInfoButton'
 }
 </script>
 
