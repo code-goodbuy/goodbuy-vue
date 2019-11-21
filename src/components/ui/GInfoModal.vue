@@ -20,7 +20,7 @@
 
     <GListElement class="list-box">
       <slot slot="index">3.</slot>
-      <slot slot="title">Get Feeback!</slot>
+      <slot slot="title">Get Feedback!</slot>
       <slot slot="content">After we found your item you will get feedback on it.</slot>
     </GListElement>
 
@@ -35,15 +35,15 @@
 
 <script>
 import GButton from './GButton'
-import GTextHeader from '../ui/GTextHeader'
-import GListElement from '../ui/GListElement'
+import GListElement from './GListElement'
+import GTextHeader from './GTextHeader'
 
 export default {
   name: 'Modal',
   components: {
     GButton,
-    GTextHeader,
     GListElement,
+    GTextHeader,
   },
   methods: {
     test() {
@@ -75,7 +75,7 @@ export default {
       transform: translate(-50%, -50%);
     }
     .list-box {
-      margin: 1rem 0;
+      margin: 3vw 0;
     }
   }
 </style>

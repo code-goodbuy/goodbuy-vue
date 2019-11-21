@@ -15,13 +15,13 @@
 import VueScreenSize from 'vue-screen-size'
 
 export default {
-  name: 'app',
+  name: 'App',
   mixins: [VueScreenSize.VueScreenSizeMixin],
   data() {
     return {
       isMobile: true,
-      isVertical: true,
       isTooOld: false,
+      isVertical: true,
     }
   },
   watch: {
@@ -37,21 +37,9 @@ export default {
   },
   methods: {
     checkWindow() {
-      if (this.$vssWidth > this.$vssHeight) {
-        this.isVertical = false
-      } else {
-        this.isVertical = true
-      }
-      if (this.$vssWidth > 500 || this.$vssHeight > 900) {
-        this.isMobile = false
-      } else {
-        this.isMobile = true
-      }
-      if (this.$vssWidth < 300 || this.$vssHeight < 560) {
-        this.isTooOld = true
-      } else {
-        this.isTooOld = false
-      }
+      this.isVertical = this.$vssWidth < this.$vssHeight
+      this.isMobile = this.$vssWidth < 500 && this.$vssHeight < 900
+      this.isTooOld = this.$vssWidth < 300 && this.$vssHeight < 560
     }
   }
 }

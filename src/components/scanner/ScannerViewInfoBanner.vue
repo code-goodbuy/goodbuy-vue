@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'InfoBanner'
+  name: 'ScannerViewInfoBanner'
 }
 </script>
 

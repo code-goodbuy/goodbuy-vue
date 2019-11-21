@@ -1,19 +1,19 @@
 <template>
   <div class="scanner-view">
     <div class="content" :class="{'blur-content': showModal || !scannerStarted}">
-      <InfoButton v-if="!showModal" @showInfo="showInfo" />
-      <Overlay />
+      <ScannerViewInfoButton v-if="!showModal" @showInfo="showModal = true" />
+      <ScannerViewOverlay />
       <scanner
         v-show="scannerStarted"
         @updateBarcode="updateBarcode"
         @scannerStarted="scannerStarted = true"
       />
       <div class="loading-background"/>
-      <InfoBanner />
+      <ScannerViewInfoBanner />
     </div>
 
     <transition name="modal">
-      <GInfoModal v-if="showModal" @closeModal="hideInfo" />
+      <GInfoModal v-if="showModal" @closeModal="showModal = false" />
     </transition>
 
     <GLoadingAnimation white v-show="!scannerStarted"/>
@@ -21,29 +21,29 @@
 </template>
 
 <script>
-import Scanner from './Scanner'
-import GInfoModal from '../ui/GInfoModal'
-import InfoButton from './InfoButton'
-import Overlay from './Overlay'
-import InfoBanner from './InfoBanner.vue'
-import GLoadingAnimation from '../ui/GLoadingAnimation.vue'
+import GInfoModal from '@/components/ui/GInfoModal.vue'
+import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
+import Scanner from './Scanner.vue'
+import ScannerViewInfoBanner from './ScannerViewInfoBanner.vue'
+import ScannerViewInfoButton from './ScannerViewInfoButton.vue'
+import ScannerViewOverlay from './ScannerViewOverlay.vue'
 
 export default {
   name: 'ScannerView',
+  components: {
+    GInfoModal,
+    GLoadingAnimation,
+    Scanner,
+    ScannerViewInfoBanner,
+    ScannerViewInfoButton,
+    ScannerViewOverlay,
+  },
   data() {
     return {
       barcode: '',
-      showModal: true,
       scannerStarted: false,
+      showModal: true,
     }
-  },
-  components: {
-    Scanner,
-    GInfoModal,
-    InfoButton,
-    Overlay,
-    InfoBanner,
-    GLoadingAnimation,
   },
   mounted() {
     this.showModal = this.$route.params.firstVisit
@@ -54,12 +54,6 @@ export default {
         this.$router.push({ name: 'product-screen', params: {code: barcode}})
       }
     },
-    showInfo() {
-      this.showModal = true
-    },
-    hideInfo() {
-      this.showModal = false
-    }
   }
 }
 </script>

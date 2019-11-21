@@ -17,9 +17,9 @@
           <slot slot="content">{{ feedbackMessage }}</slot>
         </GTextHeader>
 
-        <InfoButton @click="showInfo">
+        <ProductViewInfoButton @click="showInfo">
           <slot slot="title">{{ infoButtonTitle }}</slot>
-        </InfoButton>
+        </ProductViewInfoButton>
       </div>
 
       <div class="back-button">
@@ -30,41 +30,42 @@
     </div>
 
     <transition name="slide-up">
-      <ProductInfo v-if="isInfoModalActive" @closeInfoModal="isInfoModalActive = false"/>
+      <InfoSlideUp v-if="isInfoModalActive" @closeInfoModal="isInfoModalActive = false"/>
     </transition>
   </div>
 </template>
 
 <script>
-import GButton from '../ui/GButton'
-import PosFeedbackIcon from '../../assets/feedback/PosFeebackIcon'
-import NegFeedbackIcon from '../../assets/feedback/NegFeedbackIcon'
-import MissingItemIcon from '../../assets/feedback/MissingItemIcon'
-import GTextHeader from '../ui/GTextHeader'
-import InfoButton from './InfoButton'
-import GLoadingAnimation from '../ui/GLoadingAnimation'
-import ProductInfo from './ProductInfo.vue'
+import axios from 'axios'
+import GButton from '@/components/ui/GButton.vue'
+import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
+import GTextHeader from '@/components/ui/GTextHeader.vue'
+import ProductViewInfoButton from './ProductViewInfoButton.vue'
+import MissingItemIcon from '@/assets/product/MissingItemIcon.vue'
+import NegFeedbackIcon from '@/assets/product/NegFeedbackIcon.vue'
+import PosFeedbackIcon from '@/assets/product/PosFeebackIcon.vue'
+import InfoSlideUp from './info/InfoSlideUp.vue'
 
 export default {
-  name: 'ProductFeedback',
+  name: 'ProductView',
   components: {
     GButton,
-    PosFeedbackIcon,
-    NegFeedbackIcon,
-    MissingItemIcon,
-    GTextHeader,
-    InfoButton,
     GLoadingAnimation,
-    ProductInfo,
+    GTextHeader,
+    ProductViewInfoButton,
+    MissingItemIcon,
+    NegFeedbackIcon,
+    PosFeedbackIcon,
+    InfoSlideUp,
   },
   data() {
     return {
-      goodItem: false,
       badItem: false,
-      isInfoModalActive: false,
-      feedbackTitle: '',
       feedbackMessage: '',
+      feedbackTitle: '',
+      goodItem: false,
       infoButtonTitle: '',
+      isInfoModalActive: false,
       productName: '',
     }
   },
@@ -76,6 +77,15 @@ export default {
     isBigTen() {
       this.badItem = true
       this.productName = 'test-name'
+      if (process.env.NODE_ENV === 'production') {
+        axios
+        .get('https://dev-goodbuy.herokuapp.com/feedback/90415296/')
+        .then(response => (console.log(response)))
+      } else if (process.env.NODE_ENV === 'development') {
+        axios
+        .get('/feedback/90415296/')
+        .then(response => (console.log(response)))
+      }
     },
     updateContent() {
       if (this.goodItem) {

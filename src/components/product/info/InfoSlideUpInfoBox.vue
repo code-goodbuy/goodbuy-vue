@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: 'InfoBox',
+  name: 'InfoSlideUpInfoBox',
   props: {
     brand: {
       type: String,
