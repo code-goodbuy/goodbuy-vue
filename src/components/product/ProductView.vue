@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="product-screen">
+  <div class="product-view">
     <div v-if="!feedbackTitle" class="loading-animation">
       <GLoadingAnimation />
     </div>
@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     isBigTen() {
-      this.badItem = true
+      // this.badItem = true
       this.productName = 'test-name'
       if (process.env.NODE_ENV === 'production') {
         axios
@@ -113,7 +113,7 @@ export default {
         this.isInfoModalActive = true
       } else {
         this.$router.push({
-          name: 'enter-product-data',
+          name: 'product-input',
           params: {
             code: this.$route.params.code
           }
@@ -125,7 +125,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.product-screen {
+.product-view {
   .loading-animation {
     position: fixed;
     left: 50%;

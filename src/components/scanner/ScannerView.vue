@@ -51,7 +51,7 @@ export default {
   methods: {
     updateBarcode(barcode) {
       if (!this.showModal) {
-        this.$router.push({ name: 'product-screen', params: {code: barcode}})
+        this.$router.push({ name: 'product', params: {code: barcode}})
       }
     },
   }
