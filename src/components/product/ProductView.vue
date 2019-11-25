@@ -88,9 +88,26 @@ export default {
       infoButtonTitle: '',
       isInfoModalActive: false,
       productName: '',
+      invalidBarcode: false,
+    }
+  },
+  watch:{
+    $route (){
+      if (isNaN(this.$route.params.code) || this.$route.params.code.length !== 13) {
+        this.$router.push({
+          name: 'scanner',
+          params: { firstVisit: false },
+        })
+      }
     }
   },
   created() {
+    if (isNaN(this.$route.params.code) || this.$route.params.code.length !== 13) {
+      this.$router.push({
+        name: 'scanner',
+        params: { firstVisit: false },
+      })
+    }
     this.isBigTen()
     this.updateContent()
   },
