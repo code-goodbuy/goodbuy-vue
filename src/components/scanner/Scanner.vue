@@ -43,6 +43,12 @@ export default {
               height: this.$vssHeight,
               facingMode: "environment" // or user
             },
+            area: { // defines rectangle of the detection/localization area
+              top: "0%",    // top offset
+              right: "0%",  // right offset
+              left: "0%",   // left offset
+              bottom: "0%"  // bottom offset
+            },
           },
           decoder : {
             readers : ['ean_reader'],
@@ -72,7 +78,7 @@ export default {
       if (code.length === 13) {
         this.results.push(code)
       }
-      if (this.results.length > 10) {
+      if (this.results.length > 5) {
         this.$emit('updateBarcode', this.findMost(this.results))
         this.results = []
       }

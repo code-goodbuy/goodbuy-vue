@@ -66,9 +66,15 @@ export default {
     div {
       margin: 1rem 0;
     }
-    button {
-      margin: 2rem;
-      align-self: center;
+    .back-button {
+      width: 100%;
+      display: flex;
+      justify-content: space-evenly;
+      
+      button {
+        margin: 2rem;
+        align-self: center;
+      }
     }
   }
 }

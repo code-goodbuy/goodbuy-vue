@@ -13,7 +13,7 @@
     </div>
 
     <transition name="modal">
-      <GInfoModal v-if="showModal" @closeModal="showModal = false" />
+      <ScannerViewInfoModal v-if="showModal" @closeModal="showModal = false" />
     </transition>
 
     <GLoadingAnimation white v-show="!scannerStarted"/>
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import GInfoModal from '@/components/ui/GInfoModal.vue'
+import ScannerViewInfoModal from './ScannerViewInfoModal.vue'
 import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
 import Scanner from './Scanner.vue'
 import ScannerViewInfoBanner from './ScannerViewInfoBanner.vue'
@@ -31,7 +31,7 @@ import ScannerViewOverlay from './ScannerViewOverlay.vue'
 export default {
   name: 'ScannerView',
   components: {
-    GInfoModal,
+    ScannerViewInfoModal,
     GLoadingAnimation,
     Scanner,
     ScannerViewInfoBanner,
