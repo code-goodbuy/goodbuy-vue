@@ -41,7 +41,8 @@ export default {
             constraints: {
               width: this.$vssWidth,
               height: this.$vssHeight,
-              facingMode: "environment" // or user
+              facingMode: "environment", // or user
+              aspectRatio: { min: 1, max: parseFloat(this.$vssHeight/this.$vssWidth) },
             },
             area: { // defines rectangle of the detection/localization area
               top: "0%",    // top offset
