@@ -1,7 +1,18 @@
 <template lang="html">
   <div class="product-view">
-    <div v-if="!feedbackTitle" class="loading-animation">
-      <GLoadingAnimation />
+    <div v-if="showDefaultLoading" class="def-loading">
+      <GLoadingAnimation class="loading-animation"/>
+    </div>
+
+    <div v-else-if="showLoadingScreen" class="loading-screen">
+      <GLoadingAnimation class="loading-animation"/>
+      <div class="info-text">
+        We are looking for your product. Hit refresh to see if it is already here
+      </div>
+      <button @click="checkResult">Refresh</button>
+      <GButton class="loading-scan-again" @click="onClickScanAgain">
+        <slot slot="title">Scan Again</slot>
+      </GButton>
     </div>
 
     <div class="flex-container" v-else>
@@ -46,6 +57,7 @@
 
     <transition name="slide-up">
       <InfoSlideUp
+        :name="productName"
         v-if="isInfoModalActive"
         @closeInfoModal="isInfoModalActive = false"
       />
@@ -89,16 +101,13 @@ export default {
       isInfoModalActive: false,
       productName: '',
       invalidBarcode: false,
+      showLoadingScreen: false,
+      showDefaultLoading: true,
     }
   },
   watch:{
     $route (){
-      if (isNaN(this.$route.params.code) || this.$route.params.code.length !== 13) {
-        this.$router.push({
-          name: 'scanner',
-          params: { firstVisit: false },
-        })
-      }
+      location.reload()
     }
   },
   created() {
@@ -113,23 +122,19 @@ export default {
   },
   methods: {
     isBigTen() {
-      const random = Math.floor(Math.random() * 4)
-      if (random == 0) {
-        this.badItem = true
-      } else if (random == 1) {
-        this.goodItem = true
-      } else if (random == 2) {
-        this.recommendedItem = true
-      }
-      this.productName = 'test-name'
+      const barcode = this.$route.params.code
       if (process.env.NODE_ENV === 'production') {
         axios
-        .get('https://dev-goodbuy.herokuapp.com/feedback/90415296/')
-        .then(response => (console.log(response)))
+        .get(`https://dev-goodbuy.herokuapp.com/feedback/${barcode}/`)
+        .then(response => (
+          this.checkBigTen(response)
+        ))
       } else if (process.env.NODE_ENV === 'development') {
         axios
-        .get('/feedback/90415296/')
-        .then(response => (console.log(response)))
+        .get(`/feedback/${barcode}/`)
+        .then(response => (
+          this.checkBigTen(response)
+        ))
       }
     },
     updateContent() {
@@ -164,12 +169,98 @@ export default {
         }
       })
     },
+    getResponse() {
+      let response = ''
+      const barcode = this.$route.params.code
+      if (process.env.NODE_ENV === 'production') {
+        axios
+        .get(`https://dev-goodbuy.herokuapp.com/feedback/${barcode}/`)
+        .then(resp => (
+          response = resp
+        ))
+      } else if (process.env.NODE_ENV === 'development') {
+        axios
+        .get(`/feedback/${barcode}/`)
+        .then(resp => (
+          response = resp
+        ))
+      }
+      return response
+    },
+    getResult() {
+      const barcode = this.$route.params.code
+      if (process.env.NODE_ENV === 'production') {
+        axios
+        .get(`https://dev-goodbuy.herokuapp.com/feedback/result/${barcode}/`)
+        .then(response => (
+          this.checkBigTen(response)
+        ))
+      } else if (process.env.NODE_ENV === 'development') {
+        axios
+        .get(`/feedback/result/${barcode}/`)
+        .then(response => (
+          this.checkBigTen(response)
+        ))
+      }
+    },
+    checkBigTen(response) {
+      console.log(response)
+      if (response.status === 209) {
+        this.showLoadingScreen = true
+      } else if (response.data.is_big_ten === "True") {
+        this.badItem = true
+        this.productName = response.data.fields.name
+      } else if (response.data.is_big_ten === "False") {
+        this.goodItem = true
+        this.productName = response.data.fields.name
+      }
+      this.updateContent()
+      this.showDefaultLoading = false
+    },
+    checkResult() {
+      this.getResult()
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .product-view {
+  width: 100%;
+  height: 100%;
+
+  .def-loading{
+    position: fixed;
+    left: 50%;
+    bottom: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .loading-screen{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .loading-animation {
+    }
+    .info-text {
+      margin: .5rem 2rem;
+    }
+    button {
+      background-color: grey;
+    }
+    .loading-scan-again {
+      position: fixed;
+      left: 50%;
+      bottom: 0;
+      transform: translate(-50%, -50%);
+      margin: 0 auto;
+    }
+  }
+
   .flex-container {
     width: 100%;
     height: 100%;
@@ -201,12 +292,6 @@ export default {
     }
   }
 
-  .loading-animation {
-    position: fixed;
-    left: 50%;
-    bottom: 50%;
-    transform: translate(-50%, -0%);
-  }
   .slide-up-enter {
     transform: translateY(800px);
   }

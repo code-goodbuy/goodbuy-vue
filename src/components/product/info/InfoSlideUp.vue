@@ -59,7 +59,12 @@ export default {
       category: '',
       code: '',
       description: '',
-      name: '',
+    }
+  },
+  props: {
+    name: {
+      type: String,
+      required: true,
     }
   },
   mounted() {
@@ -67,7 +72,6 @@ export default {
   },
   methods: {
     getProductData() {
-      this.name = 'test-name'
       this.description = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor'
       this.code = this.$route.params.code
     },
