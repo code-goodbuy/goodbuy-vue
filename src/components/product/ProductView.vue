@@ -96,7 +96,14 @@ export default {
   },
   methods: {
     isBigTen() {
-      this.badItem = true
+      const random = Math.floor(Math.random() * 4)
+      if (random == 0) {
+        this.badItem = true
+      } else if (random == 1) {
+        this.goodItem = true
+      } else if (random == 2) {
+        this.recommendedItem = true
+      }
       this.productName = 'test-name'
       if (process.env.NODE_ENV === 'production') {
         axios
