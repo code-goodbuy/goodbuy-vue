@@ -1,27 +1,27 @@
 <template>
-  <div class="modal">
+  <div class="scanner-view-info-modal">
     <GTextHeader class="text-box">
       <slot slot="title">
-        How does it work ?
+        How it works
       </slot>
     </GTextHeader>
 
     <GListElement class="list-box">
       <slot slot="index">1.</slot>
-      <slot slot="title">Find your item to scan.</slot>
-      <slot slot="content">Choose the item you would like to scan.</slot>
+      <slot slot="title">Choose an item to scan</slot>
+      <slot slot="content">Pick a grocery product you want to scan</slot>
     </GListElement>
 
     <GListElement class="list-box">
       <slot slot="index">2.</slot>
-      <slot slot="title">Scan the item.</slot>
-      <slot slot="content">Hold the EAN code into the camera to scan.</slot>
+      <slot slot="title">Scan the item</slot>
+      <slot slot="content">Point your camera at the EAN code </slot>
     </GListElement>
 
     <GListElement class="list-box">
       <slot slot="index">3.</slot>
-      <slot slot="title">Get Feedback!</slot>
-      <slot slot="content">After we found your item you will get feedback on it.</slot>
+      <slot slot="title">Receive Feedback</slot>
+      <slot slot="content">Enjoy the feedback on your product</slot>
     </GListElement>
 
     <div class="btn-container">
@@ -34,12 +34,12 @@
 </template>
 
 <script>
-import GButton from './GButton'
-import GListElement from './GListElement'
-import GTextHeader from './GTextHeader'
+import GButton from '@/components/ui/GButton'
+import GListElement from '@/components/ui/GListElement'
+import GTextHeader from '@/components/ui/GTextHeader'
 
 export default {
-  name: 'Modal',
+  name: 'ScannerViewInfoModal',
   components: {
     GButton,
     GListElement,
@@ -55,8 +55,8 @@ export default {
 
 
 <style lang="scss" scoped>
-  .modal {
-    padding: 2rem 0;
+  .scanner-view-info-modal {
+    padding: 1rem 0;
     margin: 70px 20px;
     border-radius: 10px;
     background-color: white;

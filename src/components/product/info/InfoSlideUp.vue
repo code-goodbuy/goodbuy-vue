@@ -23,16 +23,14 @@
         {{ description }}
       </div>
 
-      <div class="info-box">
-        <InfoSlideUpInfoBox
-          :brand="brand"
-          :category="category"
-          :code="code"
-        />
-        <GButton class="back-button" @click="goBack">
-          <slot slot="title">Scan again</slot>
-        </GButton>
-      </div>
+      <InfoSlideUpInfoBox
+        class="info-box"
+        :brand="brand"
+      />
+
+      <GButton class="back-button" @click="onClickScanAgain">
+        <slot slot="title">Scan again</slot>
+      </GButton>
     </div>
   </div>
 </template>
@@ -70,12 +68,10 @@ export default {
   methods: {
     getProductData() {
       this.name = 'test-name'
-      this.brand = 'test-brand'
-      this.category = 'test-category'
       this.description = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor'
       this.code = this.$route.params.code
     },
-    goBack() {
+    onClickScanAgain() {
       this.$router.push({
         name: 'scanner',
         params: { firstVisit: false },
@@ -96,17 +92,18 @@ export default {
   right: 0;
   bottom: 0;
 
-  .close-button {
-    margin: .5rem;
-    position: absolute;
-  }
   .loading-animation {
     position: fixed;
     left: 50%;
     bottom: 50%;
     transform: translate(-50%, -0%);
   }
+  .close-button {
+    margin: .5rem;
+    position: absolute;
+  }
   .food-icon {
+    padding: 1rem 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -117,18 +114,15 @@ export default {
     font-weight: 400;
     font-size: 15px;
     line-height: 20px;
-    text-align: center;
   }
   .info-box {
+    margin: 1rem;
+  }
+  .back-button {
     position: fixed;
-    bottom: 5rem;
-
-    .back-button {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 </style>

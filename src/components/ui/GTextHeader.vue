@@ -76,13 +76,13 @@ export default {
   }
   .content {
     font-family: "Open Sans", sans-serif;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 3.5vw;
+    line-height: 16px;
     margin: 1rem 1rem 0 1rem;
 
     &--big {
-      font-size: 20px;
-      line-height: 27px;
+      font-size: 5vw;
+      line-height: 20px;
       text-align: center;
       margin: 1.5rem 1rem;
     }

@@ -4,14 +4,6 @@
       <span>Brand:</span>
       <span>{{ brand }}</span>
     </div>
-    <div>
-      <span>Category:</span>
-      <span>{{ category }}</span>
-    </div>
-    <div>
-      <span>Barcode Number:</span>
-      <span>{{ code }}</span>
-    </div>
   </div>
 </template>
 
@@ -20,14 +12,6 @@ export default {
   name: 'InfoSlideUpInfoBox',
   props: {
     brand: {
-      type: String,
-      required: true,
-    },
-    category: {
-      type: String,
-      required: true,
-    },
-    code: {
       type: String,
       required: true,
     },
