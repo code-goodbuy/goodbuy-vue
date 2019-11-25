@@ -45,7 +45,7 @@ export default {
             },
           },
           decoder : {
-            readers : ['ean_reader', 'ean_8_reader'],
+            readers : ['ean_reader'],
           },
           multiple: true,
           locator: {
@@ -68,10 +68,11 @@ export default {
     },
     onDetected(data) {
       let code = data.codeResult.code
-      if (code.length === 13 && code.length === 8) {
+      console.log(code);
+      if (code.length === 13) {
         this.results.push(code)
       }
-      if (this.results.length > 10 && this.results.every( (val, i, arr) => val.length === arr[0].length ) ) {
+      if (this.results.length > 10) {
         this.$emit('updateBarcode', this.findMost(this.results))
         this.results = []
       }
