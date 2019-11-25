@@ -37,8 +37,8 @@ export default {
   },
   methods: {
     checkWindow() {
+      this.isMobile = this.$vssWidth < 900 && this.$vssHeight < 1000
       this.isVertical = this.$vssWidth < this.$vssHeight
-      this.isMobile = this.$vssWidth < 500 && this.$vssHeight < 900
       this.isTooOld = this.$vssWidth < 300 && this.$vssHeight < 560
     }
   }
