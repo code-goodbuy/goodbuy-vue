@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="input-view">
-    <div class="header">
-      <button @click="goBack">back</button>
+    <div class="header" @click="goBack">
+      <BackArrowIcon/>
     </div>
     <div class="content">
     </div>
@@ -21,6 +21,7 @@
 import GInput from '@/components/ui/GInput.vue'
 import GButton from '@/components/ui/GButton.vue'
 import GSelect from '@/components/ui/GSelect.vue'
+import BackArrowIcon from '@/assets/common/BackArrowIcon.vue'
 
 export default {
   name: 'InputView',
@@ -28,6 +29,7 @@ export default {
     GInput,
     GButton,
     GSelect,
+    BackArrowIcon,
   },
   methods: {
     goBack() {
@@ -52,7 +54,7 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   .header {
-
+    margin-left: .3rem;
   }
   .footer {
     width: 100%;
