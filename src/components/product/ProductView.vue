@@ -9,7 +9,7 @@
       <div class="info-text">
         We are looking for your product. Hit refresh to see if it is already here
       </div>
-      <button @click="checkResult">Refresh</button>
+      <button @click="getResult">Refresh</button>
       <GButton class="loading-scan-again" @click="onClickScanAgain">
         <slot slot="title">Scan Again</slot>
       </GButton>
@@ -193,14 +193,31 @@ export default {
         axios
         .get(`https://dev-goodbuy.herokuapp.com/feedback/result/${barcode}/`)
         .then(response => (
-          this.checkBigTen(response)
+          this.checkResultbigten(response)
         ))
       } else if (process.env.NODE_ENV === 'development') {
         axios
         .get(`/feedback/result/${barcode}/`)
         .then(response => (
-          this.checkBigTen(response)
+          this.checkResultbigten(response)
         ))
+      }
+    },
+    checkResultbigten(response) {
+      console.log(response)
+      if (response.data === "Not yet in database") {
+        console.log('not yet');
+        this.showLoadingScreen = true
+      } else if (response.data.is_big_ten === "True") {
+        this.badItem = true
+        this.productName = response.data.fields.name
+        this.updateContent()
+        this.showLoadingScreen = false
+      } else if (response.data.is_big_ten === "False") {
+        this.goodItem = true
+        this.productName = response.data.fields.name
+        this.updateContent()
+        this.showLoadingScreen = false
       }
     },
     checkBigTen(response) {
