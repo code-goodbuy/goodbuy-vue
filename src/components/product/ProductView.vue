@@ -102,8 +102,8 @@ export default {
       productName: '',
       productBrand: '',
       invalidBarcode: false,
-      showLoadingScreen: true,
-      showDefaultLoading: false,
+      showLoadingScreen: false,
+      showDefaultLoading: true,
     }
   },
   watch:{
