@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="product-info">
-    <div v-if="!name" class="loading-animation">
+    <div v-if="!productName" class="loading-animation">
       <GLoadingAnimation />
     </div>
 
@@ -15,7 +15,7 @@
 
       <div class="brand">
         <GTextHeader centered>
-          <slot slot="title">{{ name }}</slot>
+          <slot slot="title">{{ productName }}</slot>
         </GTextHeader>
       </div>
 
@@ -25,7 +25,7 @@
 
       <InfoSlideUpInfoBox
         class="info-box"
-        :brand="brand"
+        :brand="productBrand"
       />
 
       <GButton class="back-button" @click="onClickScanAgain">
@@ -55,14 +55,15 @@ export default {
   },
   data() {
     return {
-      brand: '',
-      category: '',
-      code: '',
       description: '',
     }
   },
   props: {
-    name: {
+    productName: {
+      type: String,
+      required: true,
+    },
+    productBrand: {
       type: String,
       required: true,
     }
@@ -73,11 +74,10 @@ export default {
   methods: {
     getProductData() {
       this.description = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor'
-      this.code = this.$route.params.code
     },
     onClickScanAgain() {
       this.$router.push({
-        name: 'scanner',
+        productName: 'scanner',
         params: { firstVisit: false },
       })
     }

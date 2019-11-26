@@ -24,6 +24,7 @@ export default {
 <style lang="scss" scoped>
 .g-button {
   button {
+    outline: none;
     border: 0;
     display: inline-block;
     text-align: center;
