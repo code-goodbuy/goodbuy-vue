@@ -118,7 +118,7 @@ export default {
         params: { firstVisit: false },
       })
     } else {
-      this.isBigTen()
+      // this.isBigTen()
     }
   },
   methods: {
