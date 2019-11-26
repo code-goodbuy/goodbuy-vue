@@ -3,17 +3,22 @@
     <div class="content" :class="{'blur-content': showModal || !scannerStarted}">
       <ScannerViewInfoButton v-if="!showModal" @showInfo="showModal = true" />
       <ScannerViewOverlay />
-      <scanner
+      <!-- <scanner
         v-show="scannerStarted"
         @updateBarcode="updateBarcode"
         @scannerStarted="scannerStarted = true"
+      /> -->
+      <Scandit
+        v-show="scannerStarted"
+        @scannerStarted="scannerStarted = true"
+        @updateBarcode="updateBarcode"
       />
       <div class="loading-background"/>
       <ScannerViewInfoBanner />
     </div>
 
     <transition name="modal">
-      <GInfoModal v-if="showModal" @closeModal="showModal = false" />
+      <ScannerViewInfoModal v-if="showModal" @closeModal="showModal = false" />
     </transition>
 
     <GLoadingAnimation white v-show="!scannerStarted"/>
@@ -21,27 +26,27 @@
 </template>
 
 <script>
-import GInfoModal from '@/components/ui/GInfoModal.vue'
+import ScannerViewInfoModal from './ScannerViewInfoModal.vue'
 import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
-import Scanner from './Scanner.vue'
 import ScannerViewInfoBanner from './ScannerViewInfoBanner.vue'
 import ScannerViewInfoButton from './ScannerViewInfoButton.vue'
 import ScannerViewOverlay from './ScannerViewOverlay.vue'
+import Scandit from './Scandit.vue'
 
 export default {
   name: 'ScannerView',
   components: {
-    GInfoModal,
+    ScannerViewInfoModal,
     GLoadingAnimation,
-    Scanner,
     ScannerViewInfoBanner,
     ScannerViewInfoButton,
     ScannerViewOverlay,
+    Scandit,
   },
   data() {
     return {
       barcode: '',
-      scannerStarted: false,
+      scannerStarted: true,
       showModal: true,
     }
   },
@@ -51,7 +56,7 @@ export default {
   methods: {
     updateBarcode(barcode) {
       if (!this.showModal) {
-        this.$router.push({ name: 'product-screen', params: {code: barcode}})
+        this.$router.push({ name: 'product', params: {code: barcode}})
       }
     },
   }

@@ -23,9 +23,9 @@ export default {
 <style lang="scss" scoped>
 .g-list-element {
   .index {
-    font-size: 30px;
     font-family: 'Work Sans', sans-serif;
     font-weight: 600;
+    font-size: 9vw;
     line-height: 35px;
     margin-left: 1rem;
   }
@@ -40,7 +40,7 @@ export default {
 
   .content {
     display: table-cell;
-    font-size: 15px;
+    font-size: 4.8vw;
     font-family: 'Open Sans', sans-serif;
     font-weight: 600;
     line-height: 20px;

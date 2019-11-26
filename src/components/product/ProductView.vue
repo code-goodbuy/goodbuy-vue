@@ -1,36 +1,64 @@
 <template lang="html">
-  <div class="product-screen">
-    <div v-if="!feedbackTitle" class="loading-animation">
-      <GLoadingAnimation />
+  <div class="product-view">
+    <div v-if="showDefaultLoading" class="def-loading">
+      <GLoadingAnimation
+        class="loading-animation"
+      />
     </div>
 
-    <div v-else>
+    <LoadingView
+      v-else-if="showLoadingScreen"
+      @updateView="updateView"
+      @onClickBackButton="$router.push({name: 'scanner'})"
+    />
+
+    <div class="flex-container" v-else>
       <div class="feedback-icon">
-        <PosFeedbackIcon v-if="goodItem"/>
+        <RecommendedItemIcon v-if="recommendedItem"/>
+        <PosFeedbackIcon v-else-if="goodItem"/>
         <NegFeedbackIcon v-else-if="badItem"/>
         <MissingItemIcon v-else />
       </div>
 
-      <div class="feedback-content">
-        <GTextHeader centered big>
-          <slot slot="title">{{ feedbackTitle }}</slot>
-          <slot slot="content">{{ feedbackMessage }}</slot>
-        </GTextHeader>
+      <GTextHeader
+        class="feedback-content"
+        centered
+        big
+      >
+        <slot slot="title">{{ feedbackTitle }}</slot>
+        <slot slot="content">{{ feedbackMessage }}</slot>
+      </GTextHeader>
 
-        <ProductViewInfoButton @click="showInfo">
-          <slot slot="title">{{ infoButtonTitle }}</slot>
-        </ProductViewInfoButton>
-      </div>
+      <ProductViewInfoButton
+        v-if="recommendedItem || goodItem || badItem"
+        class="feedback-button"
+        @click="isInfoModalActive = true"
+      >
+        <slot slot="title">I want to know more</slot>
+      </ProductViewInfoButton>
 
-      <div class="back-button">
-        <GButton @click="goBack">
+
+      <div class="back-button-container">
+        <GButton @click="onClickScanAgain">
           <slot slot="title">Scan Again</slot>
+        </GButton>
+        <GButton
+          v-if="!recommendedItem && !badItem && !goodItem"
+          @click="onClickAddInfo"
+          black
+        >
+          <slot slot="title">Add Info</slot>
         </GButton>
       </div>
     </div>
 
     <transition name="slide-up">
-      <InfoSlideUp v-if="isInfoModalActive" @closeInfoModal="isInfoModalActive = false"/>
+      <InfoSlideUp
+        :productName="productName"
+        :productBrand="productBrand"
+        v-if="isInfoModalActive"
+        @closeInfoModal="isInfoModalActive = false"
+      />
     </transition>
   </div>
 </template>
@@ -45,6 +73,8 @@ import MissingItemIcon from '@/assets/product/MissingItemIcon.vue'
 import NegFeedbackIcon from '@/assets/product/NegFeedbackIcon.vue'
 import PosFeedbackIcon from '@/assets/product/PosFeebackIcon.vue'
 import InfoSlideUp from './info/InfoSlideUp.vue'
+import RecommendedItemIcon from '@/assets/product/RecommendedItemIcon.vue'
+import LoadingView from './LoadingView.vue'
 
 export default {
   name: 'ProductView',
@@ -57,9 +87,12 @@ export default {
     NegFeedbackIcon,
     PosFeedbackIcon,
     InfoSlideUp,
+    RecommendedItemIcon,
+    LoadingView,
   },
   data() {
     return {
+      recommendedItem: false,
       badItem: false,
       feedbackMessage: '',
       feedbackTitle: '',
@@ -67,88 +100,131 @@ export default {
       infoButtonTitle: '',
       isInfoModalActive: false,
       productName: '',
+      productBrand: '',
+      invalidBarcode: false,
+      showLoadingScreen: false,
+      showDefaultLoading: true,
+    }
+  },
+  watch:{
+    $route (){
+      location.reload()
     }
   },
   created() {
-    this.isBigTen()
-    this.updateContent()
+    if (isNaN(this.$route.params.code) || this.$route.params.code.length !== 13) {
+      this.$router.push({
+        name: 'scanner',
+        params: { firstVisit: false },
+      })
+    } else {
+      this.isBigTen()
+    }
   },
   methods: {
     isBigTen() {
-      this.badItem = true
-      this.productName = 'test-name'
-      if (process.env.NODE_ENV === 'production') {
-        axios
-        .get('https://dev-goodbuy.herokuapp.com/feedback/90415296/')
-        .then(response => (console.log(response)))
-      } else if (process.env.NODE_ENV === 'development') {
-        axios
-        .get('/feedback/90415296/')
-        .then(response => (console.log(response)))
+      const barcode = this.$route.params.code
+      console.log(process.env.VUE_APP_FEEDBACK_API_URL);
+      axios
+      .get(`${process.env.VUE_APP_FEEDBACK_API_URL}${barcode}/`)
+      .then(resp => (
+        this.updateView(resp)
+      ))
+    },
+    updateView(response) {
+      console.log(response)
+      if (response.status === 209) {
+        this.showDefaultLoading = false
+        this.showLoadingScreen = true
+      } else {
+        if (response.data.is_big_ten === "True") {
+          this.badItem = true
+          this.productName = response.data.fields.name
+          this.productBrand = response.data.fields.brand
+        } else if (response.data.is_big_ten === "False") {
+          this.goodItem = true
+          this.productName = response.data.fields.name
+          this.productBrand = response.data.fields.brand
+        }
+        this.updateContent()
+        this.showDefaultLoading = false
+        this.showLoadingScreen = false
       }
     },
     updateContent() {
-      if (this.goodItem) {
+      if (this.recommendedItem) {
         this.feedbackTitle = 'Yah!'
-        this.feedbackMessage = 'The product that you scanned is not from one of the 10 big concerns.'
-        this.infoButtonTitle = 'I want to know more'
+        this.feedbackMessage = 'Congrats! This product is recommended by Goodbuy! '
+      } else if (this.goodItem) {
+        this.feedbackTitle = 'Aah!'
+        this.feedbackMessage = 'Cool, your product does not belong to one of the biggest 10 corporations.'
       } else if (this.badItem) {
         this.feedbackTitle = 'Nah...'
-        this.feedbackMessage = 'The product that you scanned is from one of the 10 big concerns.'
-        this.infoButtonTitle = 'I want to know more'
+        this.feedbackMessage = `The product that you scanned is from ${this.productBrand}`
       } else {
         this.feedbackTitle = 'Well...'
-        this.feedbackMessage = 'We are sorry the product that you scanned is currently not in our database'
-        this.infoButtonTitle = 'Enter product data'
+        this.feedbackMessage = 'Sorry, the product you scanned cannot be found in our database.  Be our Hero and insert the missing information to contribute to our Goodbuy community!'
       }
     },
-    goBack() {
+    onClickScanAgain() {
       this.$router.push({
         name: 'scanner',
         params: { firstVisit: false },
       })
     },
-    showInfo() {
-      if (this.goodItem || this.badItem) {
-        this.isInfoModalActive = true
-      } else {
-        this.$router.push({
-          name: 'enter-product-data',
-          params: {
-            code: this.$route.params.code
-          }
-        })
-      }
-    }
+    onClickAddInfo() {
+      this.$router.push({
+        name: 'product-input',
+        params: {
+          code: this.$route.params.code
+        }
+      })
+    },
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.product-screen {
-  .loading-animation {
+.product-view {
+  width: 100%;
+  height: 100%;
+
+  .def-loading{
     position: fixed;
     left: 50%;
     bottom: 50%;
-    transform: translate(-50%, -0%);
-  }
-  .feedback-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .feedback-content {
-    button {
-      margin: 1.5rem auto;
-      display: block;
-    }
-  }
-  .back-button {
-    position: fixed;
-    left: 50%;
-    bottom: 0;
     transform: translate(-50%, -50%);
-    margin: 0 auto;
+  }
+
+  .flex-container {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .feedback-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .feedback-content {
+    }
+    .feedback-button{
+      margin: 1rem;
+    }
+    .back-button-container {
+      width: 100%;
+      display: flex;
+      justify-content: space-evenly;
+
+      position: fixed;
+      left: 50%;
+      bottom: 0;
+      transform: translate(-50%, -50%);
+      margin: 0 auto;
+    }
   }
 
   .slide-up-enter {
