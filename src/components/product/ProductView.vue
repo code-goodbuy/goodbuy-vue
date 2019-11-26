@@ -118,7 +118,7 @@ export default {
         params: { firstVisit: false },
       })
     } else {
-      // this.isBigTen()
+      this.isBigTen()
     }
   },
   methods: {
@@ -134,6 +134,7 @@ export default {
     updateView(response) {
       console.log(response)
       if (response.status === 209) {
+        this.showDefaultLoading = false
         this.showLoadingScreen = true
       } else {
         if (response.data.is_big_ten === "True") {
@@ -159,7 +160,7 @@ export default {
         this.feedbackMessage = 'Cool, your product does not belong to one of the biggest 10 corporations.'
       } else if (this.badItem) {
         this.feedbackTitle = 'Nah...'
-        this.feedbackMessage = 'The product that you scanned is from <Company>'
+        this.feedbackMessage = `The product that you scanned is from ${this.productBrand}`
       } else {
         this.feedbackTitle = 'Well...'
         this.feedbackMessage = 'Sorry, the product you scanned cannot be found in our database.  Be our Hero and insert the missing information to contribute to our Goodbuy community!'

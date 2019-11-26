@@ -28,7 +28,6 @@
 <script>
 import ScannerViewInfoModal from './ScannerViewInfoModal.vue'
 import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
-import Scanner from './Scanner.vue'
 import ScannerViewInfoBanner from './ScannerViewInfoBanner.vue'
 import ScannerViewInfoButton from './ScannerViewInfoButton.vue'
 import ScannerViewOverlay from './ScannerViewOverlay.vue'
@@ -39,7 +38,6 @@ export default {
   components: {
     ScannerViewInfoModal,
     GLoadingAnimation,
-    Scanner,
     ScannerViewInfoBanner,
     ScannerViewInfoButton,
     ScannerViewOverlay,
