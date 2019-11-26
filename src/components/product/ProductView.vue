@@ -1,19 +1,16 @@
 <template lang="html">
   <div class="product-view">
     <div v-if="showDefaultLoading" class="def-loading">
-      <GLoadingAnimation class="loading-animation"/>
+      <GLoadingAnimation
+        class="loading-animation"
+      />
     </div>
 
-    <div v-else-if="showLoadingScreen" class="loading-screen">
-      <GLoadingAnimation class="loading-animation"/>
-      <div class="info-text">
-        We are looking for your product. Hit refresh to see if it is already here
-      </div>
-      <button @click="getResult">Refresh</button>
-      <GButton class="loading-scan-again" @click="onClickScanAgain">
-        <slot slot="title">Scan Again</slot>
-      </GButton>
-    </div>
+    <LoadingView
+      v-else-if="showLoadingScreen"
+      @updateView="updateView"
+      @onClickBackButton="$router.push({name: 'scanner'})"
+    />
 
     <div class="flex-container" v-else>
       <div class="feedback-icon">
@@ -35,7 +32,7 @@
       <ProductViewInfoButton
         v-if="recommendedItem || goodItem || badItem"
         class="feedback-button"
-        @click="onClickShowInfo"
+        @click="isInfoModalActive = true"
       >
         <slot slot="title">I want to know more</slot>
       </ProductViewInfoButton>
@@ -57,7 +54,8 @@
 
     <transition name="slide-up">
       <InfoSlideUp
-        :name="productName"
+        :productName="productName"
+        :productBrand="productBrand"
         v-if="isInfoModalActive"
         @closeInfoModal="isInfoModalActive = false"
       />
@@ -76,6 +74,7 @@ import NegFeedbackIcon from '@/assets/product/NegFeedbackIcon.vue'
 import PosFeedbackIcon from '@/assets/product/PosFeebackIcon.vue'
 import InfoSlideUp from './info/InfoSlideUp.vue'
 import RecommendedItemIcon from '@/assets/product/RecommendedItemIcon.vue'
+import LoadingView from './LoadingView.vue'
 
 export default {
   name: 'ProductView',
@@ -89,6 +88,7 @@ export default {
     PosFeedbackIcon,
     InfoSlideUp,
     RecommendedItemIcon,
+    LoadingView,
   },
   data() {
     return {
@@ -100,9 +100,10 @@ export default {
       infoButtonTitle: '',
       isInfoModalActive: false,
       productName: '',
+      productBrand: '',
       invalidBarcode: false,
-      showLoadingScreen: false,
-      showDefaultLoading: true,
+      showLoadingScreen: true,
+      showDefaultLoading: false,
     }
   },
   watch:{
@@ -116,25 +117,37 @@ export default {
         name: 'scanner',
         params: { firstVisit: false },
       })
+    } else {
+      this.isBigTen()
     }
-    this.isBigTen()
-    this.updateContent()
   },
   methods: {
     isBigTen() {
       const barcode = this.$route.params.code
-      if (process.env.NODE_ENV === 'production') {
-        axios
-        .get(`https://dev-goodbuy.herokuapp.com/feedback/${barcode}/`)
-        .then(response => (
-          this.checkBigTen(response)
-        ))
-      } else if (process.env.NODE_ENV === 'development') {
-        axios
-        .get(`/feedback/${barcode}/`)
-        .then(response => (
-          this.checkBigTen(response)
-        ))
+      console.log(process.env.VUE_APP_FEEDBACK_API_URL);
+      axios
+      .get(`${process.env.VUE_APP_FEEDBACK_API_URL}${barcode}/`)
+      .then(resp => (
+        this.updateView(resp)
+      ))
+    },
+    updateView(response) {
+      console.log(response)
+      if (response.status === 209) {
+        this.showLoadingScreen = true
+      } else {
+        if (response.data.is_big_ten === "True") {
+          this.badItem = true
+          this.productName = response.data.fields.name
+          this.productBrand = response.data.fields.brand
+        } else if (response.data.is_big_ten === "False") {
+          this.goodItem = true
+          this.productName = response.data.fields.name
+          this.productBrand = response.data.fields.brand
+        }
+        this.updateContent()
+        this.showDefaultLoading = false
+        this.showLoadingScreen = false
       }
     },
     updateContent() {
@@ -158,9 +171,6 @@ export default {
         params: { firstVisit: false },
       })
     },
-    onClickShowInfo() {
-      this.isInfoModalActive = true
-    },
     onClickAddInfo() {
       this.$router.push({
         name: 'product-input',
@@ -169,74 +179,6 @@ export default {
         }
       })
     },
-    getResponse() {
-      let response = ''
-      const barcode = this.$route.params.code
-      if (process.env.NODE_ENV === 'production') {
-        axios
-        .get(`https://dev-goodbuy.herokuapp.com/feedback/${barcode}/`)
-        .then(resp => (
-          response = resp
-        ))
-      } else if (process.env.NODE_ENV === 'development') {
-        axios
-        .get(`/feedback/${barcode}/`)
-        .then(resp => (
-          response = resp
-        ))
-      }
-      return response
-    },
-    getResult() {
-      const barcode = this.$route.params.code
-      if (process.env.NODE_ENV === 'production') {
-        axios
-        .get(`https://dev-goodbuy.herokuapp.com/feedback/result/${barcode}/`)
-        .then(response => (
-          this.checkResultbigten(response)
-        ))
-      } else if (process.env.NODE_ENV === 'development') {
-        axios
-        .get(`/feedback/result/${barcode}/`)
-        .then(response => (
-          this.checkResultbigten(response)
-        ))
-      }
-    },
-    checkResultbigten(response) {
-      console.log(response)
-      if (response.data === "Not yet in database") {
-        console.log('not yet');
-        this.showLoadingScreen = true
-      } else if (response.data.is_big_ten === "True") {
-        this.badItem = true
-        this.productName = response.data.fields.name
-        this.updateContent()
-        this.showLoadingScreen = false
-      } else if (response.data.is_big_ten === "False") {
-        this.goodItem = true
-        this.productName = response.data.fields.name
-        this.updateContent()
-        this.showLoadingScreen = false
-      }
-    },
-    checkBigTen(response) {
-      console.log(response)
-      if (response.status === 209) {
-        this.showLoadingScreen = true
-      } else if (response.data.is_big_ten === "True") {
-        this.badItem = true
-        this.productName = response.data.fields.name
-      } else if (response.data.is_big_ten === "False") {
-        this.goodItem = true
-        this.productName = response.data.fields.name
-      }
-      this.updateContent()
-      this.showDefaultLoading = false
-    },
-    checkResult() {
-      this.getResult()
-    }
   }
 }
 </script>
@@ -251,31 +193,6 @@ export default {
     left: 50%;
     bottom: 50%;
     transform: translate(-50%, -50%);
-  }
-
-  .loading-screen{
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    .loading-animation {
-    }
-    .info-text {
-      margin: .5rem 2rem;
-    }
-    button {
-      background-color: grey;
-    }
-    .loading-scan-again {
-      position: fixed;
-      left: 50%;
-      bottom: 0;
-      transform: translate(-50%, -50%);
-      margin: 0 auto;
-    }
   }
 
   .flex-container {

@@ -54,7 +54,7 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   .header {
-    margin-left: .3rem;
+    margin-left: .5rem;
   }
   .footer {
     width: 100%;
@@ -70,7 +70,7 @@ export default {
       width: 100%;
       display: flex;
       justify-content: space-evenly;
-      
+
       button {
         margin: 2rem;
         align-self: center;
