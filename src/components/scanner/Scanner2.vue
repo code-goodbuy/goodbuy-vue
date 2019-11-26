@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Quagga from '@ericblade/quagga2'
+import Quagga from 'quagga'
 import VueScreenSize from 'vue-screen-size'
 
 export default {
@@ -33,7 +33,7 @@ export default {
     initScanner() {
       this.$nextTick(() => {
         Quagga.init({
-          locate: false,
+          locate: true,
           inputStream : {
             name : "Live",
             type : "LiveStream",
@@ -45,10 +45,10 @@ export default {
               aspectRatio: { min: 1, max: parseFloat(this.$vssHeight/this.$vssWidth) },
             },
             area: { // defines rectangle of the detection/localization area
-              top: "25%",    // top offset
+              top: "0%",    // top offset
               right: "0%",  // right offset
               left: "0%",   // left offset
-              bottom: "25%"  // bottom offset
+              bottom: "0%"  // bottom offset
             },
           },
           decoder : {
@@ -79,7 +79,7 @@ export default {
       if (code.length === 13) {
         this.results.push(code)
       }
-      if (this.results.length > 20) {
+      if (this.results.length > 5) {
         this.$emit('updateBarcode', this.findMost(this.results))
         this.results = []
       }
