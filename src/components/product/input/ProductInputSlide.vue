@@ -19,6 +19,7 @@
       </GTitle>
       <GInput v-else placeholder="Brand" v-model="inputBrand"/>
 
+      <!-- TODO - disable when already provided -->
       <GSelect v-model="inputCategory" :options="options"/>
 
       <GTitle>

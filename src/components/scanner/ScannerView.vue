@@ -2,7 +2,7 @@
   <div class="scanner-view">
     <div class="content" :class="{'blur-content': showModal || !scannerStarted}">
       <ScannerViewInfoButton v-if="!showModal" @showInfo="showModal = true" />
-      <ScannerViewOverlay />
+      <!-- <ScannerViewOverlay /> -->
       <!-- <scanner
         v-show="scannerStarted"
         @updateBarcode="updateBarcode"
