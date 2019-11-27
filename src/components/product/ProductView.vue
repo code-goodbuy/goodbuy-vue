@@ -12,7 +12,7 @@
       @onClickBackButton="$router.push({name: 'scanner'})"
     />
 
-    <div class="flex-container" v-else>
+    <div v-else class="flex-container">
       <div class="feedback-icon">
         <RecommendedItemIcon v-if="recommendedItem"/>
         <PosFeedbackIcon v-else-if="goodItem"/>
@@ -32,7 +32,7 @@
       <ProductViewInfoButton
         v-if="recommendedItem || goodItem || badItem"
         class="feedback-button"
-        @click="isInfoModalActive = true"
+        @click="showProductInfo = true"
       >
         <slot slot="title">I want to know more</slot>
       </ProductViewInfoButton>
@@ -43,9 +43,9 @@
           <slot slot="title">Scan Again</slot>
         </GButton>
         <GButton
-          v-if="!recommendedItem && !badItem && !goodItem"
-          @click="onClickAddInfo"
+          v-if="!recommendedItem && !badItem && !goodItem && !unchecked"
           black
+          @click="showProductInput = true"
         >
           <slot slot="title">Add Info</slot>
         </GButton>
@@ -54,10 +54,20 @@
 
     <transition name="slide-up">
       <InfoSlideUp
+        v-if="showProductInfo"
         :productName="productName"
         :productBrand="productBrand"
-        v-if="isInfoModalActive"
-        @closeInfoModal="isInfoModalActive = false"
+        @closeInfoModal="showProductInfo = false"
+      />
+    </transition>
+
+    <transition name="slide-left">
+      <ProductInputSlide
+        v-if="showProductInput"
+        :name="productName"
+        :brand="productBrand"
+        :code="barcode"
+        @closeProductInput="showProductInput = false"
       />
     </transition>
   </div>
@@ -75,6 +85,7 @@ import PosFeedbackIcon from '@/assets/product/PosFeebackIcon.vue'
 import InfoSlideUp from './info/InfoSlideUp.vue'
 import RecommendedItemIcon from '@/assets/product/RecommendedItemIcon.vue'
 import LoadingView from './LoadingView.vue'
+import ProductInputSlide from './input/ProductInputSlide.vue'
 
 export default {
   name: 'ProductView',
@@ -89,6 +100,7 @@ export default {
     InfoSlideUp,
     RecommendedItemIcon,
     LoadingView,
+    ProductInputSlide,
   },
   data() {
     return {
@@ -97,13 +109,15 @@ export default {
       feedbackMessage: '',
       feedbackTitle: '',
       goodItem: false,
-      infoButtonTitle: '',
-      isInfoModalActive: false,
+      showProductInfo: false,
       productName: '',
       productBrand: '',
-      invalidBarcode: false,
       showLoadingScreen: false,
       showDefaultLoading: true,
+      productCorporation: '',
+      barcode: '',
+      showProductInput: false,
+      unchecked: false,
     }
   },
   watch:{
@@ -123,16 +137,19 @@ export default {
   },
   methods: {
     isBigTen() {
-      const barcode = this.$route.params.code
-      console.log(process.env.VUE_APP_FEEDBACK_API_URL);
+      this.barcode = this.$route.params.code
       axios
-      .get(`${process.env.VUE_APP_FEEDBACK_API_URL}${barcode}/`)
+      .get(`${process.env.VUE_APP_FEEDBACK_API_URL}${this.barcode}/`)
       .then(resp => (
         this.updateView(resp)
       ))
     },
     updateView(response) {
-      console.log(response)
+      console.log(response) ? process.env.NODE_ENV === 'develop' : ''
+      // 209 - not in database, crawler starts
+      // 210 - data is incomplete
+      // 211 - data is entered but unchecked
+      // 200 - data is here and returned
       if (response.status === 209) {
         this.showDefaultLoading = false
         this.showLoadingScreen = true
@@ -141,11 +158,16 @@ export default {
           this.badItem = true
           this.productName = response.data.fields.name
           this.productBrand = response.data.fields.brand
+          this.productCorporation = response.data.fields.corporation
         } else if (response.data.is_big_ten === "False") {
           this.goodItem = true
           this.productName = response.data.fields.name
           this.productBrand = response.data.fields.brand
+          this.productCorporation = response.data.fields.corporation
+        } else if (response.status === 211) {
+          this.unchecked = true
         }
+
         this.updateContent()
         this.showDefaultLoading = false
         this.showLoadingScreen = false
@@ -160,7 +182,10 @@ export default {
         this.feedbackMessage = 'Cool, your product does not belong to one of the biggest 10 corporations.'
       } else if (this.badItem) {
         this.feedbackTitle = 'Nah...'
-        this.feedbackMessage = `The product that you scanned is from ${this.productBrand}`
+        this.feedbackMessage = `The product that you scanned is from ${this.productCorporation}`
+      } else if (this.unchecked) {
+        this.feedbackTitle = 'Well...'
+        this.feedbackMessage = 'Great, the product you scanned was recently added to our database by a user but we are currently validating that information'
       } else {
         this.feedbackTitle = 'Well...'
         this.feedbackMessage = 'Sorry, the product you scanned cannot be found in our database.  Be our Hero and insert the missing information to contribute to our Goodbuy community!'
@@ -170,14 +195,6 @@ export default {
       this.$router.push({
         name: 'scanner',
         params: { firstVisit: false },
-      })
-    },
-    onClickAddInfo() {
-      this.$router.push({
-        name: 'product-input',
-        params: {
-          code: this.$route.params.code
-        }
       })
     },
   }
@@ -243,6 +260,25 @@ export default {
     transform: translateY(800px);
   }
   .slide-up-leave-active {
+    transition: all .3s linear;
+  }
+
+  .slide-left-enter {
+    transform: translateX(500px);
+  }
+  .slide-left-enter-to {
+    transform: translateX(0px);
+  }
+  .slide-left-enter-active {
+    transition: all .3s linear;
+  }
+  .slide-left-leave {
+    transform: translateX(0px);
+  }
+  .slide-left-leave-to {
+    transform: translateX(500px);
+  }
+  .slide-left-leave-active {
     transition: all .3s linear;
   }
 }

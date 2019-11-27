@@ -14,9 +14,9 @@
       </div>
 
       <div class="brand">
-        <GTextHeader centered>
+        <GTitle long>
           <slot slot="title">{{ productName }}</slot>
-        </GTextHeader>
+        </GTitle>
       </div>
 
       <div class="company-description">
@@ -40,7 +40,7 @@ import CloseIcon from '@/assets/common/CloseIcon.vue'
 import FoodIcon from '@/assets/product/FoodIcon.vue'
 import GButton from '@/components/ui/GButton.vue'
 import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
-import GTextHeader from '@/components/ui/GTextHeader.vue'
+import GTitle from '@/components/ui/GTitle.vue'
 import InfoSlideUpInfoBox from './InfoSlideUpInfoBox.vue'
 
 export default {
@@ -50,7 +50,7 @@ export default {
     FoodIcon,
     GButton,
     GLoadingAnimation,
-    GTextHeader,
+    GTitle,
     InfoSlideUpInfoBox,
   },
   data() {
@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     getProductData() {
-      this.description = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor'
+      this.description = ''
     },
     onClickScanAgain() {
       this.$router.push({

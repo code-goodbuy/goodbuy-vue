@@ -1,5 +1,5 @@
 <template>
-  <div class="g-text-header">
+  <div class="g-input">
     <div
       class="container"
     >
@@ -7,7 +7,8 @@
         <input
           :readOnly="readOnly"
           :placeholder="placeholder"
-          v-model="name"
+          v-bind:value="value"
+          v-on:input="$emit('input', $event.target.value)"
           v-autowidth="{maxWidth: width}"
         />
       </h1>
@@ -19,7 +20,7 @@
 import VueScreenSize from 'vue-screen-size'
 
 export default {
-  name: 'GTextHeader',
+  name: 'GInput',
   mixins: [VueScreenSize.VueScreenSizeMixin],
   props: {
     placeholder: {
@@ -43,14 +44,13 @@ export default {
     }
   },
   mounted() {
-    this.width = `${this.$vssWidth - 100}px`
-    this.name = this.value ? this.value : ''
+    this.width = `${this.$vssWidth - 40}px`
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.g-text-header {
+.g-input {
   .container {
     display: inline-block;
     position: relative;
