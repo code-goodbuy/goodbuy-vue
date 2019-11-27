@@ -38,7 +38,7 @@ export default {
       ))
     },
     checkResultbigten(response) {
-      console.log(response)
+      console.log(response) ? process.env.NODE_ENV === 'develop' : ''
       if (response.data.is_big_ten === "True" || response.data.is_big_ten === "False") {
         this.$emit('updateView', response)
       }

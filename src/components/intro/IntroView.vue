@@ -8,7 +8,7 @@
       <div class="title">goodbuy</div>
     </div>
 
-    <GTextHeader class="text-box">
+    <GTextHeader allowtoggle class="text-box">
       <slot slot="title">
         Who are we?
       </slot>
@@ -17,7 +17,7 @@
       </slot>
     </GTextHeader>
 
-    <GTextHeader class="text-box">
+    <GTextHeader allowtoggle class="text-box">
       <slot slot="title">
         Our mission
       </slot>
