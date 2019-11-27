@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build-staging": "vue-cli-service build --mode staging"
     "lint": "vue-cli-service lint",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
@@ -17,7 +18,6 @@
     "scandit-sdk": "^4.6.0",
     "vue": "^2.6.10",
     "vue-axios": "^2.1.5",
-    "vue-barcode-reader": "0.0.3",
     "vue-input-autowidth": "^1.0.9",
     "vue-quaggajs": "^1.0.10",
     "vue-router": "^3.1.3",

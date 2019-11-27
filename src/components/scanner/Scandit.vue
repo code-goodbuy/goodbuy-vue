@@ -17,12 +17,14 @@ export default {
       enablePinchToZoom: false,
       enableCameraSwitcher: false,
       enableTorchToggle: false,
-      guiStyle: 'laser',
+      guiStyle: 'viewfinder',
       videoFit: true,
     }).then((barcodePicker) => {
       var scanSettings = new ScanditSDK.ScanSettings({
-        enabledSymbologies: ["ean8", "ean13", "upca", "upce", "code128", "code39", "code93", "itf"],
-        codeDuplicateFilter: 1000
+        blurryRecognition: false,
+        enabledSymbologies: ["ean8", "ean13"],
+        codeDuplicateFilter: 1000,
+        searchArea: {x: .1, y: .3, width: .8, height: .4}
       });
       barcodePicker.applyScanSettings(scanSettings);
       barcodePicker.on("ready", () => {
