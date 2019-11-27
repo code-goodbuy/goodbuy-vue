@@ -1,25 +1,23 @@
 <template>
-  <div class="g-text-header">
+  <div class="g-title">
     <div
       class="container"
       :class="{
         'container--centered': centered,
         'container--big': big,
-        'container--long': long,
+        'container--long-double-line': long,
+        'container--long-single-line': truncate,
       }">
       <h1>
         <slot name="title" />
       </h1>
-    </div>
-    <div class="content" :class="{'content--big': big, 'content--toggle': toggled}" @click="toggleContent">
-      <slot name="content" />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'GTextHeader',
+  name: 'GTitle',
   props: {
     centered: {
       type: Boolean,
@@ -33,41 +31,16 @@ export default {
       type: Boolean,
       default: false,
     },
-    allowtoggle: {
+    truncate: {
       type: Boolean,
       default: false,
-    }
-  },
-  data() {
-    return {
-      toggle: true
-    }
-  },
-  computed: {
-    toggled() {
-      if (!this.allowtoggle) {
-        return false
-      }
-      return this.toggle
-    }
-  },
-  watch:{
-    $route (){
-      console.log('here');
-    }
-  },
-  methods: {
-    toggleContent() {
-      if (this.allowtoggle) {
-        this.toggle = !this.toggle
-      }
-    }
+    },
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.g-text-header {
+.g-title {
   margin-right: 1rem;
   .container {
     display: inline-block;
@@ -89,7 +62,7 @@ export default {
       content: "";
       display: inline-block;
       position: absolute;
-      width: 102%;
+      width: 100%;
       height: .8rem;
       bottom: 0;
       background: #90D2D9;
@@ -108,7 +81,7 @@ export default {
         line-height: 35px;
       }
     }
-    &--long {
+    &--long-double-line {
       max-width: 100%;
       h1 {
         font-size: 7vw;
@@ -121,28 +94,17 @@ export default {
         -webkit-box-orient: vertical;
       }
     }
-  }
-  .content {
-    font-family: "Open Sans", sans-serif;
-    font-size: 3.5vw;
-    line-height: 16px;
-    margin: 1rem 1rem 0 1rem;
-
-    &--big {
-      font-size: 5vw;
-      line-height: 20px;
-      text-align: center;
-      margin: 1.5rem 1rem;
-    }
-
-    &--toggle {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      line-height: 16px;     /* fallback */
-      max-height: 48px;      /* fallback */
-      -webkit-line-clamp: 3; /* number of lines to show */
-      -webkit-box-orient: vertical;
+    &--long-single-line {
+      max-width: 100%;
+      h1 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        line-height: 25px;     /* fallback */
+        max-height: 25px;      /* fallback */
+        -webkit-line-clamp: 1; /* number of lines to show */
+        -webkit-box-orient: vertical;
+      }
     }
   }
 }
