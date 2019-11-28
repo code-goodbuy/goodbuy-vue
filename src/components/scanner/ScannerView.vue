@@ -2,12 +2,6 @@
   <div class="scanner-view">
     <div class="content" :class="{'blur-content': showModal || !scannerStarted}">
       <ScannerViewInfoButton v-if="!showModal" @showInfo="showModal = true" />
-      <!-- <ScannerViewOverlay /> -->
-      <!-- <scanner
-        v-show="scannerStarted"
-        @updateBarcode="updateBarcode"
-        @scannerStarted="scannerStarted = true"
-      /> -->
       <Scandit
         v-show="scannerStarted"
         @scannerStarted="scannerStarted = true"
@@ -30,7 +24,6 @@ import ScannerViewInfoModal from './ScannerViewInfoModal.vue'
 import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
 import ScannerViewInfoBanner from './ScannerViewInfoBanner.vue'
 import ScannerViewInfoButton from './ScannerViewInfoButton.vue'
-import ScannerViewOverlay from './ScannerViewOverlay.vue'
 import Scandit from './Scandit.vue'
 
 export default {
@@ -40,7 +33,6 @@ export default {
     GLoadingAnimation,
     ScannerViewInfoBanner,
     ScannerViewInfoButton,
-    ScannerViewOverlay,
     Scandit,
   },
   data() {

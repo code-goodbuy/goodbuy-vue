@@ -9,7 +9,7 @@
     <div class="content">
     </div>
     <div class="footer">
-      <GTitle v-if="name" truncate>
+      <GTitle v-if="name" long>
         <slot slot="title">{{ inputName }}</slot>
       </GTitle>
       <GInput v-else placeholder="Name" v-model="inputName"/>
@@ -20,7 +20,7 @@
       <GInput v-else placeholder="Brand" v-model="inputBrand"/>
 
       <!-- TODO - disable when already provided -->
-      <GSelect v-model="inputCategory" :options="options"/>
+      <!-- <GSelect v-model="inputCategory" :options="options"/> -->
 
       <GTitle>
         <slot slot="title">{{ inputCode }}</slot>
@@ -55,7 +55,7 @@ export default {
       inputBrand: this.brand,
       inputCode: this.code,
       inputCategory: this.category,
-      options: ['dwdwdw', 'dwd'],
+      options: ['Beverages', 'Fish'],
       message: '',
     }
   },
@@ -94,7 +94,7 @@ export default {
       return (
         this.inputName !== '' &&
         this.inputBrand !== '' &&
-        this.inputCategory !== 'Category' &&
+        // this.inputCategory !== 'Category' &&
         this.inputCode !== ''
       )
     }
