@@ -84,7 +84,7 @@ export default {
     &--long-double-line {
       max-width: 100%;
       h1 {
-        font-size: 7vw;
+        font-size: 8vw;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
@@ -97,6 +97,7 @@ export default {
     &--long-single-line {
       max-width: 100%;
       h1 {
+        font-size: 8vw;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;

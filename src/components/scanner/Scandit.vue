@@ -24,7 +24,7 @@ export default {
         blurryRecognition: false,
         enabledSymbologies: ["ean8", "ean13"],
         codeDuplicateFilter: 1000,
-        searchArea: {x: .1, y: .3, width: .8, height: .4}
+        searchArea: {x: .1, y: .35, width: .8, height: .3}
       });
       barcodePicker.applyScanSettings(scanSettings);
       barcodePicker.on("ready", () => {
