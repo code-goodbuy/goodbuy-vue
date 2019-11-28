@@ -26,7 +26,7 @@
           Every browser should work just fine
         </big>
         <div class="link">
-          <a href="goodbuy.netlify.com">goodbuy.netlify.com</a>
+          <a href="/#/">goodbuy.netlify.com</a>
         </div>
       </slot>
     </GTextHeader>
