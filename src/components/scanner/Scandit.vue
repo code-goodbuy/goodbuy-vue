@@ -6,21 +6,11 @@
 
 <script>
 import * as ScanditSDK from "scandit-sdk"
-import VueScreenSize from 'vue-screen-size'
 
 export default {
   name: 'Scandit',
-  mixins: [VueScreenSize.VueScreenSizeMixin],
   mounted () {
     this.initScanner()
-  },
-  watch: {
-    $vssWidth() {
-      this.initScanner()
-    },
-    $vssHeight() {
-      this.initScanner()
-    }
   },
   methods: {
     initScanner() {
@@ -41,7 +31,6 @@ export default {
           blurryRecognition: false,
           enabledSymbologies: ["ean8", "ean13"],
           codeDuplicateFilter: 1000,
-          searchArea: {x: .1, y: .35, width: .8, height: .3}
         })
         barcodePicker.applyScanSettings(scanSettings)
 
