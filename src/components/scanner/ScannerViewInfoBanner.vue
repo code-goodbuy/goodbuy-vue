@@ -12,6 +12,7 @@ export default {
 
 <style lang="scss" scoped>
 .info-banner {
+  z-index: 3;
   position: absolute;
   bottom: 10px;
   left: 50%;

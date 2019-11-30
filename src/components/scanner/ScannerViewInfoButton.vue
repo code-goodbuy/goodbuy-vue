@@ -13,6 +13,7 @@ export default {
 
 <style lang="scss" scoped>
 .info-button {
+  z-index: 3;
   height: 23px;
   width: 23px;
   position: absolute;
@@ -28,7 +29,5 @@ export default {
   align-content: center;
   justify-content: center;
   font-size: 20px;
-
-  z-index: 1;
 }
 </style>

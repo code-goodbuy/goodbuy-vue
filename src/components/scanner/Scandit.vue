@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="">
+  <div class="scandit">
     <div id="scandit-barcode-picker" style="max-width: 1280px; max-height: 100%;"></div>
   </div>
 </template>
@@ -67,4 +67,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.scandit {
+  pointer-events: none;
+}
 </style>
