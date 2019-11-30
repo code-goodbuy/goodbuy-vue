@@ -14,15 +14,15 @@
       <slot slot="content">
         <big>
           Unfortunately, the build in instagram browser doesn't support camera access. Please open our app on your phone's dedicated browser.
-          </br>
-          </br>
+          <br>
+          <br>
           <b>iOS:</b>
-          </br>
+          <br>
           Please use the safari browser
-          </br>
-          </br>
+          <br>
+          <br>
           <b>Android:</b>
-          </br>
+          <br>
           Every browser should work just fine
         </big>
         <div class="link">

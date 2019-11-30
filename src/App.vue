@@ -34,6 +34,7 @@ export default {
   },
   mounted() {
     this.checkWindow()
+    console.log(process.env.NODE_ENV);
   },
   methods: {
     checkWindow() {
