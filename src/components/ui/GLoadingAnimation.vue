@@ -2,6 +2,9 @@
   <div class="loading-animation">
     <GLogoBlack v-if="!white"/>
     <GLogoWhite v-else/>
+    <div class="description">
+      <slot name="description"></slot>
+    </div>
   </div>
 </template>
 
@@ -26,6 +29,16 @@ export default {
 
 <style lang="scss" scoped>
 .loading-animation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .description {
+    margin-top: 1rem;
+    z-index:2;
+    color: white;
+  }
+
   svg {
     height: 60px;
     width: 60px;
