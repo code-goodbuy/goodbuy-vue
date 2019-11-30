@@ -129,7 +129,7 @@ export default {
     const barcode = this.$route.params.code
     const barcodeLength = barcode.length
     const isBarcodeNotNumber = isNaN(barcode)
-    if (isBarcodeNotNumber || barcodeLength !== 13 || barcodeLength !== 8) {
+    if (isBarcodeNotNumber || (barcodeLength !== 13 && barcodeLength !== 8)) {
       this.$router.push({
         name: 'scanner',
         params: { firstVisit: false },
