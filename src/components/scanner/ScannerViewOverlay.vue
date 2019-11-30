@@ -10,6 +10,7 @@ export default {
 
 <style lang="scss" scoped>
 .overlay:after{
+  z-index: 2;
   content:'';
   position: absolute;
   top: 50%;

@@ -1,21 +1,27 @@
 <template>
   <div class="scanner-view">
     <div class="content" :class="{'blur-content': showModal || !scannerStarted}">
-      <ScannerViewInfoButton v-if="!showModal" @showInfo="showModal = true" />
+      <ScannerViewInfoButton v-if="!showModal && scannerStarted" @showInfo="showModal = true" />
+      <ScannerViewOverlay v-if="scannerStarted"/>
+      <ScannerViewInfoBanner v-if="scannerStarted"/>
       <Scandit
         v-show="scannerStarted"
         @scannerStarted="scannerStarted = true"
-        @updateBarcode="updateBarcode"
+        @onBarcodeDetect="onBarcodeDetect"
       />
       <div class="loading-background"/>
-      <ScannerViewInfoBanner />
     </div>
 
     <transition name="modal">
       <ScannerViewInfoModal v-if="showModal" @closeModal="showModal = false" />
     </transition>
 
-    <GLoadingAnimation white v-show="!scannerStarted"/>
+    <GLoadingAnimation
+      v-show="!scannerStarted"
+      white
+    >
+      <slot slot="description">Scanner is loading...</slot>
+    </GLoadingAnimation>
   </div>
 </template>
 
@@ -24,6 +30,7 @@ import ScannerViewInfoModal from './ScannerViewInfoModal.vue'
 import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
 import ScannerViewInfoBanner from './ScannerViewInfoBanner.vue'
 import ScannerViewInfoButton from './ScannerViewInfoButton.vue'
+import ScannerViewOverlay from './ScannerViewOverlay.vue'
 import Scandit from './Scandit.vue'
 
 export default {
@@ -33,12 +40,13 @@ export default {
     GLoadingAnimation,
     ScannerViewInfoBanner,
     ScannerViewInfoButton,
+    ScannerViewOverlay,
     Scandit,
   },
   data() {
     return {
       barcode: '',
-      scannerStarted: true,
+      scannerStarted: false,
       showModal: true,
     }
   },
@@ -46,7 +54,7 @@ export default {
     this.showModal = this.$route.params.firstVisit
   },
   methods: {
-    updateBarcode(barcode) {
+    onBarcodeDetect(barcode) {
       if (!this.showModal) {
         this.$router.push({ name: 'product', params: {code: barcode}})
       }

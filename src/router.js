@@ -4,7 +4,7 @@ import Router from 'vue-router'
 import IntroView from '@/components/intro/IntroView.vue'
 import ScannerView from '@/components/scanner/ScannerView.vue'
 import ProductView from '@/components/product/ProductView.vue'
-import InstagramView from '@/components/redirect/InstagramView.vue'
+import InstagramView from '@/components/instagram/InstagramView.vue'
 
 Vue.use(Router)
 
