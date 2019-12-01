@@ -42,6 +42,7 @@ export default {
 <style lang="scss" scoped>
 .g-title {
   margin-right: 1rem;
+  
   .container {
     display: inline-block;
     position: relative;
@@ -58,6 +59,7 @@ export default {
       z-index: 1;
       line-height: 35px;
     }
+
     &:after {
       content: "";
       display: inline-block;
@@ -68,12 +70,15 @@ export default {
       background: #90D2D9;
       opacity: 80%;
     }
+
     &--centered {
       width: 65%;
+
       h1 {
         text-align: right;
       }
     }
+
     &--big {
       h1 {
         font-weight: 600;
@@ -81,8 +86,10 @@ export default {
         line-height: 35px;
       }
     }
+
     &--long-double-line {
       max-width: 100%;
+
       h1 {
         font-size: 8vw;
         overflow: hidden;
@@ -94,8 +101,10 @@ export default {
         -webkit-box-orient: vertical;
       }
     }
+
     &--long-single-line {
       max-width: 100%;
+
       h1 {
         font-size: 8vw;
         overflow: hidden;

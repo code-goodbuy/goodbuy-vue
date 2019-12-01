@@ -1,7 +1,7 @@
 <template lang="html">
   <div
     class="info-button"
-    @click="$emit('showInfo')"
+    @click="$emit('onClickInfoButton')"
   >i</div>
 </template>
 

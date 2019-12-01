@@ -1,13 +1,11 @@
 <template lang="html">
   <div class="g-list-element">
-    <div class="">
       <span class="index">
         <slot name="index"></slot>
       </span>
       <span class="title">
         <slot name="title"></slot>
       </span>
-    </div>
     <div class="content">
       <slot name="content"></slot>
     </div>

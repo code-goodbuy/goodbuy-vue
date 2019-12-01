@@ -55,13 +55,16 @@ export default {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+
     .logo {
       position: absolute;
+
       svg {
         width: 40px;
         height: 40px;
       }
     }
+
     .title {
       margin: auto;
       text-align: center;
@@ -70,16 +73,19 @@ export default {
       font-size: 12vw;
     }
   }
+
   .text-box {
     margin-top: 1rem;
   }
+
   .link {
+    margin-top: 2rem;
+    text-align: center;
+
     a {
       font-size: 6vw;
       color: #90D2D9;
     }
-    margin-top: 2rem;
-    text-align: center;
   }
 }
 </style>

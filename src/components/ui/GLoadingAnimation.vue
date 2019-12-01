@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="loading-animation">
-    <GLogoBlack v-if="!white"/>
+    <GLogoBlack v-if="!whiteLogo"/>
     <GLogoWhite v-else/>
     <div class="description">
       <slot name="description"></slot>
@@ -19,10 +19,10 @@ export default {
     GLogoWhite,
   },
   props: {
-    white: {
+    whiteLogo: {
       type: Boolean,
       default: false,
-    }
+    },
   }
 }
 </script>
@@ -44,6 +44,7 @@ export default {
     width: 60px;
     z-index: 2;
   }
+
   #logo {
     animation: test 4s linear infinite;
   }

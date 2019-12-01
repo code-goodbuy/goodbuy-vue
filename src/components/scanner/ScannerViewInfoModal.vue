@@ -1,10 +1,10 @@
 <template>
   <div class="scanner-view-info-modal">
-    <GTextHeader class="text-box">
+    <GTitle class="text-box">
       <slot slot="title">
         How it works
       </slot>
-    </GTextHeader>
+    </GTitle>
 
     <GListElement class="list-box">
       <slot slot="index">1.</slot>
@@ -15,7 +15,7 @@
     <GListElement class="list-box">
       <slot slot="index">2.</slot>
       <slot slot="title">Scan the item</slot>
-      <slot slot="content">Point your camera at the EAN code </slot>
+      <slot slot="content">Point your camera at the EAN code</slot>
     </GListElement>
 
     <GListElement class="list-box">
@@ -24,8 +24,8 @@
       <slot slot="content">Enjoy the feedback on your product</slot>
     </GListElement>
 
-    <div class="btn-container">
-      <GButton @click="test">
+    <div class="close-button">
+      <GButton @click="onClickCloseModal">
         <slot slot="title">Let's Go!</slot>
       </GButton>
     </div>
@@ -36,17 +36,17 @@
 <script>
 import GButton from '@/components/ui/GButton'
 import GListElement from '@/components/ui/GListElement'
-import GTextHeader from '@/components/ui/GTextHeader'
+import GTitle from '@/components/ui/GTitle'
 
 export default {
   name: 'ScannerViewInfoModal',
   components: {
     GButton,
     GListElement,
-    GTextHeader,
+    GTitle,
   },
   methods: {
-    test() {
+    onClickCloseModal() {
       this.$emit('closeModal')
     }
   }
@@ -67,13 +67,15 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
-    .btn-container {
+
+    .close-button {
       margin: 0 auto;
       position: absolute;
       left: 50%;
       bottom: 0;
       transform: translate(-50%, -50%);
     }
+    
     .list-box {
       margin: 3vw 0;
     }

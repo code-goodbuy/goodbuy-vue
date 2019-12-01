@@ -1,0 +1,127 @@
+<template lang="html">
+  <div class="product-view-recommended-item">
+    <div class="feedback-icon">
+      <RecommendedItemIcon v-if="feedback==='recommended'" />
+      <PositiveFeedbackIcon v-else-if="feedback==='good'" />
+      <NegativeFeedbackIcon v-else-if="feedback==='bad'" />
+      <MissingItemIcon v-else />
+    </div>
+
+    <GTextHeader
+      class="feedback-content"
+      centered
+      big
+    >
+      <slot slot="title">{{ feedbackTitle }}</slot>
+      <slot slot="content">{{ feedbackMessage }}</slot>
+    </GTextHeader>
+
+    <InfoButton
+      v-if="feedback"
+      class="feedback-button"
+      @click="$emit('onClickInfoButton')"
+    >
+      <slot slot="title">I want to know more</slot>
+    </InfoButton>
+
+    <BackButton
+      :isAddInfoShown="!feedback"
+      @onClickScanAgain="onClickScanAgain"
+      @onClickBackButton="$emit('onClickBackButton')"
+    />
+  </div>
+</template>
+
+<script>
+import GTextHeader from '@/components/ui/GTextHeader.vue'
+import MissingItemIcon from '@/assets/product/MissingItemIcon.vue'
+import NegativeFeedbackIcon from '@/assets/product/NegativeFeedbackIcon.vue'
+import PositiveFeedbackIcon from '@/assets/product/PositiveFeebackIcon.vue'
+import ProductViewBackButton from './ProductViewBackButton.vue'
+import ProductViewInfoButton from './ProductViewInfoButton.vue'
+import RecommendedItemIcon from '@/assets/product/RecommendedItemIcon.vue'
+
+export default {
+  name: 'ProductViewFeedbackView',
+  components: {
+    GTextHeader,
+    MissingItemIcon,
+    NegativeFeedbackIcon,
+    PositiveFeedbackIcon,
+    'BackButton': ProductViewBackButton,
+    'InfoButton': ProductViewInfoButton,
+    RecommendedItemIcon,
+  },
+  props: {
+    feedback: {
+      type: String,
+      required: true,
+    },
+    productCorporation: {
+      type: String,
+      required: true,
+    }
+  },
+  watch: {
+    feedback() {
+      console.log(this.feedback);
+    }
+  },
+  computed: {
+    feedbackTitle() {
+      if (this.feedback === 'recommended') {
+        return 'Yah!'
+      } else if (this.feedback === 'good') {
+        return 'Aah!'
+      } else if (this.feedback === 'bad') {
+        return 'Nah...'
+      } else if (this.feedback === 'unchecked') {
+        return 'Well...'
+      } else {
+        return 'Well...'
+      }
+    },
+    feedbackMessage() {
+      if (this.feedback === 'recommended') {
+        return 'Congrats! This product is recommended by Goodbuy! '
+      } else if (this.feedback === 'good') {
+        return 'Cool, your product does not belong to one of the biggest 10 corporations.'
+      } else if (this.feedback === 'bad') {
+        return `The product that you scanned is from ${this.productCorporation}`
+      } else if (this.feedback === 'unchecked') {
+        return 'Great, the product you scanned was recently added to our database by a user but we are currently validating that information'
+      } else {
+        return 'Sorry, the product you scanned cannot be found in our database.  Be our Hero and insert the missing information to contribute to our Goodbuy community!'
+      }
+    },
+  },
+  methods: {
+    onClickScanAgain() {
+      this.$router.push({
+        name: 'scanner',
+        params: { usersFirstVisit: false },
+      })
+    },
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.product-view-recommended-item {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .feedback-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .feedback-button{
+    margin: 1rem;
+  }
+}
+</style>
