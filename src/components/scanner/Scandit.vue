@@ -46,10 +46,10 @@ export default {
       })
     },
     onBarcodeDetect(barcode) {
-      this.$emit('onBarcodeDetect', barcode)
+      this.$emit('onBarcodeDetected', barcode)
     },
     onReady() {
-      this.$emit('scannerStarted')
+      this.$emit('onScannerStarted')
     }
   }
 }

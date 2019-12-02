@@ -3,33 +3,34 @@
     <div @click="$emit('onClickBackButton')">
       <BackArrowIcon class="back-button"/>
     </div>
+
     <div class="center">
       <GLoadingAnimation class="loading-animation"/>
       <div class="info-text">
         Hi, we currently don’t have your product in our database. We are adding it right now. This may take a bit. Thank you for your patience.
       </div>
-      <ProductViewInfoButton @click="getResult">
+      <RefreshButton @click="onClickRefreshButton">
         <slot slot="title">Refresh</slot>
-      </ProductViewInfoButton>
+      </RefreshButton>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
 import BackArrowIcon from '@/assets/common/BackArrowIcon.vue'
+import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
 import ProductViewInfoButton from './ProductViewInfoButton.vue'
 
 export default {
   name: 'LoadingView',
   components: {
-    GLoadingAnimation,
     BackArrowIcon,
-    ProductViewInfoButton,
+    GLoadingAnimation,
+    'RefreshButton': ProductViewInfoButton,
   },
   methods: {
-    getResult() {
+    onClickRefreshButton() {
       const barcode = this.$route.params.code
       axios
       .get(`${process.env.VUE_APP_RESULT_API_URL}${barcode}/`)

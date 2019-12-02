@@ -78,7 +78,7 @@ export default {
     onClickScanAgain() {
       this.$router.push({
         productName: 'scanner',
-        params: { firstVisit: false },
+        params: { usersFirstVisit: false },
       })
     }
   },

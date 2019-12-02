@@ -39,13 +39,10 @@ export default {
       required: true,
     }
   },
-  data() {
-    return {
-      width: ''
+  computed: {
+    width() {
+      return `${this.$vssWidth - 60}px`
     }
-  },
-  mounted() {
-    this.width = `${this.$vssWidth - 60}px`
   },
 }
 </script>
@@ -63,7 +60,6 @@ export default {
     margin-left: 1rem;
 
     select {
-      // margin-right: -10px;
       z-index: 1;
       line-height: 35px;
 

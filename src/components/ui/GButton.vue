@@ -38,6 +38,7 @@ export default {
     background-color: #90D2D9;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.353);
   }
+  
   .black {
     color: #ffffff;
     background-color: #272727;

@@ -1,17 +1,23 @@
 <template>
   <div class="g-text-header">
     <div
-      class="container"
+      class="title-container"
       :class="{
-        'container--centered': centered,
-        'container--big': big,
-        'container--long': long,
+        'title-container--centered': centered,
+        'title-container--big': big,
       }">
       <h1>
         <slot name="title" />
       </h1>
     </div>
-    <div class="content" :class="{'content--big': big, 'content--toggle': toggled}" @click="toggleContent">
+    <div
+      class="content-container"
+      :class="{
+        'content-container--big': big,
+        'content-container--toggle': isToggled
+      }"
+      @click="onClickToggleContent"
+    >
       <slot name="content" />
     </div>
   </div>
@@ -29,10 +35,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    long: {
-      type: Boolean,
-      default: false,
-    },
     allowtoggle: {
       type: Boolean,
       default: false,
@@ -44,20 +46,15 @@ export default {
     }
   },
   computed: {
-    toggled() {
+    isToggled() {
       if (!this.allowtoggle) {
         return false
       }
       return this.toggle
     }
   },
-  watch:{
-    $route (){
-      console.log('here');
-    }
-  },
   methods: {
-    toggleContent() {
+    onClickToggleContent() {
       if (this.allowtoggle) {
         this.toggle = !this.toggle
       }
@@ -69,7 +66,7 @@ export default {
 <style lang="scss" scoped>
 .g-text-header {
   margin-right: 1rem;
-  .container {
+  .title-container {
     display: inline-block;
     position: relative;
 
@@ -85,6 +82,7 @@ export default {
       z-index: 1;
       line-height: 35px;
     }
+
     &:after {
       content: "";
       display: inline-block;
@@ -95,12 +93,15 @@ export default {
       background: #90D2D9;
       opacity: 80%;
     }
+
     &--centered {
       width: 65%;
+
       h1 {
         text-align: right;
       }
     }
+
     &--big {
       h1 {
         font-weight: 600;
@@ -108,21 +109,8 @@ export default {
         line-height: 35px;
       }
     }
-    &--long {
-      max-width: 100%;
-      h1 {
-        font-size: 7vw;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        line-height: 25px;     /* fallback */
-        max-height: 50px;      /* fallback */
-        -webkit-line-clamp: 2; /* number of lines to show */
-        -webkit-box-orient: vertical;
-      }
-    }
   }
-  .content {
+  .content-container {
     font-family: "Open Sans", sans-serif;
     font-size: 3.5vw;
     line-height: 16px;
