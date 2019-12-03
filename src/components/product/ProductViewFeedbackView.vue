@@ -1,9 +1,9 @@
 <template lang="html">
   <div class="product-view-recommended-item">
     <div class="feedback-icon">
-      <RecommendedItemIcon v-if="feedback==='recommended'" />
-      <PositiveFeedbackIcon v-else-if="feedback==='good'" />
-      <NegativeFeedbackIcon v-else-if="feedback==='bad'" />
+      <RecommendedItemIcon v-if="feedback==='recommended'" data-cy="recommendet-item" />
+      <PositiveFeedbackIcon v-else-if="feedback==='good'" data-cy="positive-item" />
+      <NegativeFeedbackIcon v-else-if="feedback==='bad'" data-cy="negative-item" />
       <MissingItemIcon v-else />
     </div>
 
@@ -11,6 +11,7 @@
       class="feedback-content"
       centered
       big
+      data-cy="feedback-content"
     >
       <slot slot="title">{{ feedbackTitle }}</slot>
       <slot slot="content">{{ feedbackMessage }}</slot>

@@ -5,7 +5,7 @@
     </div>
 
     <div v-else>
-      <div class="close-button" @click="$emit('closeInfoModal')" >
+      <div class="close-button" @click="$emit('closeInfoModal')" data-cy="info-close-button">
         <CloseIcon />
       </div>
 
@@ -28,7 +28,7 @@
         :brand="productBrand"
       />
 
-      <GButton class="back-button" @click="onClickScanAgain">
+      <GButton class="back-button" @click="onClickScanAgain" data-cy="info-scan-again-button">
         <slot slot="title">Scan again</slot>
       </GButton>
     </div>
@@ -77,7 +77,7 @@ export default {
     },
     onClickScanAgain() {
       this.$router.push({
-        productName: 'scanner',
+        name: 'scanner',
         params: { usersFirstVisit: false },
       })
     }

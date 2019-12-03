@@ -1,10 +1,6 @@
 <template>
   <div class="scanner-view-info-modal">
-    <GTitle class="text-box">
-      <slot slot="title">
-        How it works
-      </slot>
-    </GTitle>
+    <ModalTitle />
 
     <GListElement class="list-box">
       <slot slot="index">1.</slot>
@@ -24,60 +20,49 @@
       <slot slot="content">Enjoy the feedback on your product</slot>
     </GListElement>
 
-    <div class="close-button">
-      <GButton @click="onClickCloseModal">
-        <slot slot="title">Let's Go!</slot>
-      </GButton>
-    </div>
-
+    <CloseButton
+      @onClickCloseModal="onClickCloseModal"
+    />
   </div>
 </template>
 
 <script>
-import GButton from '@/components/ui/GButton'
 import GListElement from '@/components/ui/GListElement'
-import GTitle from '@/components/ui/GTitle'
+import ScannerViewInfoModalCloseButton from './ScannerViewInfoModalCloseButton.vue'
+import ScannerViewInfoModalTitle from './ScannerViewInfoModalTitle.vue'
 
 export default {
   name: 'ScannerViewInfoModal',
   components: {
-    GButton,
     GListElement,
-    GTitle,
+    'CloseButton': ScannerViewInfoModalCloseButton,
+    'ModalTitle': ScannerViewInfoModalTitle,
   },
   methods: {
     onClickCloseModal() {
       this.$emit('closeModal')
     }
-  }
-};
+  },
+}
 </script>
 
 
 <style lang="scss" scoped>
-  .scanner-view-info-modal {
-    padding: 1rem 0;
-    margin: 70px 20px;
-    border-radius: 10px;
-    background-color: white;
+.scanner-view-info-modal {
+  padding: 1rem 0;
+  margin: 70px 20px;
+  border-radius: 10px;
+  background-color: white;
 
-    position: absolute;
-    z-index: 4;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
-    .close-button {
-      margin: 0 auto;
-      position: absolute;
-      left: 50%;
-      bottom: 0;
-      transform: translate(-50%, -50%);
-    }
-    
-    .list-box {
-      margin: 3vw 0;
-    }
+  .list-box {
+    margin: 3vw 0;
   }
+}
 </style>

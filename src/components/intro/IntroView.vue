@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="welcome-screen">
-    <IntroViewHeaderBar />
-    <IntroViewContent />
-    <IntroViewButton />
+    <IntroViewHeaderBar data-cy="intro-header-bar"/>
+    <IntroViewContent data-cy="intro-content"/>
+    <IntroViewButton data-cy="intro-button-scan"/>
   </div>
 </template>
 
