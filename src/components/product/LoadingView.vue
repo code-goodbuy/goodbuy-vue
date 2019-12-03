@@ -20,14 +20,14 @@
 import axios from 'axios'
 import BackArrowIcon from '@/assets/common/BackArrowIcon.vue'
 import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
-import ProductViewInfoButton from './ProductViewInfoButton.vue'
+import FeedbackViewInfoButton from './FeedbackViewInfoButton.vue'
 
 export default {
   name: 'LoadingView',
   components: {
     BackArrowIcon,
     GLoadingAnimation,
-    'RefreshButton': ProductViewInfoButton,
+    'RefreshButton': FeedbackViewInfoButton,
   },
   methods: {
     onClickRefreshButton() {

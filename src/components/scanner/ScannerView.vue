@@ -26,12 +26,12 @@
       />
     </transition>
 
-    <LoadingAnimation
+    <GLoadingAnimation
       v-show="!isScannerStarted"
       whiteLogo
     >
       <slot slot="description">Scanner is loading...</slot>
-    </LoadingAnimation>
+    </GLoadingAnimation>
   </div>
 </template>
 
@@ -46,7 +46,7 @@ import ScannerViewOverlay from './ScannerViewOverlay.vue'
 export default {
   name: 'ScannerView',
   components: {
-    'LoadingAnimation': GLoadingAnimation,
+    GLoadingAnimation,
     'Scanner': Scandit,
     'InfoBanner': ScannerViewInfoBanner,
     'InfoButton': ScannerViewInfoButton,

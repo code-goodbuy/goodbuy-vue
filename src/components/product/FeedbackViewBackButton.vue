@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="product-view-back-button" data-cy="feedback-scan-again-button">
+  <div class="feedback-view-back-button" data-cy="feedback-scan-again-button">
     <GButton @click="$emit('onClickScanAgain')">
       <slot slot="title">Scan Again</slot>
     </GButton>
@@ -17,7 +17,7 @@
 import GButton from '@/components/ui/GButton.vue'
 
 export default {
-  name: 'ProductViewBackButton',
+  name: 'FeedbackViewBackButton',
   components: {
     GButton,
   },
@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.product-view-back-button {
+.feedback-view-back-button {
   width: 100%;
   display: flex;
   justify-content: space-evenly;

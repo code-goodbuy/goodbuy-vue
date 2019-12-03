@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="product-view-recommended-item">
+  <div class="feedback-view-recommended-item">
     <div class="feedback-icon">
       <RecommendedItemIcon v-if="feedback==='recommended'" data-cy="recommendet-item" />
       <PositiveFeedbackIcon v-else-if="feedback==='good'" data-cy="positive-item" />
@@ -38,19 +38,19 @@ import GTextHeader from '@/components/ui/GTextHeader.vue'
 import MissingItemIcon from '@/assets/product/MissingItemIcon.vue'
 import NegativeFeedbackIcon from '@/assets/product/NegativeFeedbackIcon.vue'
 import PositiveFeedbackIcon from '@/assets/product/PositiveFeebackIcon.vue'
-import ProductViewBackButton from './ProductViewBackButton.vue'
-import ProductViewInfoButton from './ProductViewInfoButton.vue'
+import FeedbackViewBackButton from './FeedbackViewBackButton.vue'
+import FeedbackViewInfoButton from './FeedbackViewInfoButton.vue'
 import RecommendedItemIcon from '@/assets/product/RecommendedItemIcon.vue'
 
 export default {
-  name: 'ProductViewFeedbackView',
+  name: 'FeedbackView',
   components: {
     GTextHeader,
     MissingItemIcon,
     NegativeFeedbackIcon,
     PositiveFeedbackIcon,
-    'BackButton': ProductViewBackButton,
-    'InfoButton': ProductViewInfoButton,
+    'BackButton': FeedbackViewBackButton,
+    'InfoButton': FeedbackViewInfoButton,
     RecommendedItemIcon,
   },
   props: {
@@ -108,7 +108,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.product-view-recommended-item {
+.feedback-view-recommended-item {
   width: 100%;
   height: 100%;
 

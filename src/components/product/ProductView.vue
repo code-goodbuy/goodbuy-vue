@@ -7,14 +7,14 @@
 
     <LoadingView
       v-else-if="isDataRequestScreenActive"
-      @updateView="updateView"
+      @updateFeedbackView="updateFeedbackView"
       @onClickBackButton="$router.push({name: 'scanner'})"
     />
 
     <FeedbackView
       v-else
       :feedback="feedback"
-      :productCorporation="productCorporation"
+      :productCorporation="product.corporation"
       @onClickInfoButton="isProductInfoActive = true"
       @onClickBackButton="isProductInputActive = true"
     />
@@ -22,8 +22,8 @@
     <transition name="slide-up">
       <InfoSlideUp
         v-if="isProductInfoActive"
-        :productName="productName"
-        :productBrand="productBrand"
+        :productName="product.name"
+        :productBrand="product.brand"
         @closeInfoModal="isProductInfoActive = false"
       />
     </transition>
@@ -31,8 +31,8 @@
     <transition name="slide-left">
       <ProductInput
         v-if="isProductInputActive"
-        :name="productName"
-        :brand="productBrand"
+        :name="product.name"
+        :brand="product.brand"
         :code="barcode"
         @closeProductInput="isProductInputActive = false"
       />
@@ -46,7 +46,7 @@ import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
 import InfoSlideUp from './info/InfoSlideUp.vue'
 import LoadingView from './LoadingView.vue'
 import ProductInput from './input/ProductInput.vue'
-import ProductViewFeedbackView from './ProductViewFeedbackView.vue'
+import FeedbackView from './FeedbackView.vue'
 
 export default {
   name: 'ProductView',
@@ -55,21 +55,21 @@ export default {
     InfoSlideUp,
     LoadingView,
     ProductInput,
-    'FeedbackView': ProductViewFeedbackView,
+    FeedbackView,
   },
   data() {
     return {
       barcode: '',
-      feedbackMessage: '',
-      feedbackTitle: '',
       feedback: '',
       isDataRequestScreenActive: false,
       isLoadingScreenActive: true,
       isProductInfoActive: false,
       isProductInputActive: false,
-      productBrand: '',
-      productCorporation: '',
-      productName: '',
+      product: {
+        brand: '',
+        corporation: '',
+        name: '',
+      }
     }
   },
   watch:{
@@ -87,45 +87,51 @@ export default {
         params: { usersFirstVisit: false },
       })
     } else {
-      this.isBigTen()
+      this.getAPIResponse()
     }
   },
   methods: {
-    isBigTen() {
+    getAPIResponse() {
       axios
       .get(`${process.env.VUE_APP_FEEDBACK_API_URL}${this.barcode}/`)
       .then(resp => (
-        this.updateView(resp)
+        this.updateFeedbackView(resp)
       ))
     },
-    updateView(response) {
+    updateFeedbackView(response) {
       console.log(response) ? process.env.NODE_ENV === 'develop' : ''
       // 209 - not in database, crawler starts
       // 210 - data is incomplete
       // 211 - data is entered but unchecked
       // 200 - data is here and returned
-      if (response.status === 209) {
+
+      const httpStatus = response.status
+      const is_big_ten = response.data.is_big_ten
+
+      if (httpStatus === 209) {
         this.isLoadingScreenActive = false
         this.isDataRequestScreenActive = true
       } else {
-        if (response.data.is_big_ten === "True") {
+        if (is_big_ten === "True") {
           this.feedback = 'bad'
-          this.updateProductInfo(response)
-        } else if (response.data.is_big_ten === "False") {
+          this.updateProductData(response)
+        } else if (is_big_ten === "False") {
           this.feedback = 'good'
-          this.updateProductInfo(response)
-        } else if (response.status === 211) {
+          this.updateProductData(response)
+        } else if (httpStatus === 211) {
           this.feedback = 'unchecked'
         }
-
-        this.isLoadingScreenActive = false
-        this.isDataRequestScreenActive = false
+        this.disableLoadingScreens()
       }
     },
-    updateProductInfo(response) {
-      this.productName = response.data.fields.name
-      this.productBrand = response.data.fields.brand
-      this.productCorporation = response.data.fields.corporation
+    updateProductData(response) {
+      this.product.name = response.data.fields.name
+      this.product.brand = response.data.fields.brand
+      this.product.corporation = response.data.fields.corporation
+    },
+    disableLoadingScreens() {
+      this.isLoadingScreenActive = false
+      this.isDataRequestScreenActive = false
     },
   }
 }
