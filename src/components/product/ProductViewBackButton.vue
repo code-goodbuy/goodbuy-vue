@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="product-view-back-button">
+  <div class="product-view-back-button" data-cy="feedback-scan-again-button">
     <GButton @click="$emit('onClickScanAgain')">
       <slot slot="title">Scan Again</slot>
     </GButton>

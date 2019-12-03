@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="overlay" />
+  <div class="overlay" data-cy="scanner-overlay"/>
 </template>
 
 <script>

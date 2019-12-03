@@ -2,6 +2,7 @@
   <div
     class="info-button"
     @click="$emit('onClickInfoButton')"
+    data-cy="scanner-info-button"
   >i</div>
 </template>
 
