@@ -10,11 +10,13 @@
         @onClickInfoButton="isInfoModalActive = true"
       />
       <Overlay v-if="isScannerStarted"/>
-      <Scanner
-        v-show="isScannerStarted"
-        @onScannerStarted="isScannerStarted = true"
-        @onBarcodeDetected="onBarcodeDetected"
-      />
+      <keep-alive>
+        <Scanner
+          v-show="isScannerStarted"
+          @onScannerStarted="isScannerStarted = true"
+          @onBarcodeDetected="onBarcodeDetected"
+        />
+      </keep-alive>
       <InfoBanner v-if="isScannerStarted"/>
       <div class="loading-screen-background"/>
     </div>
@@ -57,11 +59,15 @@ export default {
     return {
       barcode: '',
       isScannerStarted: false,
-      isInfoModalActive: false
+      isInfoModalActive: false,
     }
   },
   mounted() {
-    this.isInfoModalActive = this.$route.params.usersFirstVisit
+    const isFirstVisit = this.$route.params.usersFirstVisit
+    this.isInfoModalActive = isFirstVisit
+  },
+  beforeDestroy() {
+    console.log('destroyed');
   },
   methods: {
     onBarcodeDetected(barcode) {
