@@ -1,45 +1,53 @@
 <template>
   <div id="app">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
-    <transition name="fade" mode="out-in">
-      <router-view v-if="isMobile && isVertical && !isTooOld"/>
+
+    <transition name="page-fade" mode="out-in">
+      <router-view v-if="!isDesktop && !isHorizontal && !isTooOld"/>
     </transition>
-    <!-- TODO - Refactor this into components -->
-    <div v-if="!isMobile">This app currently only works on mobile</div>
-    <div v-else-if="!isVertical">This app currently only works horizontally</div>
-    <div v-else-if="isTooOld">This app currently only works on modern devices</div>
+
+    <Desktop v-if="isDesktop" />
+    <Horizontal v-else-if="isHorizontal" />
+    <OldDevice v-else-if="isTooOld" />
   </div>
 </template>
 
 <script>
+import Desktop from '@/fallbacks/Desktop.vue'
+import Horizontal from '@/fallbacks/Horizontal.vue'
+import OldDevice from '@/fallbacks/OldDevice.vue'
 import VueScreenSize from 'vue-screen-size'
 
 export default {
   name: 'App',
   mixins: [VueScreenSize.VueScreenSizeMixin],
+  components: {
+    Desktop,
+    Horizontal,
+    OldDevice,
+  },
   data() {
     return {
-      isMobile: true,
+      isDesktop: false,
+      isHorizontal: false,
       isTooOld: false,
-      isVertical: true,
     }
   },
   watch: {
     $vssWidth() {
-      this.checkWindow()
+      this.checkScreenDimensions()
     },
     $vssHeight() {
-      this.checkWindow()
+      this.checkScreenDimensions()
     }
   },
   mounted() {
-    this.checkWindow()
-    console.log(process.env.NODE_ENV);
+    this.checkScreenDimensions()
   },
   methods: {
-    checkWindow() {
-      this.isMobile = this.$vssWidth < 900 && this.$vssHeight < 1000
-      this.isVertical = this.$vssWidth < this.$vssHeight
+    checkScreenDimensions() {
+      this.isDesktop = this.$vssWidth > 700 && this.$vssHeight > 700
+      this.isHorizontal = this.$vssWidth > this.$vssHeight
       this.isTooOld = this.$vssWidth < 300 && this.$vssHeight < 560
     }
   }
@@ -61,15 +69,15 @@ body { margin: 0; }
 }
 
 /* transition effects */
-.fade-enter-active,
-.fade-leave-active {
+.page-fade-enter-active,
+.page-fade-leave-active {
   transition-duration: 0.2s;
   transition-property: opacity;
   transition-timing-function: ease;
 }
 
-.fade-enter,
-.fade-leave-active {
+.page-fade-enter,
+.page-fade-leave-active {
   opacity: 0
 }
 </style>

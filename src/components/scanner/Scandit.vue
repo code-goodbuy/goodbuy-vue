@@ -15,7 +15,9 @@ export default {
   methods: {
     initScanner() {
       const LICENSE_KEY = process.env.VUE_APP_SCANDIT_SECRET
-      const engineLocation = "https://unpkg.com/scandit-sdk/build"
+      const engineLocation = "https://cdn.jsdelivr.net/npm/scandit-sdk@4.2.2"
+      // const engineLocation = "/dist"
+      // const engineLocation = "node_modules/"
       ScanditSDK.configure(LICENSE_KEY, {
         engineLocation: engineLocation,
         preloadEngineLibrary: true,
@@ -46,10 +48,10 @@ export default {
       })
     },
     onBarcodeDetect(barcode) {
-      this.$emit('onBarcodeDetect', barcode)
+      this.$emit('onBarcodeDetected', barcode)
     },
     onReady() {
-      this.$emit('scannerStarted')
+      this.$emit('onScannerStarted')
     }
   }
 }

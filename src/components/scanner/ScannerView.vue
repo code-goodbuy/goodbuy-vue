@@ -1,24 +1,36 @@
 <template>
   <div class="scanner-view">
-    <div class="content" :class="{'blur-content': showModal || !scannerStarted}">
-      <ScannerViewInfoButton v-if="!showModal && scannerStarted" @showInfo="showModal = true" />
-      <ScannerViewOverlay v-if="scannerStarted"/>
-      <ScannerViewInfoBanner v-if="scannerStarted"/>
-      <Scandit
-        v-show="scannerStarted"
-        @scannerStarted="scannerStarted = true"
-        @onBarcodeDetect="onBarcodeDetect"
+    <div
+      :class="{
+        'blur-page': isInfoModalActive || !isScannerStarted
+      }"
+    >
+      <InfoButton
+        v-if="!isInfoModalActive && isScannerStarted"
+        @onClickInfoButton="isInfoModalActive = true"
       />
-      <div class="loading-background"/>
+      <Overlay v-if="isScannerStarted"/>
+      <keep-alive>
+        <Scanner
+          v-show="isScannerStarted"
+          @onScannerStarted="isScannerStarted = true"
+          @onBarcodeDetected="onBarcodeDetected"
+        />
+      </keep-alive>
+      <InfoBanner v-if="isScannerStarted"/>
+      <div class="loading-screen-background"/>
     </div>
 
-    <transition name="modal">
-      <ScannerViewInfoModal v-if="showModal" @closeModal="showModal = false" />
+    <transition name="info-modal">
+      <InfoModal
+        v-if="isInfoModalActive"
+        @closeModal="isInfoModalActive = false"
+      />
     </transition>
 
     <GLoadingAnimation
-      v-show="!scannerStarted"
-      white
+      v-show="!isScannerStarted"
+      whiteLogo
     >
       <slot slot="description">Scanner is loading...</slot>
     </GLoadingAnimation>
@@ -26,36 +38,40 @@
 </template>
 
 <script>
-import ScannerViewInfoModal from './ScannerViewInfoModal.vue'
 import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
+import Scandit from './Scandit.vue'
 import ScannerViewInfoBanner from './ScannerViewInfoBanner.vue'
 import ScannerViewInfoButton from './ScannerViewInfoButton.vue'
+import ScannerViewInfoModal from './ScannerViewInfoModal.vue'
 import ScannerViewOverlay from './ScannerViewOverlay.vue'
-import Scandit from './Scandit.vue'
 
 export default {
   name: 'ScannerView',
   components: {
-    ScannerViewInfoModal,
     GLoadingAnimation,
-    ScannerViewInfoBanner,
-    ScannerViewInfoButton,
-    ScannerViewOverlay,
-    Scandit,
+    'Scanner': Scandit,
+    'InfoBanner': ScannerViewInfoBanner,
+    'InfoButton': ScannerViewInfoButton,
+    'InfoModal': ScannerViewInfoModal,
+    'Overlay': ScannerViewOverlay,
   },
   data() {
     return {
       barcode: '',
-      scannerStarted: false,
-      showModal: true,
+      isScannerStarted: false,
+      isInfoModalActive: false,
     }
   },
   mounted() {
-    this.showModal = this.$route.params.firstVisit
+    const isFirstVisit = this.$route.params.usersFirstVisit
+    this.isInfoModalActive = isFirstVisit
+  },
+  beforeDestroy() {
+    console.log('destroyed');
   },
   methods: {
-    onBarcodeDetect(barcode) {
-      if (!this.showModal) {
+    onBarcodeDetected(barcode) {
+      if (!this.isInfoModalActive) {
         this.$router.push({ name: 'product', params: {code: barcode}})
       }
     },
@@ -69,39 +85,38 @@ export default {
   height: 100%;
   background-color: black;
 
-  .content {
+  .loading-screen-background {
+    background-color: black;
     width: 100%;
     height: 100%;
   }
+
+  .blur-page {
+    filter: blur(2px);
+  }
+
   .loading-animation {
     position: fixed;
     left: 50%;
     bottom: 50%;
     transform: translate(-50%, -0%);
   }
-  .loading-background {
-    background-color: black;
-    width: 100%;
-    height: 100%;
-  }
-  .blur-content {
-    filter: blur(2px);
-  }
 
-  .modal-enter {
+  .info-modal-enter {
     opacity: 0;
   }
 
-  .modal-leave-active {
+  .info-modal-leave-active {
     opacity: 0;
   }
 
-  .modal-enter .modal-container,
-  .modal-leave-active .modal-container {
+  .info-modal-enter .info-modal-container,
+  .info-modal-leave-active .info-modal-container {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
   }
-  .modal-enter-active, .modal-leave-active {
+
+  .info-modal-enter-active, .info-modal-leave-active {
     transition: opacity .2s
   }
 }

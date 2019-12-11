@@ -1,12 +1,12 @@
 <template lang="html">
-  <button @click="$emit('click')">
+  <button @click="$emit('click')" data-cy="feedback-more-info-button">
     <slot name="title"></slot>
   </button>
 </template>
 
 <script>
 export default {
-  name: 'InfoButton',
+  name: 'FeedbackViewInfoButton',
 }
 </script>
 
