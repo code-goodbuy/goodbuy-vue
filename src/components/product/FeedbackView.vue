@@ -14,7 +14,9 @@
       data-cy="feedback-content"
     >
       <slot slot="title">{{ feedbackTitle }}</slot>
-      <slot slot="content">{{ feedbackMessage }}</slot>
+      <slot slot="content">
+        <div v-html="feedbackMessage"></div>
+      </slot>
     </GTextHeader>
 
     <InfoButton
@@ -88,7 +90,7 @@ export default {
       } else if (this.feedback === 'good') {
         return 'Cool, your product does not belong to one of the biggest 10 corporations.'
       } else if (this.feedback === 'bad') {
-        return `The product that you scanned is from ${this.productCorporation}`
+        return `The product that you scanned is from <b>${this.productCorporation}</b>`
       } else if (this.feedback === 'unchecked') {
         return 'Great, the product you scanned was recently added to our database by a user but we are currently validating that information'
       } else {
