@@ -41,12 +41,12 @@
 </template>
 
 <script>
-import axios from 'axios'
 import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
 import InfoSlideUp from './info/InfoSlideUp.vue'
 import LoadingView from './LoadingView.vue'
 import ProductInput from './input/ProductInput.vue'
 import FeedbackView from './FeedbackView.vue'
+import FeedbackService from '@/FeedbackService'
 
 export default {
   name: 'ProductView',
@@ -78,7 +78,10 @@ export default {
     }
   },
   created() {
-    this.barcode = this.$route.params.code
+    this.barcode = this.$store.state.barcode
+    if (this.barcode !== this.$route.params.code) {
+      this.barcode = this.$route.params.code
+    }
     const barcodeLength = this.barcode.length
     const isBarcodeNotNumber = isNaN(this.barcode)
     if (isBarcodeNotNumber || (barcodeLength !== 13 && barcodeLength !== 8)) {
@@ -92,8 +95,7 @@ export default {
   },
   methods: {
     getAPIResponse() {
-      axios
-      .get(`${process.env.VUE_APP_FEEDBACK_API_URL}${this.barcode}/`)
+      FeedbackService.getFeedback({ barcode: this.barcode })
       .then(resp => (
         this.updateFeedbackView(resp)
       ))
