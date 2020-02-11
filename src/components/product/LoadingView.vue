@@ -17,10 +17,10 @@
 </template>
 
 <script>
-import axios from 'axios'
 import BackArrowIcon from '@/assets/common/BackArrowIcon.vue'
 import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
 import FeedbackViewInfoButton from './FeedbackViewInfoButton.vue'
+import FeedbackService from '@/FeedbackService'
 
 export default {
   name: 'LoadingView',
@@ -32,8 +32,7 @@ export default {
   methods: {
     onClickRefreshButton() {
       const barcode = this.$route.params.code
-      axios
-      .get(`${process.env.VUE_APP_RESULT_API_URL}${barcode}/`)
+      FeedbackService.getFeedbackResult({ barcode: barcode })
       .then(resp => (
         this.checkResultbigten(resp)
       ))

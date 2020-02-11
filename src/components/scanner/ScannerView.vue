@@ -57,7 +57,6 @@ export default {
   },
   data() {
     return {
-      barcode: '',
       isScannerStarted: false,
       isInfoModalActive: false,
     }
@@ -65,6 +64,7 @@ export default {
   mounted() {
     const isFirstVisit = this.$route.params.usersFirstVisit
     this.isInfoModalActive = isFirstVisit
+    this.$store.commit('resetBarcode')
   },
   beforeDestroy() {
     console.log('destroyed');
@@ -72,7 +72,8 @@ export default {
   methods: {
     onBarcodeDetected(barcode) {
       if (!this.isInfoModalActive) {
-        this.$router.push({ name: 'product', params: {code: barcode}})
+        this.$store.commit('updateBarcode', barcode)
+        this.$router.push({ name: 'product' , params: { 'code': barcode }})
       }
     },
   }
