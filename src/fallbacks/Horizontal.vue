@@ -1,9 +1,14 @@
 <template lang="html">
-  <div>This app currently only works horizontally</div>
+  <TurnIcon />
 </template>
 
 <script>
+import TurnIcon from '@/assets/common/TurnIcon.vue'
+
 export default {
-  name: 'Horizontal'
+  name: 'Horizontal',
+  components: {
+    TurnIcon,
+  }
 }
 </script>

@@ -5,6 +5,7 @@
       :class="{
         'container--centered': centered,
         'container--big': big,
+        'container--desktop': desktop,
         'container--long-double-line': long,
         'container--long-single-line': truncate,
       }">
@@ -35,6 +36,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    desktop: {
+      type: Boolean,
+      default: false,
+    },
   }
 }
 </script>
@@ -42,7 +47,7 @@ export default {
 <style lang="scss" scoped>
 .g-title {
   margin-right: 1rem;
-  
+
   .container {
     display: inline-block;
     position: relative;
@@ -84,6 +89,15 @@ export default {
         font-weight: 600;
         font-size: 16vw;
         line-height: 35px;
+      }
+    }
+
+    &--desktop {
+      width: 75%;
+      h1 {
+        text-align: right;
+        margin-bottom: .8rem;
+        font-size: 4.5vw;
       }
     }
 

@@ -3,7 +3,7 @@
     <div class="logo">
       <GLogoWhite />
     </div>
-    <div class="title">goodbuy</div>
+    <div class="title" :class="{ 'title__desktop': desktop }" ref="name">goodbuy</div>
   </div>
 </template>
 
@@ -14,7 +14,13 @@ export default {
   name: 'IntroViewHeaderBar',
   components: {
     GLogoWhite,
-  }
+  },
+  props: {
+    desktop: {
+      type: Boolean,
+      default: false,
+    }
+  },
 }
 </script>
 
@@ -42,6 +48,10 @@ export default {
     font-family: 'Avenir';
     color: white;
     font-size: 12vw;
+
+    &__desktop {
+      font-size: 3vw;
+    }
   }
 }
 </style>
