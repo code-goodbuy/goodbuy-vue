@@ -28,7 +28,12 @@
         :brand="productBrand"
       />
 
-      <GButton class="back-button" @click="onClickScanAgain" data-cy="info-scan-again-button">
+      <GButton
+        class="back-button"
+        @click="onClickScanAgain"
+        data-cy="info-scan-again-button"
+        feedback
+      >
         <slot slot="title">Scan again</slot>
       </GButton>
     </div>
@@ -126,7 +131,7 @@ export default {
     position: fixed;
     bottom: 0;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -30%);
   }
 }
 </style>

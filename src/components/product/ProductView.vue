@@ -127,9 +127,9 @@ export default {
       }
     },
     updateProductData(response) {
-      this.product.name = response.data.name
-      this.product.brand = response.data.brand
-      this.product.corporation = response.data.corporation
+      this.product.name = response.data.fields.name
+      this.product.brand = response.data.fields.brand
+      this.product.corporation = response.data.fields.corporation
     },
     disableLoadingScreens() {
       this.isLoadingScreenActive = false
