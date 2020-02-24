@@ -13,6 +13,5 @@ module.exports = {
   },
   devServer: {
     proxy: process.env.BASE_API_URL,
-    // https: true,
   },
 };

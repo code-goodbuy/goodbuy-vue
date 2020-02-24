@@ -38,9 +38,9 @@ export default {
       ))
     },
     checkResultbigten(response) {
-      console.log(response) ? process.env.NODE_ENV === 'develop' : ''
+      // TODO - change "True" to a true boolean front and backend
       if (response.data.is_big_ten === "True" || response.data.is_big_ten === "False") {
-        this.$emit('updateView', response)
+        this.$emit('update-view', response)
       }
     },
   }

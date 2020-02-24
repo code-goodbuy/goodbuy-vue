@@ -6,6 +6,7 @@ module.exports = {
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide/' },
+      { text: 'Troubleshooting', link: '/troubleshooting/' },
       { text: 'Website', link: 'https://goodbuy.netlify.com/' },
     ],
     sidebar: 'auto',
