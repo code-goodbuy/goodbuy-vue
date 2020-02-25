@@ -30,7 +30,7 @@
     <BackButton
       :isAddInfoShown="!feedback"
       @onClickScanAgain="onClickScanAgain"
-      @onClickBackButton="$emit('onClickBackButton')"
+      @onClickAddInfoButton="$emit('onClickAddInfoButton')"
     />
   </div>
 </template>

@@ -16,7 +16,7 @@
       :feedback="feedback"
       :productCorporation="product.corporation"
       @onClickInfoButton="isProductInfoActive = true"
-      @onClickBackButton="isProductInputActive = true"
+      @onClickAddInfoButton="onClickAddInfoButton()"
     />
 
     <transition name="slide-up">
@@ -34,6 +34,8 @@
         :name="product.name"
         :brand="product.brand"
         :code="barcode"
+        :category="getCategory"
+        :categories="categories"
         @closeProductInput="isProductInputActive = false"
       />
     </transition>
@@ -69,7 +71,9 @@ export default {
         brand: '',
         corporation: '',
         name: '',
-      }
+        category: '',
+      },
+      categories: [],
     }
   },
   watch:{
@@ -91,6 +95,15 @@ export default {
       })
     } else {
       this.getAPIResponse()
+    }
+  },
+  computed: {
+    getCategory() {
+      if (this.product.category !== '') {
+        return this.product.category
+      } else {
+        return 'Category'
+      }
     }
   },
   methods: {
@@ -116,24 +129,34 @@ export default {
       } else {
         if (is_big_ten === true) {
           this.feedback = 'bad'
-          this.updateProductData(response)
         } else if (is_big_ten === false) {
           this.feedback = 'good'
-          this.updateProductData(response)
         } else if (httpStatus === 211) {
           this.feedback = 'unchecked'
         }
+        this.updateProductData(response)
         this.disableLoadingScreens()
       }
     },
     updateProductData(response) {
-      this.product.name = response.data.fields.name
-      this.product.brand = response.data.fields.brand
-      this.product.corporation = response.data.fields.corporation
+      this.product.name = response.data.fields.name || ''
+      this.product.brand = response.data.fields.brand || ''
+      this.product.corporation = response.data.fields.corporation || ''
+      this.product.category = response.data.fields.category || ''
     },
     disableLoadingScreens() {
       this.isLoadingScreenActive = false
       this.isDataRequestScreenActive = false
+    },
+    onClickAddInfoButton() {
+      FeedbackService.getCategories()
+      .then(resp => (
+        this.showInputScreen(resp)
+      ))
+    },
+    showInputScreen(resp) {
+      this.categories = resp.data
+      this.isProductInputActive = true
     },
   }
 }

@@ -9,8 +9,18 @@
     </button>
     <div v-if="feedback" class="feedback">
       Was our feedback correct?
-      <button style="border-color: gray;">+</button>
-      <button style="border-color: gray; margin-left: .3rem;">-</button>
+      <button
+        style="border-color: gray;"
+        @click="$emit('onClickFeedback', true)"
+      >
+        +
+      </button>
+      <button
+        style="border-color: gray; margin-left: .3rem;"
+        @click="$emit('onClickFeedback', false)"
+      >
+        -
+      </button>
     </div>
   </div>
 </template>

@@ -19,10 +19,10 @@
       </GTitle>
       <GInput v-else placeholder="Brand" v-model="inputBrand"/>
 
-      <!-- <GTitle v-if="category" truncate>
+      <GTitle v-if="!showCategorySelect" truncate>
         <slot slot="title">{{ inputCategory }}</slot>
-      </GTitle> -->
-      <GSelect v-model="inputCategory" :options="options"/>
+      </GTitle>
+      <GSelect v-else v-model="inputCategory" :options="options"/>
 
       <GTitle>
         <slot slot="title">{{ inputCode }}</slot>
@@ -57,8 +57,9 @@ export default {
       inputBrand: this.brand,
       inputCode: this.code,
       inputCategory: this.category,
-      options: ['Beverages', 'Fish'],
+      options: this.categories,
       message: '',
+      showCategorySelect: true,
     }
   },
   props: {
@@ -76,7 +77,16 @@ export default {
     },
     category: {
       type: String,
-      default: 'Category',
+      required: true,
+    },
+    categories: {
+      type: Array,
+      required: true,
+    }
+  },
+  mounted() {
+    if (this.inputCategory !== 'Category') {
+      this.showCategorySelect = false
     }
   },
   methods: {
@@ -96,7 +106,7 @@ export default {
       return (
         this.inputName !== '' &&
         this.inputBrand !== '' &&
-        // this.inputCategory !== 'Category' &&
+        this.inputCategory !== 'Category' &&
         this.inputCode !== ''
       )
     }
@@ -106,6 +116,13 @@ export default {
 
 <style lang="scss" scoped>
 .input-view {
+  .error-message {
+    margin-top: 1rem;
+    width: 100%;
+    color: #FF6455;
+    text-align: center;
+  }
+
   background-color: white;
 
   position: absolute;
@@ -136,9 +153,8 @@ export default {
       margin-bottom: 1rem;
     }
     .back-button {
-      width: 100%;
-      display: flex;
-      justify-content: space-evenly;
+      display: block;
+      margin: 1rem auto;
 
       button {
         margin: 2rem;

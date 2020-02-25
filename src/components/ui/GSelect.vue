@@ -11,7 +11,7 @@
           v-for="(option, index) in options"
           :key="index"
         >
-          {{ option }}
+          {{ option.name }}
         </option>
       </select>
       <DropdownIcon />

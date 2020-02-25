@@ -33,6 +33,7 @@
         @click="onClickScanAgain"
         data-cy="info-scan-again-button"
         feedback
+        @onClickFeedback="onClickFeedback"
       >
         <slot slot="title">Scan again</slot>
       </GButton>
@@ -47,6 +48,7 @@ import GButton from '@/components/ui/GButton.vue'
 import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
 import GTitle from '@/components/ui/GTitle.vue'
 import InfoSlideUpInfoBox from './InfoSlideUpInfoBox.vue'
+import FeedbackService from '@/FeedbackService'
 
 export default {
   name: 'InfoSlideUp',
@@ -85,7 +87,13 @@ export default {
         name: 'scanner',
         params: { usersFirstVisit: false },
       })
-    }
+    },
+    onClickFeedback(bool) {
+      FeedbackService.postValidation({ barcode: this.barcode, upvote: bool, downvote: !bool })
+      .then(resp => (
+        console.log('successfull', resp)
+      ))
+    },
   },
 }
 </script>

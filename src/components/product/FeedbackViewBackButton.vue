@@ -6,7 +6,7 @@
     <GButton
       v-if="isAddInfoShown"
       black
-      @click="$emit('onClickBackButton')"
+      @click="$emit('onClickAddInfoButton')"
     >
       <slot slot="title">Add Info</slot>
     </GButton>
