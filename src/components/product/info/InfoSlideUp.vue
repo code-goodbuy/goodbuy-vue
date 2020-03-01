@@ -73,7 +73,11 @@ export default {
     productBrand: {
       type: String,
       required: true,
-    }
+    },
+    barcode: {
+      type: String,
+      required: true,
+    },
   },
   mounted() {
     this.getProductData()
@@ -89,7 +93,7 @@ export default {
       })
     },
     onClickFeedback(bool) {
-      FeedbackService.postValidation({ barcode: this.barcode, upvote: bool, downvote: !bool })
+      FeedbackService.postValidation(this.barcode, bool, !bool)
       .then(resp => (
         console.log('successfull', resp)
       ))

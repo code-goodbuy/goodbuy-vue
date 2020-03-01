@@ -24,6 +24,7 @@
         v-if="isProductInfoActive"
         :productName="product.name"
         :productBrand="product.brand"
+        :barcode="this.barcode"
         @closeInfoModal="isProductInfoActive = false"
       />
     </transition>
