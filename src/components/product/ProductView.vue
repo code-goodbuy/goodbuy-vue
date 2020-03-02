@@ -114,10 +114,10 @@ export default {
         this.isLoadingScreenActive = false
         this.isDataRequestScreenActive = true
       } else {
-        if (is_big_ten === "True") {
+        if (is_big_ten === true) {
           this.feedback = 'bad'
           this.updateProductData(response)
-        } else if (is_big_ten === "False") {
+        } else if (is_big_ten === false) {
           this.feedback = 'good'
           this.updateProductData(response)
         } else if (httpStatus === 211) {
