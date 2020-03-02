@@ -41,6 +41,7 @@ import GButton from '@/components/ui/GButton.vue'
 import GSelect from '@/components/ui/GSelect.vue'
 import GTitle from '@/components/ui/GTitle.vue'
 import BackArrowIcon from '@/assets/common/BackArrowIcon.vue'
+import FeedbackService from '@/FeedbackService'
 
 export default {
   name: 'ProductInputSlide',
@@ -82,7 +83,11 @@ export default {
     categories: {
       type: Array,
       required: true,
-    }
+    },
+    product: {
+      type: Object,
+      required: true,
+    },
   },
   mounted() {
     if (this.inputCategory !== 'Category') {
@@ -95,9 +100,25 @@ export default {
     },
     onClickSubmit() {
       if (this.isAllDataEntered()) {
-        this.$router.push({
+        let updated_product = {
+          'code': this.product.code,
+          'name': this.product.name,
+          'brand': this.product.brand,
+          'main_product_category': this.product.main_product_category,
+          'product_category': this.product.product_category,
+          'sub_product_category': this.product.sub_product_category,
+          'scraped_image': this.product.scraped_image,
+          'state': this.product.state,
+          'data_source': this.product.data_source,
+        }
+        console.log('here');
+        
+        FeedbackService.updateProduct(updated_product)
+        .then(() => (
+          this.$router.push({
           name: 'scanner'
         })
+        ))
       } else {
         this.message = 'Please provide data for all fields'
       }

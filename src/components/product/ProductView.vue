@@ -37,6 +37,7 @@
         :code="barcode"
         :category="getCategory"
         :categories="categories"
+        :product="raw_product"
         @closeProductInput="isProductInputActive = false"
       />
     </transition>
@@ -75,6 +76,7 @@ export default {
         category: '',
       },
       categories: [],
+      raw_product: {}
     }
   },
   watch:{
@@ -143,7 +145,9 @@ export default {
       this.product.name = response.data.fields.name || ''
       this.product.brand = response.data.fields.brand || ''
       this.product.corporation = response.data.fields.corporation || ''
-      this.product.category = response.data.fields.category || ''
+      this.product.category = response.data.fields.main_product_category || ''
+      this.raw_product = response.data.fields
+      console.log(this.raw_product, response.data.fields);
     },
     disableLoadingScreens() {
       this.isLoadingScreenActive = false
