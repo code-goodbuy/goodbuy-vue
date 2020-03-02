@@ -3,7 +3,7 @@
     <span class="contact-header">
       Contact us:
     </span>
-    <a href="#">support@goodbuy.com</a>
+    <a href="mailto:teamgoodbuy@gmail.com">teamgoodbuy@gmail.com</a>
   </div>
 </template>
 
