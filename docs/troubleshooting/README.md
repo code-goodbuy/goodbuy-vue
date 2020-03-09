@@ -1,4 +1,4 @@
-# Troubleshooting
+# Vue - Troubleshooting
 
 This is the place where we collect all the problems we had with our
 Vue App and how we solved them for future reference.
@@ -17,3 +17,8 @@ to our `vue.config.js` file. The `BASE_API_URL` is saved inside our `.dev.develo
 as a variable.
 
 Furthermore, this also requires us to set the `.env.development` variable `VUE_APP_BASE_API_URL` to an empty string, since our `vue.config.js` file now already sets that information.
+
+# Django - Troubleshooting
+
+This is the place where we collect all the problems we had with our
+Django App and how we solved them for future reference.
