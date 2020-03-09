@@ -37,7 +37,6 @@
         :code="barcode"
         :category="getCategory"
         :categories="categories"
-        :product="raw_product"
         @closeProductInput="isProductInputActive = false"
       />
     </transition>
@@ -76,7 +75,6 @@ export default {
         category: '',
       },
       categories: [],
-      raw_product: {}
     }
   },
   watch:{
@@ -119,7 +117,7 @@ export default {
     updateFeedbackView(response) {
       console.log(response) ? process.env.NODE_ENV === 'develop' : ''
       // 209 - not in database, crawler starts
-      // 210 - data is incomplete
+      // 306 - data is incomplete
       // 211 - data is entered but unchecked
       // 200 - data is here and returned
 
@@ -146,8 +144,6 @@ export default {
       this.product.brand = response.data.fields.brand || ''
       this.product.corporation = response.data.fields.corporation || ''
       this.product.category = response.data.fields.main_product_category || ''
-      this.raw_product = response.data.fields
-      console.log(this.raw_product, response.data.fields);
     },
     disableLoadingScreens() {
       this.isLoadingScreenActive = false

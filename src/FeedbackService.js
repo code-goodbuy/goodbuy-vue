@@ -17,8 +17,7 @@ export default {
       'downvote-counter': donwvote
     })
   },
-  updateProduct(product) {
-    console.log( process.env.VUE_APP_UPDATE_PRODUCT_API_URL, product);
-    return Api().post( process.env.VUE_APP_UPDATE_PRODUCT_API_URL, product )
+  updateProduct(params) {
+    return Api().post( process.env.VUE_APP_UPDATE_PRODUCT_API_URL, params )
   },
 }
