@@ -96,16 +96,11 @@ export default {
     },
     onClickSubmit() {
       if (this.isAllDataEntered()) {
-        FeedbackService.updateProduct({
-          name: this.inputName,
-          brand: this.inputBrand,
-          category: this.inputCategory,
-          code: this.inputCode,
-        })
+        FeedbackService.updateProduct(this.inputName, this.inputBrand, this.inputCategory, this.inputCode)
         .then(() => (
           this.$router.push({
-          name: 'scanner'
-        })
+            name: 'scanner'
+          })
         ))
       } else {
         this.message = 'Please provide data for all fields'
