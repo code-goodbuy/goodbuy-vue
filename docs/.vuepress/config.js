@@ -5,8 +5,20 @@ module.exports = {
     logo: '/GoodbuyLogoTitle.png',
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Guide', link: '/guide/' },
-      { text: 'Troubleshooting', link: '/troubleshooting/' },
+      {
+        text: 'Vue',
+        items: [
+          { text: 'Guide', link: '/vue-guide/'},
+          { text: 'Tourbleshooting', link: '/vue-troubleshooting/' },
+        ]
+      },
+      {
+        text: 'Django',
+        items: [
+          { text: 'Guide', link: '/django-guide/' },
+          { text: 'Tourbleshooting', link: '/django-troubleshooting/' },
+        ]
+      },
       { text: 'Website', link: 'https://goodbuy.netlify.com/' },
     ],
     sidebar: 'auto',
