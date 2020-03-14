@@ -2,9 +2,7 @@
 home: true
 heroImage: /GoodbuyLogo.png
 heroText: Goodbuy Docs
-tagline: This is the Vue JS documentation for the core semester project 'Goodbuy'
-actionText: Get Started →
-actionLink: /guide/
+tagline: This is the documentation for the core semester project 'Goodbuy'
 features:
 - title: Backend
   details: The underlying backend of this project is build with Django
