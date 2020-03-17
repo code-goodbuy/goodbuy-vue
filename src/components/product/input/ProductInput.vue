@@ -99,7 +99,7 @@ export default {
         FeedbackService.updateProduct(this.inputName, this.inputBrand, this.inputCategory, this.inputCode)
         .then(() => (
           this.$router.push({
-            name: 'scanner'
+            name: 'instant-feedback'
           })
         ))
       } else {

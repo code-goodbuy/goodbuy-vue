@@ -88,7 +88,7 @@ export default {
     },
     onClickScanAgain() {
       this.$router.push({
-        name: 'scanner',
+        name: 'instant-feedback',
         params: { usersFirstVisit: false },
       })
     },

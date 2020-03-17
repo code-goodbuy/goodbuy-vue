@@ -8,7 +8,7 @@
     <LoadingView
       v-else-if="isDataRequestScreenActive"
       @update-view="updateFeedbackView"
-      @onClickBackButton="$router.push({name: 'scanner'})"
+      @onClickBackButton="$router.push({name: 'instant-feedback'})"
     />
 
     <FeedbackView
@@ -91,7 +91,7 @@ export default {
     const isBarcodeNotNumber = isNaN(this.barcode)
     if (isBarcodeNotNumber || (barcodeLength !== 13 && barcodeLength !== 8)) {
       this.$router.push({
-        name: 'scanner',
+        name: 'instant-feedback',
         params: { usersFirstVisit: false },
       })
     } else {
