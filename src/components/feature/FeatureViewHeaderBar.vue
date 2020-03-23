@@ -1,8 +1,10 @@
 <template>
   <div class="feature-view-header-bar">
-    <div class="logo">
-      <GLogoWhite />
-    </div>
+    <a href="" class="link">
+      <div class="logo">
+        <GLogoWhite />
+      </div>
+    </a>
     <div class="title" ref="name">goodbuy</div>
   </div>
 </template>
@@ -44,5 +46,10 @@ export default {
     font-size: 12vw;
 
   }
+}
+
+.link {
+  display: flex;
+  align-items: center;
 }
 </style>

@@ -10,6 +10,9 @@ export default {
   getCategories () {
     return Api().get(process.env.VUE_APP_CATEGORIES_API_URL)
   },
+  getFridgeKarmaResult () {
+    return Api().get(process.env.VUE_APP_FRIDGE_KARMA_FEEDBACK_API_URL)
+  },
   postValidation (barcode, upvote, donwvote) {
     return Api().post(process.env.VUE_APP_PRODUCT_VALIDATION_API_URL, {
       'barcode': barcode,

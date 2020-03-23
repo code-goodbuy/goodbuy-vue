@@ -29,6 +29,7 @@
       />
 
       <GButton
+        v-if="showScanAgainButton"
         class="back-button"
         @click="onClickScanAgain"
         data-cy="info-scan-again-button"
@@ -78,6 +79,9 @@ export default {
       type: String,
       required: true,
     },
+    showScanAgainButton: {
+      type: Boolean,
+    }
   },
   mounted() {
     this.getProductData()

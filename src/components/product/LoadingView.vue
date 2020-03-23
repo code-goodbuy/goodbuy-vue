@@ -64,8 +64,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    .loading-animation {
-    }
+
     .info-text {
       margin: 1rem 2rem;
       margin-top: 2rem;

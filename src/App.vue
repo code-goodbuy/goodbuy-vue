@@ -62,7 +62,7 @@ body { margin: 0; }
   position: fixed;
   margin: 0;
   height: 100%;
-  overflow: hidden;
+  overflow: scroll;
   font-family: 'Open Sans', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
