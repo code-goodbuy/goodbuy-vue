@@ -9,8 +9,14 @@
         <CloseIcon />
       </div>
 
-      <div class="food-icon">
-        <FoodIcon />
+      <div class="icon">
+        <template v-if="productIsBigTen">
+          <GeneralMills v-if="productCorporation === 'General Mills, Inc.'"></GeneralMills>
+          <ABF v-else-if="productCorporation === 'Associated British Foods plc'"></ABF>
+          <Kellogs v-else-if="productCorporation === 'Kellog\'s'"></Kellogs>
+          <component v-else :is="productCorporation"></component>
+        </template>
+        <FoodIcon v-else />
       </div>
 
       <div class="brand">
@@ -50,6 +56,16 @@ import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
 import GTitle from '@/components/ui/GTitle.vue'
 import InfoSlideUpInfoBox from './InfoSlideUpInfoBox.vue'
 import FeedbackService from '@/FeedbackService'
+import ABF from '@/assets/corporations/Associated British Foods plc.svg'
+import CocaCola from '@/assets/corporations/Coca-Cola.svg'
+import Nestle from '@/assets/corporations/Nestlé.svg'
+import GeneralMills from '@/assets/corporations/General Mills, Inc..svg'
+import Kellogs from "@/assets/corporations/Kellog's.svg"
+import Danone from '@/assets/corporations/Danone.svg'
+import Mars from '@/assets/corporations/Mars.svg'
+import Mondelez from '@/assets/corporations/Mondelez.svg'
+import PepsiCo from '@/assets/corporations/PepsiCo.svg'
+import Unilever from '@/assets/corporations/Unilever.svg'
 
 export default {
   name: 'InfoSlideUp',
@@ -60,6 +76,17 @@ export default {
     GLoadingAnimation,
     GTitle,
     InfoSlideUpInfoBox,
+    "ABF": ABF,
+    "Coca-Cola": CocaCola,
+    "Nestlé": Nestle,
+    "Kellogs": Kellogs,
+    "GeneralMills": GeneralMills,
+    "Danone": Danone,
+    "Mars": Mars,
+    "Mondelez": Mondelez,
+    "PepsiCo": PepsiCo,
+    "Unilever": Unilever,
+
   },
   data() {
     return {
@@ -74,6 +101,12 @@ export default {
     productBrand: {
       type: String,
       required: true,
+    },
+    productCorporation: {
+      required: false,
+    },
+    productIsBigTen: {
+      required: false,
     },
     barcode: {
       type: String,
@@ -127,7 +160,7 @@ export default {
     margin: .5rem;
     position: absolute;
   }
-  .food-icon {
+  .icon {
     padding: 1rem 0;
     display: flex;
     align-items: center;

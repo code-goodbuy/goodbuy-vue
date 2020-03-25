@@ -5,7 +5,8 @@
       <template v-for="(data, index) in response_data">
 				<button
 					@click="isProductInfoActive = true,
-					product = data.fields"
+					product = data.fields,
+					product.is_big_ten = data.is_big_ten"
 					:key="index"
 					class="row"
 					>
@@ -22,7 +23,7 @@
 						</div>
 					</div>
 				</button>
-				<hr :key="index+data.fields.name">
+          <hr :key="index+data.fields.name">
       </template>
     </div>
 
@@ -33,6 +34,7 @@
 				:productName="product.name"
 				:productBrand="product.brand"
 				:productCorporation="product.corporation"
+				:productIsBigTen="product.is_big_ten"
 				:barcode="this.barcode"
 				@closeInfoModal="isProductInfoActive = false"
 			/>
@@ -56,63 +58,62 @@ import InfoSlideUp from '@/components/product/info/InfoSlideUp.vue'
 import HeaderBar from '@/components/feature/FeatureViewHeaderBar.vue'
 
 export default {
-	components: {
-		InfoSlideUp,
-		HeaderBar
-	},
-	data() {
-		return {
-			response_data: '',
-			score: 0,
-			big_true: 0,
-			big_false: 0,
-			big_we_dont_know: 0,
-			big_size: 0,
-			isProductInfoActive: false,
-			product: {
-				brand: '',
-				corporation: '',
-				name: '',
-				code: '',
-			},
-			barcode: '',
-		}
-	},
-	methods: {
-		calculateScore() {
-			this.response_data.forEach(element => {
-				this.big_size += 1
-				if (element.is_big_ten === true) {
-					this.big_true += 1
-				}
-				else if (element.is_big_ten === false) {
-					this.big_false += 1
-				}
-				else {
-					this.big_we_dont_know += 1
-				}
-			})
-			// <!-- Good Item / Total Item * 100 = Score -->
-			this.score = Math.round((this.big_false / (this.big_size - this.big_we_dont_know)) * 100)
-		},
-		getAPIResponse() {
-			FeedbackService.getFridgeKarmaResult()
-			.then(response => (
-				this.saveData(response)
-			))
-		},
-		onClickRouteToFeature() {
-			this.$router.push("/feature")
-		},
-		saveData(response) {
-			console.log(response.data)
-			this.response_data = response.data
-			this.calculateScore()
-		},
-	},
+    components: {
+			InfoSlideUp,
+			HeaderBar
+    },
+    data() {
+			return {
+				response_data: '',
+				score: 0,
+				big_true: 0,
+				big_false: 0,
+				big_we_dont_know: 0,
+				big_size: 0,
+				isProductInfoActive: false,
+				product: {
+					brand: '',
+					corporation: '',
+					name: '',
+					code: '',
+					is_big_ten: ''
+				},
+				barcode: '',
+			}
+    },
+		methods: {
+			calculateScore() {
+				this.response_data.forEach(element => {
+					this.big_size += 1
+					if (element.is_big_ten === true) {
+							this.big_true += 1
+					}
+					else if (element.is_big_ten === false) {
+							this.big_false += 1
+					}
+					else {
+							this.big_we_dont_know += 1
+					}
+				})
+				// <!-- Good Item / Total Item * 100 = Score -->
+				this.score = Math.round((this.big_false / (this.big_size - this.big_we_dont_know)) * 100)
+				},
+				getAPIResponse() {
+					FeedbackService.getFridgeKarmaResult()
+					.then(response => (
+							this.saveData(response)
+					))
+        },
+        onClickRouteToFeature() {
+					this.$router.push("/feature")
+        },
+        saveData(response) {
+					this.response_data = response.data
+					this.calculateScore()
+        },
+  },
 	created() {
 		this.barcodes = this.$store.state.multipleBarcodes
-		console.log(this.barcodes)
 		this.getAPIResponse()
 	}
 }
@@ -158,7 +159,7 @@ hr, p {
 			background-color: #272727;
 			border-radius: 16px;
 			margin-right: 20px;
-			padding: 1vw;
+			padding: 0.5rem;
 		}
 	}
 }

@@ -20,8 +20,8 @@ export default {
   methods: {
     onClickScanItem() {
       this.$router.push('feature')
-      }
     }
+  }
 }
 </script>
 
