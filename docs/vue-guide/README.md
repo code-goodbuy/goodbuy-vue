@@ -1,4 +1,4 @@
-# Guide
+# Vue-Guide
 
 This is a small **documentation** for the core semester project **Goodbuy**.
 
@@ -104,14 +104,14 @@ Branch names are always [kebab-case](https://wiki.c2.com/?KebabCase) and should 
 Commits should be as descriptive as possible while keeping it to 50 characters or less.
 
 Keywords to stick to:
-* `Add ...` when something is **added**
-* `Fix ...` when something is **fixed**
-* `Update ...` when something is **updated**
-* `Rework ...` when something is **reworked**
-* `Refactor ...` when something is **refactored**
-* `Remove ..` when something is **removed**
-* `Release ...` when something is **released**
-* `WIP` when something is a **Work in Progress**
+* `Add ...`
+* `Fix ...`
+* `Update ...`
+* `Rework ...`
+* `Refactor ...`
+* `Remove ..`
+* `Release ...`
+* `WIP`
 
 >Propositions are encouraged if you feel like something is missing
 

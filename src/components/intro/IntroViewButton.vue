@@ -4,7 +4,7 @@
     @click="onClickScanItem"
   >
     <slot slot="title">
-      Scan an item
+      Start
     </slot>
   </GButton>
 </template>
@@ -19,12 +19,9 @@ export default {
   },
   methods: {
     onClickScanItem() {
-      this.$router.push({
-        name: 'scanner',
-        params: { usersFirstVisit: true },
-      })
+      this.$router.push('feature')
     }
-  },
+  }
 }
 </script>
 

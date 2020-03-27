@@ -38,9 +38,9 @@ export default {
       ))
     },
     checkResultbigten(response) {
-      console.log(response) ? process.env.NODE_ENV === 'develop' : ''
-      if (response.data.is_big_ten === "True" || response.data.is_big_ten === "False") {
-        this.$emit('updateView', response)
+      // TODO - change "True" to a true boolean front and backend
+      if (response.data.is_big_ten === true || response.data.is_big_ten === false) {
+        this.$emit('update-view', response)
       }
     },
   }
@@ -64,8 +64,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    .loading-animation {
-    }
+
     .info-text {
       margin: 1rem 2rem;
       margin-top: 2rem;

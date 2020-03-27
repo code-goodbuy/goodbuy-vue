@@ -1,9 +1,11 @@
-<template lang="html">
-  <div class="intro-view-header-bar">
-    <div class="logo">
-      <GLogoWhite />
-    </div>
-    <div class="title" :class="{ 'title__desktop': desktop }" ref="name">goodbuy</div>
+<template>
+  <div class="feature-view-header-bar">
+    <a href="" class="link">
+      <div class="logo">
+        <GLogoWhite />
+      </div>
+    </a>
+    <div class="title" ref="name">goodbuy</div>
   </div>
 </template>
 
@@ -11,21 +13,15 @@
 import GLogoWhite from '@/assets/logo/GLogoWhite'
 
 export default {
-  name: 'IntroViewHeaderBar',
+  name: 'FeatureViewHeaderBar',
   components: {
     GLogoWhite,
-  },
-  props: {
-    desktop: {
-      type: Boolean,
-      default: false,
-    }
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.intro-view-header-bar {
+.feature-view-header-bar {
   padding: .3rem;
   overflow: hidden;
   background-color: #272727;
@@ -49,9 +45,11 @@ export default {
     color: white;
     font-size: 12vw;
 
-    &__desktop {
-      font-size: 3vw;
-    }
   }
+}
+
+.link {
+  display: flex;
+  align-items: center;
 }
 </style>

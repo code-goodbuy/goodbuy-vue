@@ -9,8 +9,14 @@
         <CloseIcon />
       </div>
 
-      <div class="food-icon">
-        <FoodIcon />
+      <div class="icon">
+        <template v-if="productIsBigTen">
+          <GeneralMills v-if="productCorporation === 'General Mills, Inc.'"></GeneralMills>
+          <ABF v-else-if="productCorporation === 'Associated British Foods plc'"></ABF>
+          <Kellogs v-else-if="productCorporation === 'Kellog\'s'"></Kellogs>
+          <component v-else :is="productCorporation"></component>
+        </template>
+        <FoodIcon v-else />
       </div>
 
       <div class="brand">
@@ -28,7 +34,14 @@
         :brand="productBrand"
       />
 
-      <GButton class="back-button" @click="onClickScanAgain" data-cy="info-scan-again-button">
+      <GButton
+        v-if="showScanAgainButton"
+        class="back-button"
+        @click="onClickScanAgain"
+        data-cy="info-scan-again-button"
+        feedback
+        @onClickFeedback="onClickFeedback"
+      >
         <slot slot="title">Scan again</slot>
       </GButton>
     </div>
@@ -42,6 +55,17 @@ import GButton from '@/components/ui/GButton.vue'
 import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
 import GTitle from '@/components/ui/GTitle.vue'
 import InfoSlideUpInfoBox from './InfoSlideUpInfoBox.vue'
+import FeedbackService from '@/FeedbackService'
+import ABF from '@/assets/corporations/Associated British Foods plc.svg'
+import CocaCola from '@/assets/corporations/Coca-Cola.svg'
+import Nestle from '@/assets/corporations/Nestlé.svg'
+import GeneralMills from '@/assets/corporations/General Mills, Inc..svg'
+import Kellogs from "@/assets/corporations/Kellog's.svg"
+import Danone from '@/assets/corporations/Danone.svg'
+import Mars from '@/assets/corporations/Mars.svg'
+import Mondelez from '@/assets/corporations/Mondelez.svg'
+import PepsiCo from '@/assets/corporations/PepsiCo.svg'
+import Unilever from '@/assets/corporations/Unilever.svg'
 
 export default {
   name: 'InfoSlideUp',
@@ -52,6 +76,17 @@ export default {
     GLoadingAnimation,
     GTitle,
     InfoSlideUpInfoBox,
+    "ABF": ABF,
+    "Coca-Cola": CocaCola,
+    "Nestlé": Nestle,
+    "Kellogs": Kellogs,
+    "GeneralMills": GeneralMills,
+    "Danone": Danone,
+    "Mars": Mars,
+    "Mondelez": Mondelez,
+    "PepsiCo": PepsiCo,
+    "Unilever": Unilever,
+
   },
   data() {
     return {
@@ -66,6 +101,19 @@ export default {
     productBrand: {
       type: String,
       required: true,
+    },
+    productCorporation: {
+      required: false,
+    },
+    productIsBigTen: {
+      required: false,
+    },
+    barcode: {
+      type: String,
+      required: true,
+    },
+    showScanAgainButton: {
+      type: Boolean,
     }
   },
   mounted() {
@@ -77,10 +125,16 @@ export default {
     },
     onClickScanAgain() {
       this.$router.push({
-        name: 'scanner',
+        name: 'instant-feedback',
         params: { usersFirstVisit: false },
       })
-    }
+    },
+    onClickFeedback(bool) {
+      FeedbackService.postValidation(this.barcode, bool, !bool)
+      .then(resp => (
+        console.log('successfull', resp)
+      ))
+    },
   },
 }
 </script>
@@ -106,7 +160,7 @@ export default {
     margin: .5rem;
     position: absolute;
   }
-  .food-icon {
+  .icon {
     padding: 1rem 0;
     display: flex;
     align-items: center;
@@ -126,7 +180,7 @@ export default {
     position: fixed;
     bottom: 0;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -30%);
   }
 }
 </style>

@@ -48,7 +48,12 @@ export default {
       })
     },
     onBarcodeDetect(barcode) {
-      this.$emit('onBarcodeDetected', barcode)
+      if (this.$route.path == '/fridge-karma'){
+        this.$store.commit('updateMultipleBarcodes', barcode)
+      }
+      else{
+        this.$emit('onBarcodeDetected', barcode)
+      }
     },
     onReady() {
       this.$emit('onScannerStarted')
