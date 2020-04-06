@@ -1,19 +1,22 @@
 <template>
-  <div class="feature-content">
-    <button 
-      @click="onClickFridgeKarma"
-      class="karma-fridge-button" 
-    >
-      <KarmaFridgeIcon class="icon"/>
-      <p><b>Karma Fridge</b> let's you scan the item in your fridge and provides you with an ethical-feedback.</p>
-    </button>
-    <button
-      @click="onClickInstantFeedback"
-    >
-      <InstantIcon class="icon"/>
-      <p><b>Feedback</b> let's you scan single items and give you feedback and additional information about that product.</p>
-    </button>
+<div class="feature-content">
+  <div @click="onClickFridgeKarma" class="feature-button">
+    <KarmaFridgeIcon class="icon" />
+    <div>
+      <br>
+      <b>Karma Fridge</b>
+    </div>
+    <div>Scan all items in your fridge and get a Karma score</div>
   </div>
+  <div @click="onClickInstantFeedback" class="feature-button">
+    <InstantIcon class="icon" />
+    <div class="">
+      <br>
+      <b>Instant Feedback</b>
+    </div>
+    <div>Scan a single item and get a feedback</div>
+  </div>
+</div>
 </template>
 
 <script>
@@ -29,42 +32,54 @@ export default {
     onClickInstantFeedback() {
       this.$router.push({
         name: 'instant-feedback',
-        params: { usersFirstVisit: true },
+        params: {
+          usersFirstVisit: true
+        },
       })
     },
     onClickFridgeKarma() {
       this.$router.push({
-        name:'fridge-karma',
-        params: { usersFirstVisit: true },
+        name: 'fridge-karma',
+        params: {
+          usersFirstVisit: true
+        },
       })
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-  .feature-content {
-    margin-top: 2rem;
-    
-    .icon {
-      width: 125px;
-      height: 125px;
-    }
+<style scoped>
+.icon {
+  width: 125px;
+  height: 125px;
+}
 
-    p {
-      /* goodbuy/Body Mid */
+div.feature-button {
+  padding: 0;
+  border: 0;
+  text-align: center;
+  padding: 6vw;
+}
 
-      font-family: Open Sans;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 15px;
-      line-height: 20px;
+p {
+  /* goodbuy/Body Mid */
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 20px;
+  /* goodbuy/Black */
+  color: #272727;
+  padding: 1rem;
+}
 
-      /* goodbuy/Black */
+.feature-content {
+  margin-top: 2rem;
+}
 
-      color: #272727;
+div {
+  align-items: center;
+}
 
-      padding: 1rem;
-    }
-  }
 </style>
