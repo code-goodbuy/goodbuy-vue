@@ -8,6 +8,7 @@ import InstagramView from '@/components/instagram/InstagramView.vue'
 import PageNotFound from '@/fallbacks/PageNotFound.vue'
 import FeatureView from '@/components/feature/FeatureView.vue'
 import TableView from '@/components/table/TableView.vue'
+import login from '@/components/login/login.vue'
 Vue.use(Router)
 
 export const routes=[
@@ -19,10 +20,11 @@ export const routes=[
     { path: '/fridge-karma/result',name: 'result', component: TableView},
     { path: '/feature', name: 'feature', component: FeatureView},
     { path: '/fridge-karma', name:'fridge-karma', component: ScannerView},
+    { path: '/login', name: 'login', component: login },
 ]
 
 const router = new Router({
-  mode: 'hash',
+  mode: 'history',
   routes,
 })
 
