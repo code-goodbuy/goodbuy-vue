@@ -49,37 +49,37 @@ export default {
 }
 </script>
 
-<style scoped>
-.icon {
-  width: 125px;
-  height: 125px;
+<style lang="scss" scoped>
+
+.feature-content {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
 }
 
 div.feature-button {
-  padding: 0;
-  border: 0;
-  text-align: center;
-  padding: 6vw;
-}
-
-p {
-  /* goodbuy/Body Mid */
-  font-family: Open Sans;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 6vw;
+  color: #272727;
+  font-family: "Open Sans", sans-serif;
   font-style: normal;
   font-weight: normal;
-  font-size: 15px;
-  line-height: 20px;
-  /* goodbuy/Black */
-  color: #272727;
-  padding: 1rem;
+  align-items: center;
+  flex: 1;
+
+  .icon {
+    display: flex;
+    justify-content: center;
+    width: 35vw;
+    height: 35vw;
+  }
 }
 
 .feature-content {
   margin-top: 2rem;
-}
-
-div {
-  align-items: center;
 }
 
 </style>
