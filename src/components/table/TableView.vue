@@ -41,7 +41,7 @@
     </transition>
 
     <div class="table-view__footer">
-			<p class="p-score">Score: {{ score }}</p>
+			<p class="p-score">Score: {{ score }}/100</p>
 			<button
 				class="done-button"
 				@click="onClickRouteToFeature"
@@ -151,15 +151,17 @@ hr, p {
 		align-items: center;
 		flex: 1;
 		color: white;
-		font-size: 12vw;
 
 		button.done-button {
 			color: white;
-			font-size: 12vw;
+			font-size: 8vw;
 			background-color: #272727;
 			border-radius: 16px;
 			margin-right: 20px;
 			padding: 0.5rem;
+		}
+		p.p-score {
+			font-size: 8vw;
 		}
 	}
 }
