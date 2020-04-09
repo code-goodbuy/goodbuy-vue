@@ -27,16 +27,24 @@ export default class AuthService {
     this.auth0.authorize()
   }
 
-  handleAuthentication() {
-    this.auth0.parseHash( ( err, authResult ) => {
+  handleAuthentication () {
+    this.auth0.parseHash(( err, authResult ) => {
       if ( authResult && authResult.accessToken && authResult.idToken ) {
         this.setSession( authResult )
       } else if ( err ) {
         console.log( err )
         alert( `Error: ${ err.error }. Check the console for further details.` )
+      } else {
+        this.silentAuth()
+          .then(() => {
+            console.log( 'user logged in through silent auth' )
+          })
+          .catch(( err ) => {
+            console.log( err )
+          })
       }
-      router.replace( '/login/' )
-    } )
+      router.replace('/login/')
+    })
   }
 
   setSession( authResult ) {
@@ -65,5 +73,14 @@ export default class AuthService {
 
   getUserProfile( cb ) {
     return this.profile
+  }
+  silentAuth () {
+    return new Promise((resolve, reject) => {
+      this.auth0.checkSession({}, (err, authResult) => {
+        if (err) return reject(err)
+        this.setSession(authResult)
+        resolve()
+      })
+    })
   }
 }
