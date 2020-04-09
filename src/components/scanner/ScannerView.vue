@@ -34,13 +34,15 @@
     >
       <slot slot="description">Scanner is loading...</slot>
     </GLoadingAnimation>
-    <button 
+    <GButton
       v-if="!isSingleScan && !isInfoModalActive && isScannerStarted"
       @click="getKarma"
       class="karma-button"
     >
+    <slot slot="title">
       Get Karma
-    </button>
+    </slot>
+    </GButton>
 
   </div>
 </template>
@@ -52,6 +54,7 @@ import ScannerViewInfoBanner from './ScannerViewInfoBanner.vue'
 import ScannerViewInfoButton from './ScannerViewInfoButton.vue'
 import ScannerViewInfoModal from './ScannerViewInfoModal.vue'
 import ScannerViewOverlay from './ScannerViewOverlay.vue'
+import GButton from '@/components/ui/GButton.vue'
 
 export default {
   name: 'ScannerView',
@@ -62,6 +65,7 @@ export default {
     'InfoButton': ScannerViewInfoButton,
     'InfoModal': ScannerViewInfoModal,
     'Overlay': ScannerViewOverlay,
+    'GButton': GButton,
   },
   data() {
     return {
@@ -112,31 +116,12 @@ export default {
 
 <style lang="scss">
 .karma-button {
-  /* Popup Button */
-
-
-  position: absolute;
-  left: 34.13%;
-  right: 34.13%;
-  top: 82.61%;
-  bottom: 10.49%;
-  background: #90D2D9;
-  border-radius: 30%;
-  /* goodbuy/Headlines Sub */
-
-  font-family: Work Sans;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 23px;
-
-  /* goodbuy/Black */
-
-  color: #272727;
-  /* goodbuy/Button shadow */
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.353);
+  position: fixed;
+  left: 50%;
+  bottom: 15%;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;
 }
-
 .scanner-view {
   width: 100%;
   height: 100%;
