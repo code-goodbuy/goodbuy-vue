@@ -99,7 +99,7 @@ export default {
       if (this.$store.state.multipleBarcodes.size > 0){
         if (!this.isInfoModalActive) {
         //has to be changed to table view when table view exists
-        this.$router.push('feature')
+        this.$router.push('fridge-karma/result/')
         }
       }
       else {
