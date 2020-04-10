@@ -1,69 +1,70 @@
 <template>
-    <div class="feature-content">
-            <button 
-            @click="onClickFridgeKarma"
-            class="karma-fridge-button" 
-            >
-            <KarmaFridgeIcon class="icon"/>
-            <p>Karma Fridge let's you scan the item in your fridge and provides you with an ethical-feedback.</p>
-            </button>
-            <button
-            @click="onClickInstantFeedback"
-            >
-            <InstantIcon class="icon"/>
-             <p>Instant Feedback let's you scan single items and give you feedback and additional information about that product.</p>
-            </button>
-    </div>
+  <div class="feature-content">
+    <button 
+      @click="onClickFridgeKarma"
+      class="karma-fridge-button" 
+    >
+      <KarmaFridgeIcon class="icon"/>
+      <p><b>Karma Fridge</b> let's you scan the item in your fridge and provides you with an ethical-feedback.</p>
+    </button>
+    <button
+      @click="onClickInstantFeedback"
+    >
+      <InstantIcon class="icon"/>
+      <p><b>Feedback</b> let's you scan single items and give you feedback and additional information about that product.</p>
+    </button>
+  </div>
 </template>
 
 <script>
-import InstantIcon from '@/assets/common/InstantIcon'
-import KarmaFridgeIcon from '@/assets/common/KarmaFridgeIcon'
+import InstantIcon from '@/assets/common/InstantIcon.vue'
+import KarmaFridgeIcon from '@/assets/common/KarmaFridgeIcon.vue'
 
 export default {
-    components: {
-        InstantIcon,
-        KarmaFridgeIcon,
+  components: {
+    InstantIcon,
+    KarmaFridgeIcon,
+  },
+  methods: {
+    onClickInstantFeedback() {
+      this.$router.push({
+        name: 'instant-feedback',
+        params: { usersFirstVisit: true },
+      })
     },
-    methods: {
-        onClickInstantFeedback() {
-            this.$router.push({
-                name: 'instant-feedback',
-                params: { usersFirstVisit: true },
-            })
-        },
-        onClickFridgeKarma() {
-            this.$router.push({
-                name:'fridge-karma',
-                params: { usersFirstVisit: true },
-            })
-        }
+    onClickFridgeKarma() {
+      this.$router.push({
+        name:'fridge-karma',
+        params: { usersFirstVisit: true },
+      })
     }
+  }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  .feature-content {
+    margin-top: 2rem;
+    
     .icon {
-        width: 125px;
-        height: 125px;
+      width: 125px;
+      height: 125px;
     }
 
     p {
-        /* goodbuy/Body Mid */
+      /* goodbuy/Body Mid */
 
-        font-family: Open Sans;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 15px;
-        line-height: 20px;
+      font-family: Open Sans;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 15px;
+      line-height: 20px;
 
-        /* goodbuy/Black */
+      /* goodbuy/Black */
 
-        color: #272727;
+      color: #272727;
 
-        padding: 1rem;
+      padding: 1rem;
     }
-    .feature-content {
-        margin-top: 2rem;
-    }
+  }
 </style>
