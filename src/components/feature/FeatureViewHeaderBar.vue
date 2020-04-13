@@ -29,6 +29,11 @@ export default {
   align-items: center;
   justify-content: flex-start;
 
+  .link {
+    display: flex;
+    align-items: center;
+  }
+  
   .logo {
     position: absolute;
 
@@ -48,8 +53,4 @@ export default {
   }
 }
 
-.link {
-  display: flex;
-  align-items: center;
-}
 </style>
