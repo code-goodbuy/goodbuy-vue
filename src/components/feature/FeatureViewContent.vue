@@ -1,19 +1,22 @@
 <template>
-  <div class="feature-content">
-    <button 
-      @click="onClickFridgeKarma"
-      class="karma-fridge-button" 
-    >
-      <KarmaFridgeIcon class="icon"/>
-      <p><b>Karma Fridge</b> let's you scan the item in your fridge and provides you with an ethical-feedback.</p>
-    </button>
-    <button
-      @click="onClickInstantFeedback"
-    >
-      <InstantIcon class="icon"/>
-      <p><b>Feedback</b> let's you scan single items and give you feedback and additional information about that product.</p>
-    </button>
+<div class="feature-content">
+  <div @click="onClickFridgeKarma" class="feature-button">
+    <KarmaFridgeIcon class="icon" />
+    <div>
+      <br>
+      <b>Karma Fridge</b>
+    </div>
+    <div>Scan all items in your fridge and get a Karma score</div>
   </div>
+  <div @click="onClickInstantFeedback" class="feature-button">
+    <InstantIcon class="icon" />
+    <div class="">
+      <br>
+      <b>Instant Feedback</b>
+    </div>
+    <div>Scan a single item and get a feedback</div>
+  </div>
+</div>
 </template>
 
 <script>
@@ -29,13 +32,17 @@ export default {
     onClickInstantFeedback() {
       this.$router.push({
         name: 'instant-feedback',
-        params: { usersFirstVisit: true },
+        params: {
+          usersFirstVisit: true
+        },
       })
     },
     onClickFridgeKarma() {
       this.$router.push({
-        name:'fridge-karma',
-        params: { usersFirstVisit: true },
+        name: 'fridge-karma',
+        params: {
+          usersFirstVisit: true
+        },
       })
     }
   }
@@ -43,28 +50,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .feature-content {
-    margin-top: 2rem;
-    
-    .icon {
-      width: 125px;
-      height: 125px;
-    }
 
-    p {
-      /* goodbuy/Body Mid */
+.feature-content {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
 
-      font-family: Open Sans;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 15px;
-      line-height: 20px;
+div.feature-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 6vw;
+  color: #272727;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  align-items: center;
+  flex: 1;
 
-      /* goodbuy/Black */
-
-      color: #272727;
-
-      padding: 1rem;
-    }
+  .icon {
+    display: flex;
+    justify-content: center;
+    width: 35vw;
+    height: 35vw;
   }
+}
+
+.feature-content {
+  margin-top: 2rem;
+}
+
 </style>
