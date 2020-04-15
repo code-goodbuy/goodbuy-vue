@@ -59,9 +59,7 @@ export default {
 					this.$router.push('feature')
 			},
 			onClickSaveBlacklist: function() {
-				//has to be changed to put request when backend accepts put
-				//user id has to be changed everyrequest till put is allowed
-				FeedbackService.postBlacklist(this.$store.state.blacklist, 50)
+				FeedbackService.putBlacklist(this.$store.state.blacklist)
 				.then(resp => (
           console.log('successfull', resp)
 					))
@@ -78,10 +76,7 @@ export default {
 			}
 	},
 	created() {
-			//asynchronous
-			console.log(this.checkedCorporation)
-			var user_id = 3
-			FeedbackService.getBlacklist({user_id: user_id})
+			FeedbackService.getBlacklist()
 			.then(resp => (
 				this.initialBlacklist(resp)
 			))

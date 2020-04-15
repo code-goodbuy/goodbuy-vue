@@ -54,9 +54,12 @@ export default {
     },
     logout () {
       auth.logout()
+      localStorage.setItem('user_id', '')
+      localStorage.setItem('auth_token', '')
     },
     privateMessage() {
-      console.log(auth.getAuthToken());
+      localStorage.setItem('user_id', auth.profile.sub.split('|')[1])
+      localStorage.setItem('auth_token', auth.getAuthToken())
       const url = `${API_URL}/product/barcode/12/`
       return axios.get(url, {headers: {Authorization: `Bearer ${auth.getAuthToken()}`}}).then((response) => {
         this.message = response.data || ''
