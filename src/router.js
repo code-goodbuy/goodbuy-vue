@@ -9,6 +9,10 @@ import PageNotFound from '@/fallbacks/PageNotFound.vue'
 import FeatureView from '@/components/feature/FeatureView.vue'
 import TableView from '@/components/table/TableView.vue'
 import login from '@/components/login/login.vue'
+import Blacklist from '@/components/blacklist/Blacklist.vue'
+import Tutorial from '@/components/blacklist/BlacklistTutorialIntroduction.vue'
+
+
 Vue.use(Router)
 
 export const routes=[
@@ -21,6 +25,8 @@ export const routes=[
     { path: '/feature', name: 'feature', component: FeatureView},
     { path: '/fridge-karma', name:'fridge-karma', component: ScannerView},
     { path: '/login', name: 'login', component: login },
+    { path: '/blacklist', name:'blacklist', component: Blacklist},
+    { path: '/tutorial', name: 'tutorial', component: Tutorial}
 ]
 
 const router = new Router({

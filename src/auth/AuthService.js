@@ -71,7 +71,7 @@ export default class AuthService {
     return this.accessToken
   }
 
-  getUserProfile( cb ) {
+  getUserProfile() {
     return this.profile
   }
   silentAuth () {
