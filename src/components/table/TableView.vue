@@ -3,18 +3,22 @@
   <HeaderBar></HeaderBar>
   <div class="table-view__body">
     <template v-for="(data, index) in response_data">
-      <button @click="isProductInfoActive = true,
-      product = data.fields,
-      product.is_big_ten = data.is_big_ten" :key="index" class="row">
+      <button 
+        @click="onClickSetInfoActiveTrue(data)"
+        :key="index" class="row"
+      >
         {{ data.fields.name }}
         <div class="is-big-ten">
-          <div v-if="data.is_big_ten === true">
+          <div v-if="data.is_blacklist === true">
+            ⬛️
+          </div>
+          <div v-else-if="data.is_big_ten === true">
             ❌
           </div>
-          <div v-if="data.is_big_ten === false">
+          <div v-else-if="data.is_big_ten === false">
             ✅
           </div>
-          <div v-if="data.is_big_ten === 'We don\'t know'">
+          <div v-else-if="data.is_big_ten === 'We don\'t know'">
             ❓
           </div>
         </div>
@@ -37,14 +41,13 @@
 			Done
 			</button>
     </div>
-  </div>
 </div>
 </template>
 
 <script>
 import FeedbackService from '@/FeedbackService'
 import InfoSlideUp from '@/components/product/info/InfoSlideUp.vue'
-import HeaderBar from '@/components/feature/FeatureViewHeaderBar.vue'
+import HeaderBar from '@/components/ui/GHeaderBar.vue'
 
 export default {
   components: {
@@ -55,35 +58,41 @@ export default {
     return {
       response_data: '',
       score: 0,
-      big_true: 0,
-      big_false: 0,
-      big_we_dont_know: 0,
-      big_size: 0,
+      bad_karma: 0,
+      good_karma: 0,
+      we_dont_know: 0,
       isProductInfoActive: false,
       product: {
         brand: '',
         corporation: '',
         name: '',
         code: '',
-        is_big_ten: ''
+        is_big_ten: '',
+        is_blacklist: '',
       },
       barcode: '',
     }
   },
   methods: {
+    onClickSetInfoActiveTrue(data){
+      this.isProductInfoActive = true
+      this.product = data.fields
+      this.product.is_big_ten = data.is_big_ten
+      this.product.is_blacklist = data.is_blacklist
+    },
     calculateScore() {
       this.response_data.forEach(element => {
-        this.big_size += 1
-        if (element.is_big_ten === true) {
-          this.big_true += 1
-        } else if (element.is_big_ten === false) {
-          this.big_false += 1
+        if (element.is_big_ten === true || element.is_blacklist === true) {
+          this.bad_karma += 1
+        } else if (element.is_big_ten === false || element.is_blacklist === false && element.is_big_ten !== 'We don\'t know') {
+          this.good_karma += 1
         } else {
-          this.big_we_dont_know += 1
+          this.we_dont_know += 1
         }
       })
+      let amount_of_products = this.response_data.length
       // <!-- Good Item / Total Item * 100 = Score -->
-      this.score = Math.round((this.big_false / (this.big_size - this.big_we_dont_know)) * 100)
+      this.score = Math.round((this.good_karma / (amount_of_products - this.we_dont_know)) * 100)
     },
     getAPIResponse() {
       FeedbackService.getFridgeKarmaResult()

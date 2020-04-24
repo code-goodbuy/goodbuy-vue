@@ -13,23 +13,36 @@ export default {
   getFridgeKarmaResult() {
     return Api().get(process.env.VUE_APP_FRIDGE_KARMA_FEEDBACK_API_URL)
   },
-  getBlacklist() {
-    return Api().get(process.env.VUE_APP_UPDATE_BLACKLIST_API_URL + localStorage.getItem('user_id'),
+  getBlacklist(params) {
+    return Api().get(process.env.VUE_APP_UPDATE_BLACKLIST_API_URL + params.user_id,
     {
       headers:{
-        Authorization: 'Bearer ' + localStorage.getItem('auth_token'),
+        Authorization: `Bearer ${params.jwt}`
       }
     })
   },
-  putBlacklist(blacklist) {
-    return Api().put(process.env.VUE_APP_UPDATE_BLACKLIST_API_URL + localStorage.getItem('user_id') + '/', {
-      'blacklist': blacklist.join(),
-      'user_id': localStorage.getItem('user_id')
-    }, 
+  putBlacklist(params) {
+    return Api().put(process.env.VUE_APP_UPDATE_BLACKLIST_API_URL + params.user_id + '/', {
+      'blacklist': params.blacklist.join(),
+      'user_id': params.user_id
+    },
     {
       headers: {
-        Authorization: 'Bearer '+ localStorage.getItem('auth_token'),
+        Authorization: `Bearer ${params.jwt}`,
       }
+    })
+  },
+  postBlacklist(params) {
+    return Api().post(process.env.VUE_APP_UPDATE_BLACKLIST_API_URL, 
+    {
+      'user_id': params.user_id,
+      'blacklist': params.blacklist
+    },
+    {
+      headers:{
+        Authorization: `Bearer ${params.jwt}` 
+      },
+
     })
   },
   postValidation(barcode, upvote, donwvote) {

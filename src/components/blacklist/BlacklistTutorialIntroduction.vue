@@ -5,7 +5,7 @@
     <br>
     <div class="sub-title">Introduction</div>
     <br>
-    <input type="text" placeholder="e.g allergie list" v-if="tutorial===3">
+    <input type="text" placeholder="e.g sustainable list" v-if="tutorial===3">
     <hr>
     <br>
     <div class="info">
@@ -17,8 +17,11 @@
 </template>
 
 <script>
-import HeaderBar from '@/components/intro/IntroViewHeaderBar.vue'
+import HeaderBar from '@/components/ui/GHeaderBar.vue'
+import FeedbackService from '@/FeedbackService.js'
+
 export default {
+  name: 'blacklist-tutorial',
   components: {
     HeaderBar
   },
@@ -26,21 +29,39 @@ export default {
     return {
       tutorial: 0,
       content: [
-        'Hello USERNAME, this feature helps you sort out product that do not fit your habits. To get the product you like.',
-        'Simply select brands, allergies, or ingridients you do not like. We will then flag product that contain elements from your blacklist.',
+        `Hello ${this.$auth.user.nickname}, this feature helps you sort out product that do not fit your habits. To get the product you like.`,
+        'Simply select brands you do not like. We will then flag product that contain elements from your blacklist.',
         'Let\'s create your blacklist together in a short tutorial!',
         'Type in a name for your blacklist.'
       ]
     }
   },
   methods: {
-    onClickNext: function() {
-      if(this.tutorial < 3){
+    onClickNext() {
+      if(this.tutorial < 3) {
         this.tutorial += 1
       }
       else{
+        let jwt = ''
+        this.$auth.getTokenSilently()
+        .then(resp => (
+          jwt = resp,
+          this.createEmptyBlacklist(jwt)
+        ))
+        .catch(error => {
+          console.log(error.response)
+        })
         this.$router.push('blacklist')
       }
+    },
+    createEmptyBlacklist(jwt) {
+      FeedbackService.postBlacklist({ 'user_id':this.$auth.user.sub, 'blacklist':'', 'jwt': jwt })
+      .then(resp => (
+        console.log(resp) ? process.env.NODE_ENV === 'develop' : ''
+      ))
+      .catch(error => {
+        console.log(error.response)
+      })
     }
   },
   destroyed: function(){

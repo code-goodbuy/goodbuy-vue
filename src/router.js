@@ -8,9 +8,10 @@ import InstagramView from '@/components/instagram/InstagramView.vue'
 import PageNotFound from '@/fallbacks/PageNotFound.vue'
 import FeatureView from '@/components/feature/FeatureView.vue'
 import TableView from '@/components/table/TableView.vue'
-import login from '@/components/login/login.vue'
 import Blacklist from '@/components/blacklist/Blacklist.vue'
-import Tutorial from '@/components/blacklist/BlacklistTutorialIntroduction.vue'
+import BlacklistTutorial from '@/components/blacklist/BlacklistTutorialIntroduction.vue'
+import Profile from '@/components/profile/Profile.vue'
+import { authGuard } from "./auth/authGuard";
 
 
 Vue.use(Router)
@@ -24,9 +25,9 @@ export const routes=[
     { path: '/fridge-karma/result',name: 'result', component: TableView},
     { path: '/feature', name: 'feature', component: FeatureView},
     { path: '/fridge-karma', name:'fridge-karma', component: ScannerView},
-    { path: '/login', name: 'login', component: login },
     { path: '/blacklist', name:'blacklist', component: Blacklist},
-    { path: '/tutorial', name: 'tutorial', component: Tutorial}
+    { path: '/blacklist-tutorial', name: 'blacklist-tutorial', component: BlacklistTutorial},
+    { path: '/profile', name: 'profile', component: Profile,  beforeEnter: authGuard},
 ]
 
 const router = new Router({

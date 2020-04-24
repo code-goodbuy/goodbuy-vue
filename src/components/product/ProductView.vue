@@ -122,13 +122,16 @@ export default {
       // 200 - data is here and returned
 
       const httpStatus = response.status
+      const is_blacklist = response.data.is_blacklist
       const is_big_ten = response.data.is_big_ten
 
       if (httpStatus === 209) {
         this.isLoadingScreenActive = false
         this.isDataRequestScreenActive = true
       } else {
-        if (is_big_ten === true) {
+        if (is_blacklist === true) {
+          this.feedback = 'blacklist'
+        } else if (is_big_ten === true) {
           this.feedback = 'bad'
         } else if (is_big_ten === false) {
           this.feedback = 'good'

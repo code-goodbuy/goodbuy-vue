@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     barcode: '',
     multipleBarcodes: new Set([]),
-    blacklist: [],
+    blacklist: new Set([]),
   },
   mutations: {
     updateBarcode (state, barcode) {

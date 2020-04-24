@@ -1,18 +1,18 @@
 <template>
   <div class="feature-view">
-    <FeatureViewHeaderBar />
+    <HeaderBar />
     <FeatureViewContent />
   </div>
 </template>
 
 <script>
-import FeatureViewHeaderBar from './FeatureViewHeaderBar'
+import HeaderBar from '@/components/ui/GHeaderBar.vue'
 import FeatureViewContent from './FeatureViewContent'
 
 export default {
   name: 'FeatureView',
   components: {
-    FeatureViewHeaderBar,
+    HeaderBar,
     FeatureViewContent
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="desktop">
-    <IntroViewHeaderBar data-cy="desktop-header-bar" desktop/>
+    <HeaderBar data-cy="desktop-header-bar" desktop/>
     <DesktopIcon class="desktop-header-icon"/>
     <GTitle class="desktop-header-title" desktop>
       <slot slot="title">Use your smartphone</slot>
@@ -21,14 +21,14 @@
 </template>
 
 <script>
-import IntroViewHeaderBar from '@/components/intro/IntroViewHeaderBar.vue'
+import HeaderBar from '@/components/ui/GHeaderBar.vue'
 import DesktopIcon from '@/assets/common/DesktopIcon.vue'
 import GTitle from '@/components/ui/GTitle.vue'
 
 export default {
   name: 'Desktop',
   components: {
-    IntroViewHeaderBar,
+    HeaderBar,
     DesktopIcon,
     GTitle,
   }

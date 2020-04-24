@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
-
     <transition name="page-fade" mode="out-in">
       <router-view v-if="!isDesktop && !isHorizontal && !isTooOld"/>
     </transition>
