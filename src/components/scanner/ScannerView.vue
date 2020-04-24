@@ -23,6 +23,7 @@
 
     <transition name="info-modal">
       <InfoModal
+        v-bind:isSingleScan="isSingleScan"
         v-if="isInfoModalActive"
         @closeModal="isInfoModalActive = false"
       />
