@@ -2,11 +2,8 @@ import { getInstance } from "./index";
 
 export const authGuard = (to, from, next) => {
   const authService = getInstance();
-  // force_log_in
-// check_authentification_if_not_redirect_to_login
-  // check permission to next page if true next else redirect
-  //if_authenticated_next_else_redirect_to_login
-  const fn = () => {
+
+  const force_log_in = () => {
     if (authService.isAuthenticated) {
       return next();
     }
@@ -15,12 +12,12 @@ export const authGuard = (to, from, next) => {
   };
 
   if (!authService.loading) {
-    return fn();
+    return force_log_in();
   }
 
   authService.$watch("loading", loading => {
     if (loading === false) {
-      return fn();
+      return force_log_in();
     }
   });
 };
