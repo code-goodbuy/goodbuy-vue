@@ -1,7 +1,11 @@
 <template>
   <div>
     <HeaderBar></HeaderBar>
-    <h1>Your Stats</h1>
+    <GTitle>
+    <slot slot="title">
+      Profile
+    </slot>
+  </GTitle>
     <div class="profil-btn-grid">
       <div class="karma-score-btn grid">
         <div class="text">Score: 90/100</div>
@@ -16,10 +20,12 @@
 <script type="text/javascript">
 import HeaderBar from '@/components/ui/GHeaderBar.vue'
 import FeedbackService from '@/FeedbackService.js'
+import GTitle from '@/components/ui/GTitle'
 
 export default {
   components: {
-    HeaderBar
+    HeaderBar,
+    GTitle
   },
   methods: {
     onClickOpenBlacklist() {

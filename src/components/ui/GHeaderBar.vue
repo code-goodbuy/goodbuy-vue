@@ -63,11 +63,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-#app > div > div.header-bar > button {
-  color: white;
-}
-
 .header-bar {
   padding: .3rem;
   overflow: hidden;
@@ -94,10 +89,6 @@ export default {
     &__desktop {
       font-size: 3vw;
     }
-  }
-
-  .logout_button {
-    color: #90D2D8;
   }
 
   .profile_button {
