@@ -1,26 +1,31 @@
 <template>
   <div>
     <HeaderBar></HeaderBar>
-    <div>
-      <img :src="$auth.user.picture">
-      <h2>{{ $auth.user.name }}</h2>
-      <p>{{ $auth.user.email }}</p>
+    <GTitle>
+    <slot slot="title">
+      Profile
+    </slot>
+  </GTitle>
+    <div class="profil-btn-grid">
+      <div class="karma-score-btn grid">
+        <div class="text">Score: 90/100</div>
+      </div>
+      <div class="scanned-products-btn grid">Scanned Products: 900</div>
+      <div class="scan-history-btn grid">Scan History</div>
+      <div class="blacklist-btn grid" @click="onClickOpenBlacklist">Blacklist</div>
     </div>
-
-    <div>
-      <pre>{{ JSON.stringify($auth.user, null, 2) }}</pre>
-    </div>
-    <div class="blacklist-btn" @click="onClickOpenBlacklist">Open Blacklist</div>
   </div>
 </template>
 
 <script type="text/javascript">
 import HeaderBar from '@/components/ui/GHeaderBar.vue'
 import FeedbackService from '@/FeedbackService.js'
+import GTitle from '@/components/ui/GTitle'
 
 export default {
   components: {
-    HeaderBar
+    HeaderBar,
+    GTitle
   },
   methods: {
     onClickOpenBlacklist() {
@@ -51,3 +56,27 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.profil-btn-grid {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+  .grid {
+    display: flex;
+    justify-content: center;
+    height: 150px;
+    width: 150px;
+    background-color:#90D2D8;
+    margin: 10px;
+    flex-grow: 4;
+    align-items: center;
+    color: white;
+
+    .text {
+      text-align: center;
+    }
+  }
+}
+</style>

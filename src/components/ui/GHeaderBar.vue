@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="header-bar">
     <div class="logo" @click="onClickHome">
-      <GLogoWhite />
+      <GLogoBlue />
     </div>
     <div class="title" :class="{ 'title__desktop': desktop }" ref="name">goodbuy</div>
     <div class="signup" v-if="!$auth.isAuthenticated" @click="onClickLogin">
@@ -10,7 +10,7 @@
       Log In
     </div>
     <ProfileLogo
-      v-if="$auth.isAuthenticated && this.$router.currentRoute.name != 'profile'" 
+      v-if="$auth.isAuthenticated && this.$router.currentRoute.name != 'profile'"
       class="profile_button"
       @click="onClickProfile"
     />
@@ -26,13 +26,13 @@
 </template>
 
 <script>
-import GLogoWhite from '@/assets/logo/GLogoWhite'
+import GLogoBlue from '@/assets/logo/GLogoBlue'
 import ProfileLogo from '@/assets/profile/user.svg'
 
 export default {
   name: 'HeaderBar',
   components: {
-    GLogoWhite,
+    GLogoBlue,
     ProfileLogo,
   },
   props: {
@@ -55,7 +55,7 @@ export default {
         returnTo: window.location.origin
       });
     },
-    onClickHome() { 
+    onClickHome() {
       this.$router.push("feature")
     }
   }
@@ -63,15 +63,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-#app > div > div.header-bar > button {
-  color: white;
-}
-
 .header-bar {
   padding: .3rem;
   overflow: hidden;
-  background-color: #272727;
+  background-color: #F6FBFC;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -83,12 +78,12 @@ export default {
     }
   }
   .signup {
-    color: white;
+    color: #272727;
   }
 
   .title {
     font-family: 'Avenir';
-    color: white;
+    color: #272727;
     font-size: 12vw;
 
     &__desktop {
@@ -96,12 +91,12 @@ export default {
     }
   }
 
-  .profile_button {
-    color: white;
+  .logout_button {
+    color: #90D2D8;
   }
 
-  .logout_button {
-    color: red;
+  .profile_button {
+    color: #272727;
   }
 }
 </style>
