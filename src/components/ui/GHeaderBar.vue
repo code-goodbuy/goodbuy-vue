@@ -10,7 +10,7 @@
       Log In
     </div>
     <ProfileLogo
-      v-if="$auth.isAuthenticated && this.$router.currentRoute.name != 'profile'" 
+      v-if="$auth.isAuthenticated && this.$router.currentRoute.name != 'profile'"
       class="profile_button"
       @click="onClickProfile"
     />
@@ -55,7 +55,7 @@ export default {
         returnTo: window.location.origin
       });
     },
-    onClickHome() { 
+    onClickHome() {
       this.$router.push("feature")
     }
   }
