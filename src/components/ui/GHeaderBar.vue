@@ -91,6 +91,10 @@ export default {
     }
   }
 
+  .logout_button {
+    color: #90D2D8;
+  }
+
   .profile_button {
     color: #272727;
   }

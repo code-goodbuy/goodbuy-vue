@@ -72,6 +72,7 @@ export default {
     margin: 10px;
     flex-grow: 4;
     align-items: center;
+    color: white;
 
     .text {
       text-align: center;
