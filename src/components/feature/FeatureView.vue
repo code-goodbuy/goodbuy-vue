@@ -14,6 +14,9 @@ export default {
   components: {
     HeaderBar,
     FeatureViewContent
+  },
+  updated() {
+    console.log('activated' + this.$auth.isAuthenticated)
   }
 }
 </script>

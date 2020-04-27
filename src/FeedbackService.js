@@ -30,32 +30,33 @@ export default {
     })
   },
   getBlacklist(params) {
-    return Api().get(process.env.VUE_APP_BLACKLIST_API_URL + params.user_id, {
-      headers: {
-        Authorization: `Bearer ${params.jwt}`,
-      },
+    return Api().get(process.env.VUE_APP_UPDATE_BLACKLIST_API_URL + params.user_id,
+    {
+      headers:{
+        Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
+      }
     })
   },
   putBlacklist(params) {
-    return Api().put(
-      process.env.VUE_APP_BLACKLIST_API_URL + params.user_id + "/",
-      {
-        user_id: params.user_id,
-        blacklist: params.blacklist.join(),
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${params.jwt}`,
-        },
+    return Api().put(process.env.VUE_APP_UPDATE_BLACKLIST_API_URL + params.user_id + '/', {
+      'blacklist': params.blacklist.join(),
+      'user_id': params.user_id
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
       }
     )
   },
   postBlacklist(params) {
-    return Api().post(
-      process.env.VUE_APP_BLACKLIST_API_URL,
-      {
-        user_id: params.user_id,
-        blacklist: params.blacklist,
+    return Api().post(process.env.VUE_APP_UPDATE_BLACKLIST_API_URL, 
+    {
+      'user_id': params.user_id,
+      'blacklist': params.blacklist
+    },
+    {
+      headers:{
+        Authorization: `Bearer ${localStorage.getItem('jwt_token')}` 
       },
       {
         headers: {

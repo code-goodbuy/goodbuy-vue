@@ -56,14 +56,10 @@ export default {
     }
   },
   methods: {
-    onClickgoBack: function() {
+    onClickgoBack() {
       this.$router.push('feature')
     },
-    onClickSaveBlacklist: function() {
-    let jwt = ''
-    this.$auth.getTokenSilently()
-    .then(resp => {
-      jwt = resp
+    onClickSaveBlacklist() {
       let updatedBlacklist = []
       this.corporations.forEach(corp => {
       if (corp.is_checked) {
@@ -71,20 +67,16 @@ export default {
       }
       })
       this.$store.commit('updateBlacklist', updatedBlacklist)
-      this.sendBlacklist(jwt, updatedBlacklist)
-    })
-    .catch(error => {
-      console.log(error)
-    })
+      this.sendBlacklist(updatedBlacklist)
     },
-    sendBlacklist: function(jwt, updatedBlacklist) {
-    FeedbackService.putBlacklist({'blacklist': updatedBlacklist, 'jwt': jwt, 'user_id': this.$auth.user.sub})
-    .then(resp => (
-    console.log('successfull', resp) ? process.env.NODE_ENV === 'develop' : ''
-      ))
-    .catch(error => {
-      console.log(error.response)
-    })
+    sendBlacklist(updatedBlacklist) {
+      FeedbackService.putBlacklist({'blacklist': updatedBlacklist, 'user_id': this.$auth.user.sub})
+      .then(resp => (
+      console.log('successfull', resp) ? process.env.NODE_ENV === 'develop' : ''
+        ))
+      .catch(error => {
+        console.log(error.response)
+      })
     },
     initialBlacklist() {
       this.checkedCorporation = this.$store.state.blacklist
@@ -101,7 +93,7 @@ export default {
     }
   },
   created() {
-  this.initialBlacklist()
+    this.initialBlacklist()
   }
 }
 </script>

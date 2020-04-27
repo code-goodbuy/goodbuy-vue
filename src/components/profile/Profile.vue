@@ -29,30 +29,19 @@ export default {
   },
   methods: {
     onClickOpenBlacklist() {
-      let jwt = ''
-      this.$auth.getTokenSilently()
+      FeedbackService.getBlacklist({ 'user_id': this.$auth.user.sub })
       .then(resp => (
-        jwt = resp,
-        this.requestBlacklist(jwt)
+        this.$store.commit('updateBlacklist', resp.data.blacklist.split(',')),
+        this.$router.push('blacklist')
       ))
       .catch(error => {
-        console.log(error.response)
+        if (error.response.status === 404) {
+          this.$router.push("blacklist-tutorial")
+        } else {
+          console.log(error.response)
+        }
       })
     },
-    requestBlacklist(jwt) {
-      FeedbackService.getBlacklist({ 'user_id': this.$auth.user.sub,'jwt': jwt })
-        .then(resp => (
-          this.$store.commit('updateBlacklist', resp.data.blacklist.split(',')),
-          this.$router.push('blacklist')
-        ))
-        .catch(error => {
-          if (error.response.status === 404) {
-            this.$router.push("blacklist-tutorial")
-          } else {
-            console.log(error.response)
-          }
-        })
-    }
   },
 }
 </script>
