@@ -56,7 +56,9 @@ export default {
       });
     },
     onClickHome() {
-      this.$router.push("feature")
+      this.$router.push({
+        name: 'feature',
+      })
     }
   }
 }

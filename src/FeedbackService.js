@@ -1,63 +1,97 @@
-import Api from '@/Api'
+import Api from "@/Api"
 
 export default {
   getFeedback(params) {
-    return Api().get(process.env.VUE_APP_FEEDBACK_API_URL + params.barcode)
+    const user_id = typeof params.user_id !== "undefined" ? params.user_id : ""
+    return Api().get(process.env.VUE_APP_FEEDBACK_API_URL + params.barcode, {
+      params: {
+        user_id: user_id,
+      },
+    })
   },
   getFeedbackResult(params) {
-    return Api().get(process.env.VUE_APP_RESULT_API_URL + params.barcode)
+    const user_id = typeof params.user_id !== "undefined" ? params.user_id : ""
+    return Api().get(process.env.VUE_APP_RESULT_API_URL + params.barcode, {
+      params: {
+        user_id: user_id,
+      },
+    })
   },
   getCategories() {
     return Api().get(process.env.VUE_APP_CATEGORIES_API_URL)
   },
-  getFridgeKarmaResult() {
-    return Api().get(process.env.VUE_APP_FRIDGE_KARMA_FEEDBACK_API_URL)
+  getFridgeKarmaResult(params) {
+    const user_id = typeof params.user_id !== "undefined" ? params.user_id : ""
+    return Api().get(process.env.VUE_APP_FRIDGE_KARMA_FEEDBACK_API_URL, {
+      params: {
+        user_id: user_id,
+        barcodes: params.barcodes,
+      },
+    })
   },
   getBlacklist(params) {
-    return Api().get(process.env.VUE_APP_UPDATE_BLACKLIST_API_URL + params.user_id,
-    {
-      headers:{
-        Authorization: `Bearer ${params.jwt}`
-      }
+    return Api().get(process.env.VUE_APP_BLACKLIST_API_URL + params.user_id, {
+      headers: {
+        Authorization: `Bearer ${params.jwt}`,
+      },
     })
   },
   putBlacklist(params) {
-    return Api().put(process.env.VUE_APP_UPDATE_BLACKLIST_API_URL + params.user_id + '/', {
-      'blacklist': params.blacklist.join(),
-      'user_id': params.user_id
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${params.jwt}`,
+    return Api().put(
+      process.env.VUE_APP_BLACKLIST_API_URL + params.user_id + "/",
+      {
+        user_id: params.user_id,
+        blacklist: params.blacklist.join(),
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${params.jwt}`,
+        },
       }
-    })
+    )
   },
   postBlacklist(params) {
-    return Api().post(process.env.VUE_APP_UPDATE_BLACKLIST_API_URL, 
-    {
-      'user_id': params.user_id,
-      'blacklist': params.blacklist
-    },
-    {
-      headers:{
-        Authorization: `Bearer ${params.jwt}` 
+    return Api().post(
+      process.env.VUE_APP_BLACKLIST_API_URL,
+      {
+        user_id: params.user_id,
+        blacklist: params.blacklist,
       },
-
-    })
+      {
+        headers: {
+          Authorization: `Bearer ${params.jwt}`,
+        },
+      }
+    )
   },
-  postValidation(barcode, upvote, donwvote) {
-    return Api().post(process.env.VUE_APP_PRODUCT_VALIDATION_API_URL, {
-      'barcode': barcode,
-      'upvote-counter': upvote,
-      'downvote-counter': donwvote
-    })
+  postValidation(barcode, upvote, downvote) {
+    return Api().get(
+      process.env.VUE_APP_PRODUCT_API_URL +
+        barcode +
+        process.env.VUE_APP_PRODUCT_VOTE_API_URL,
+      {
+        params: {
+          barcode: barcode,
+          vote: upvote ? "upvote" : downvote ? "downvote" : "",
+        }
+      },
+    )
   },
-  updateProduct(inputName, inputBrand, inputCategory, inputCode) {
-    return Api().post(process.env.VUE_APP_UPDATE_PRODUCT_API_URL, {
-      name: inputName,
-      brand: inputBrand,
-      category: inputCategory,
-      code: inputCode,
-    })
+  updateProduct(jwt, name, brand, category, barcode) {
+    // TODO add category to product and product input
+    return Api().put(
+      process.env.VUE_APP_PRODUCT_API_URL + barcode + "/",
+      {
+        name: name,
+        brand: brand,
+        // category: category,
+        barcode: barcode,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      }
+    )
   },
 }
