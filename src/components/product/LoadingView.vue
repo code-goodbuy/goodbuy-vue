@@ -32,13 +32,14 @@ export default {
   methods: {
     onClickRefreshButton() {
       const barcode = this.$route.params.code
-      FeedbackService.getFeedbackResult({ barcode: barcode })
-      .then(resp => (
+      FeedbackService.getFeedbackResult({
+        barcode: barcode,
+        user_id: typeof(this.$auth.user) !== "undefined" ? this.$auth.user.sub : ''
+      }).then(resp => (
         this.checkResultbigten(resp)
       ))
     },
     checkResultbigten(response) {
-      // TODO - change "True" to a true boolean front and backend
       if (response.data.is_big_ten === true || response.data.is_big_ten === false) {
         this.$emit('update-view', response)
       }
@@ -55,6 +56,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
   .back-button {
     margin-left: .5rem;
   }

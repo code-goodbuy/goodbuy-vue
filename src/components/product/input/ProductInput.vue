@@ -6,8 +6,10 @@
     <div class="error-message">
       {{ message }}
     </div>
+
     <div class="content">
     </div>
+
     <div class="footer">
       <GTitle v-if="name" long>
         <slot slot="title">{{ inputName }}</slot>
@@ -96,22 +98,35 @@ export default {
     },
     onClickSubmit() {
       if (this.isAllDataEntered()) {
-        FeedbackService.updateProduct(this.inputName, this.inputBrand, this.inputCategory, this.inputCode)
-        .then(() => (
-          this.$router.push({
-            name: 'instant-feedback'
-          })
+        let jwt = ''
+        this.$auth.getTokenSilently()
+        .then(resp => (
+          jwt = resp,
+          FeedbackService.updateProduct(
+            jwt,
+            this.inputName,
+            this.inputBrand,
+            this.inputCategory,
+            this.inputCode
+          ).then(() => (
+            this.$router.push({
+              name: 'instant-feedback'
+            })
+          ))
         ))
+        .catch(error => {
+          console.log(error.response)
+        })  
       } else {
         this.message = 'Please provide data for all fields'
       }
     },
     isAllDataEntered() {
       return (
-        this.inputName !== '' &&
-        this.inputBrand !== '' &&
-        this.inputCategory !== 'Category' &&
-        this.inputCode !== ''
+      this.inputName !== '' &&
+      this.inputBrand !== '' &&
+      this.inputCategory !== 'Category' &&
+      this.inputCode !== ''
       )
     }
   },
@@ -142,6 +157,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
   .header {
     margin-left: .5rem;
   }
@@ -161,8 +177,8 @@ export default {
       margin: 1rem auto;
 
       button {
-        margin: 2rem;
-        align-self: center;
+      margin: 2rem;
+      align-self: center;
       }
     }
   }
