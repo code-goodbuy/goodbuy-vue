@@ -38,15 +38,16 @@ export default {
     })
   },
   putBlacklist(params) {
-    return Api().put(process.env.VUE_APP_UPDATE_BLACKLIST_API_URL + params.user_id + '/', {
-      'blacklist': params.blacklist.join(),
-      'user_id': params.user_id
+    return Api().put(process.env.VUE_APP_UPDATE_BLACKLIST_API_URL + params.user_id + '/', 
+    {
+      'user_id': params.user_id,
+      'blacklist': params.blacklist.join()
     },
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
-      }
-    )
+      },
+    })
   },
   postBlacklist(params) {
     return Api().post(process.env.VUE_APP_UPDATE_BLACKLIST_API_URL, 
@@ -58,12 +59,7 @@ export default {
       headers:{
         Authorization: `Bearer ${localStorage.getItem('jwt_token')}` 
       },
-      {
-        headers: {
-          Authorization: `Bearer ${params.jwt}`,
-        },
-      }
-    )
+    })
   },
   postValidation(barcode, upvote, downvote) {
     return Api().get(
@@ -78,7 +74,7 @@ export default {
       },
     )
   },
-  updateProduct(jwt, name, brand, category, barcode) {
+  updateProduct(name, brand, category, barcode) {
     // TODO add category to product and product input
     return Api().put(
       process.env.VUE_APP_PRODUCT_API_URL + barcode + "/",
@@ -90,7 +86,7 @@ export default {
       },
       {
         headers: {
-          Authorization: `Bearer ${jwt}`,
+          Authorization: `Bearer ${localStorage.getItem('jwt_token')}` 
         },
       }
     )
