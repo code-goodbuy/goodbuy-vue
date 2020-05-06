@@ -15,9 +15,9 @@ export const routes=[
     { path: '/instant-feedback/:code', name:'product', component: () => import(/* webpackChunkName: "ProductView" */ '@/components/product/ProductView.vue') },
     { path: '/fridge-karma', name:'fridge-karma',  component: () => import(/* webpackChunkName: "ScannerView" */ '@/components/scanner/ScannerView.vue') },
     { path: '/fridge-karma/result',name: 'result', component: () => import(/* webpackChunkName: "TableView" */ '@/components/table/TableView.vue') },
-    { path: '/profile', name: 'profile', component: () => import(/* webpackChunkName: "Profile" */ '@/components/profile/Profile.vue'),  beforeEnter: authGuard },
-    { path: '/blacklist-tutorial', name: 'blacklist-tutorial', component: () => import(/* webpackChunkName: "BlacklistTutorial" */ '@/components/blacklist/BlacklistTutorialIntroduction.vue') },
-    { path: '/blacklist', name:'blacklist', component: () => import(/* webpackChunkName: "Blacklist" */ '@/components/blacklist/Blacklist.vue') },
+    { path: '/profile', name: 'profile', component: () => import(/* webpackChunkName: "Profile" */ '@/components/profile/Profile.vue'), beforeEnter: authGuard },
+    { path: '/blacklist-tutorial', name: 'blacklist-tutorial', component: () => import(/* webpackChunkName: "BlacklistTutorial" */ '@/components/blacklist/BlacklistTutorialIntroduction.vue'), beforeEnter: authGuard },
+    { path: '/blacklist', name:'blacklist', component: () => import(/* webpackChunkName: "Blacklist" */ '@/components/blacklist/Blacklist.vue'), beforeEnter: authGuard  },
     { path: '/instagram', name: 'instagram', component: () => import(/* webpackChunkName: "InstagramView" */ '@/components/instagram/InstagramView.vue') },
     { path: "*", component: () => import(/* webpackChunkName: "PageNotFound" */ '@/fallbacks/PageNotFound.vue') },
 
