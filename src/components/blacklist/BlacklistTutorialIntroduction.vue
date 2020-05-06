@@ -42,20 +42,12 @@ export default {
         this.tutorial += 1
       }
       else{
-        let jwt = ''
-        this.$auth.getTokenSilently()
-        .then(resp => (
-          jwt = resp,
-          this.createEmptyBlacklist(jwt)
-        ))
-        .catch(error => {
-          console.log(error.response)
-        })
+        this.createEmptyBlacklist()
         this.$router.push('blacklist')
       }
     },
-    createEmptyBlacklist(jwt) {
-      FeedbackService.postBlacklist({ 'user_id':this.$auth.user.sub, 'blacklist':'', 'jwt': jwt })
+    createEmptyBlacklist() {
+      FeedbackService.postBlacklist({ 'user_id':this.$auth.user.sub, 'blacklist':''})
       .then(resp => (
         console.log(resp) ? process.env.NODE_ENV === 'develop' : ''
       ))

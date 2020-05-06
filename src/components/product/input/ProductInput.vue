@@ -98,21 +98,15 @@ export default {
     },
     onClickSubmit() {
       if (this.isAllDataEntered()) {
-        let jwt = ''
-        this.$auth.getTokenSilently()
-        .then(resp => (
-          jwt = resp,
-          FeedbackService.updateProduct(
-            jwt,
-            this.inputName,
-            this.inputBrand,
-            this.inputCategory,
-            this.inputCode
-          ).then(() => (
-            this.$router.push({
-              name: 'instant-feedback'
-            })
-          ))
+        FeedbackService.updateProduct(
+          this.inputName,
+          this.inputBrand,
+          this.inputCategory,
+          this.inputCode
+        ).then(() => (
+          this.$router.push({
+            name: 'instant-feedback'
+          })
         ))
         .catch(error => {
           console.log(error.response)
