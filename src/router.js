@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import IntroView from '@/components/intro/IntroView.vue'
+import FeatureView from '@/components/feature/FeatureView.vue'
 import { authGuard } from "./auth/authGuard";
 
 
@@ -9,7 +10,7 @@ Vue.use(Router)
 
 export const routes=[
     { path: '/' , component: IntroView },
-    { path: '/feature', name: 'feature', component: () => import(/* webpackChunkName: "FeatureView" */ '@/components/feature/FeatureView.vue') },
+    { path: '/feature', name: 'feature', component: FeatureView },
     { path: '/instant-feedback', name:'instant-feedback', component: () => import(/* webpackChunkName: "ScannerView" */ '@/components/scanner/ScannerView.vue') },
     { path: '/instant-feedback/:code', name:'product', component: () => import(/* webpackChunkName: "ProductView" */ '@/components/product/ProductView.vue') },
     { path: '/fridge-karma', name:'fridge-karma',  component: () => import(/* webpackChunkName: "ScannerView" */ '@/components/scanner/ScannerView.vue') },
