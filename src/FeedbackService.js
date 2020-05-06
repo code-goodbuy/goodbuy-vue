@@ -30,7 +30,7 @@ export default {
     })
   },
   getBlacklist(params) {
-    return Api().get(process.env.VUE_APP_UPDATE_BLACKLIST_API_URL + params.user_id,
+    return Api().get(process.env.VUE_APP_BLACKLIST_API_URL + params.user_id,
     {
       headers:{
         Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
@@ -38,7 +38,7 @@ export default {
     })
   },
   putBlacklist(params) {
-    return Api().put(process.env.VUE_APP_UPDATE_BLACKLIST_API_URL + params.user_id + '/', 
+    return Api().put(process.env.VUE_APP_BLACKLIST_API_URL + params.user_id + '/',
     {
       'user_id': params.user_id,
       'blacklist': params.blacklist.join()
@@ -50,14 +50,14 @@ export default {
     })
   },
   postBlacklist(params) {
-    return Api().post(process.env.VUE_APP_UPDATE_BLACKLIST_API_URL, 
+    return Api().post(process.env.VUE_APP_BLACKLIST_API_URL,
     {
       'user_id': params.user_id,
       'blacklist': params.blacklist
     },
     {
       headers:{
-        Authorization: `Bearer ${localStorage.getItem('jwt_token')}` 
+        Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
       },
     })
   },
@@ -86,7 +86,7 @@ export default {
       },
       {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('jwt_token')}` 
+          Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
         },
       }
     )
