@@ -3,7 +3,7 @@ import Api from "@/Api"
 export default {
   getFeedback(params) {
     const user_id = typeof params.user_id !== "undefined" ? params.user_id : ""
-    return Api().get(process.env.VUE_APP_FEEDBACK_API_URL + params.barcode, {
+    return Api().get(process.env.VUE_APP_FEEDBACK_API_URL + params.barcode + "/", {
       params: {
         user_id: user_id,
       },
@@ -11,7 +11,7 @@ export default {
   },
   getFeedbackResult(params) {
     const user_id = typeof params.user_id !== "undefined" ? params.user_id : ""
-    return Api().get(process.env.VUE_APP_RESULT_API_URL + params.barcode, {
+    return Api().get(process.env.VUE_APP_RESULT_API_URL + params.barcode + "/", {
       params: {
         user_id: user_id,
       },
@@ -30,7 +30,7 @@ export default {
     })
   },
   getBlacklist(params) {
-    return Api().get(process.env.VUE_APP_BLACKLIST_API_URL + params.user_id,
+    return Api().get(process.env.VUE_APP_BLACKLIST_API_URL + params.user_id + "/", 
     {
       headers:{
         Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
