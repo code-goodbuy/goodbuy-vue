@@ -52,10 +52,11 @@
 import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
 import Scandit from './Scandit.vue'
 import ScannerViewInfoBanner from './ScannerViewInfoBanner.vue'
-import ScannerViewInfoButton from './ScannerViewInfoButton.vue'
 import ScannerViewInfoModal from './ScannerViewInfoModal.vue'
 import ScannerViewOverlay from './ScannerViewOverlay.vue'
 import GButton from '@/components/ui/GButton.vue'
+const ScannerViewInfoButton = () => import(/* webpackChunkName: "ScannerViewInfoButton"  */'./ScannerViewInfoButton.vue')
+
 
 export default {
   name: 'ScannerView',
