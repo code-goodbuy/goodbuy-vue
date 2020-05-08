@@ -8,6 +8,11 @@
 import * as ScanditSDK from "scandit-sdk"
 
 export default {
+  data() {
+    return {
+      isScannerWorking: false
+    }
+  },
   name: 'Scandit',
   mounted () {
     this.initScanner()
@@ -44,7 +49,9 @@ export default {
             return barcode.data
           }, "")
           this.onBarcodeDetect(barcode)
+          this.isScannerWorking = true
         })
+        this.$emit('isScannerWorking', this.isScannerWorking)
       })
     },
     onBarcodeDetect(barcode) {

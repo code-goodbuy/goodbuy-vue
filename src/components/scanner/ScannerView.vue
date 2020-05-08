@@ -1,5 +1,12 @@
 <template>
-  <div class="scanner-view">
+<div>
+  <div v-if="isScannerWorking===false">
+    <input type="Geht das!?">
+    {{ "GEHT DAS" }}
+  </div>
+  <div class="scanner-view"
+    v-else
+  >
     <div
       :class="{
         'blur-page': isInfoModalActive || !isScannerStarted
@@ -15,8 +22,10 @@
           v-show="isScannerStarted"
           @onScannerStarted="isScannerStarted = true"
           @onBarcodeDetected="onBarcodeDetected"
+          @isScannerWorking="checkIfScannerWorks"
         />
       </keep-alive>
+
       <InfoBanner v-if="isScannerStarted"/>
       <div class="loading-screen-background"/>
     </div>
@@ -46,6 +55,7 @@
     </GButton>
 
   </div>
+</div>
 </template>
 
 <script>
@@ -72,7 +82,8 @@ export default {
     return {
       isScannerStarted: false,
       isInfoModalActive: false,
-      isSingleScan: true
+      isSingleScan: true,
+      isScannerWorking: true
     }
   },
   created() {
@@ -94,6 +105,10 @@ export default {
     console.log('destroyed');
   },
   methods: {
+    checkIfScannerWorks(working) {
+      console.log(working)
+      this.isScannerWorking = working
+    },
     onBarcodeDetected(barcode) {
       if (!this.isInfoModalActive) {
         this.$store.commit('updateBarcode', barcode)
