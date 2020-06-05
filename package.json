@@ -11,9 +11,12 @@
     "docs:build": "vuepress build docs"
   },
   "dependencies": {
+    "@auth0/auth0-spa-js": "^1.7.0",
     "@ericblade/quagga2": "0.0.7",
+    "auth0-js": "^9.13.1",
     "axios": "^0.19.0",
     "core-js": "^2.6.5",
+    "eventemitter3": "^4.0.0",
     "quagga": "^0.12.1",
     "scandit-sdk": "^4.6.1",
     "vue": "^2.6.10",

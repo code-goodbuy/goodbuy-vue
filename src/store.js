@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     barcode: '',
-    multipleBarcodes: new Set([])
+    multipleBarcodes: new Set([]),
+    blacklist: new Set([]),
   },
   mutations: {
     updateBarcode (state, barcode) {
@@ -21,7 +22,10 @@ export default new Vuex.Store({
     resetMultipleBarcodes (state) {
       state.multipleBarcodes = new Set([])
 
-    }
+    },
+    updateBlacklist (state, selectedCorporations) {
+      state.blacklist =  selectedCorporations
+    },
   },
   actions: {
 

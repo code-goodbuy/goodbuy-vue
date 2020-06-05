@@ -24,8 +24,9 @@
         v-if="isProductInfoActive"
         :productName="product.name"
         :productBrand="product.brand"
-        :barcode="this.barcode"
+        :barcode="barcode"
         @closeInfoModal="isProductInfoActive = false"
+        showScanAgainButton
       />
     </transition>
 
@@ -109,26 +110,31 @@ export default {
   },
   methods: {
     getAPIResponse() {
-      FeedbackService.getFeedback({ barcode: this.barcode })
-      .then(resp => (
+      FeedbackService.getFeedback({
+        barcode: this.barcode,
+        user_id: typeof(this.$auth.user) !== "undefined" ? this.$auth.user.sub : ''
+      }).then(resp => (
         this.updateFeedbackView(resp)
       ))
     },
     updateFeedbackView(response) {
       console.log(response) ? process.env.NODE_ENV === 'develop' : ''
-      // 209 - not in database, crawler starts
-      // 306 - data is incomplete
-      // 211 - data is entered but unchecked
-      // 200 - data is here and returned
+      // * 209 - not in database, crawler starts
+      // * 306 - data is incomplete
+      // * 211 - data is entered but unchecked
+      // * 200 - data is here and returned
 
       const httpStatus = response.status
+      const is_blacklist = response.data.is_blacklist
       const is_big_ten = response.data.is_big_ten
 
       if (httpStatus === 209) {
         this.isLoadingScreenActive = false
         this.isDataRequestScreenActive = true
       } else {
-        if (is_big_ten === true) {
+        if (is_blacklist === true) {
+          this.feedback = 'blacklist'
+        } else if (is_big_ten === true) {
           this.feedback = 'bad'
         } else if (is_big_ten === false) {
           this.feedback = 'good'
@@ -140,10 +146,10 @@ export default {
       }
     },
     updateProductData(response) {
-      this.product.name = response.data.fields.name || ''
-      this.product.brand = response.data.fields.brand || ''
-      this.product.corporation = response.data.fields.corporation || ''
-      this.product.category = response.data.fields.main_product_category || ''
+      this.product.name = response.data.name || ''
+      this.product.brand = response.data.brand || ''
+      this.product.corporation = response.data.corporation || ''
+      this.product.category = response.data.category || ''
     },
     disableLoadingScreens() {
       this.isLoadingScreenActive = false

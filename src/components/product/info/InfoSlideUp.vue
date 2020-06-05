@@ -11,10 +11,10 @@
 
       <div class="icon">
         <template v-if="productIsBigTen">
-          <GeneralMills v-if="productCorporation === 'General Mills, Inc.'"></GeneralMills>
-          <ABF v-else-if="productCorporation === 'Associated British Foods plc'"></ABF>
-          <Kellogs v-else-if="productCorporation === 'Kellog\'s'"></Kellogs>
-          <component v-else :is="productCorporation"></component>
+          <GeneralMills v-if="productCorporation === 'General Mills, Inc.'" />
+          <ABF v-else-if="productCorporation === 'Associated British Foods plc'" />
+          <Kellogs v-else-if="productCorporation === 'Kellog\'s'" />
+          <component v-else :is="productCorporation" />
         </template>
         <FoodIcon v-else />
       </div>
@@ -37,10 +37,10 @@
       <GButton
         v-if="showScanAgainButton"
         class="back-button"
-        @click="onClickScanAgain"
         data-cy="info-scan-again-button"
-        feedback
+        @click="onClickScanAgain"
         @onClickFeedback="onClickFeedback"
+        feedback
       >
         <slot slot="title">Scan again</slot>
       </GButton>
@@ -56,16 +56,16 @@ import GLoadingAnimation from '@/components/ui/GLoadingAnimation.vue'
 import GTitle from '@/components/ui/GTitle.vue'
 import InfoSlideUpInfoBox from './InfoSlideUpInfoBox.vue'
 import FeedbackService from '@/FeedbackService'
-import ABF from '@/assets/corporations/Associated British Foods plc.svg'
-import CocaCola from '@/assets/corporations/Coca-Cola.svg'
-import Nestle from '@/assets/corporations/Nestlé.svg'
-import GeneralMills from '@/assets/corporations/General Mills, Inc..svg'
-import Kellogs from "@/assets/corporations/Kellog's.svg"
-import Danone from '@/assets/corporations/Danone.svg'
-import Mars from '@/assets/corporations/Mars.svg'
-import Mondelez from '@/assets/corporations/Mondelez.svg'
-import PepsiCo from '@/assets/corporations/PepsiCo.svg'
-import Unilever from '@/assets/corporations/Unilever.svg'
+import ABF from '@/assets/corporations/Associated British Foods plc.vue'
+import CocaCola from '@/assets/corporations/Coca-Cola.vue'
+import Nestle from '@/assets/corporations/Nestlé.vue'
+import GeneralMills from '@/assets/corporations/General Mills, Inc..vue'
+import Kellogs from "@/assets/corporations/Kellog's.vue"
+import Danone from '@/assets/corporations/Danone.vue'
+import Mars from '@/assets/corporations/Mars.vue'
+import Mondelez from '@/assets/corporations/Mondelez.vue'
+import PepsiCo from '@/assets/corporations/PepsiCo.vue'
+import Unilever from '@/assets/corporations/Unilever.vue'
 
 export default {
   name: 'InfoSlideUp',

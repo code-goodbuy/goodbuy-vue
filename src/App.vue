@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
-
     <transition name="page-fade" mode="out-in">
       <router-view v-if="!isDesktop && !isHorizontal && !isTooOld"/>
     </transition>
@@ -39,6 +38,9 @@ export default {
     },
     $vssHeight() {
       this.checkScreenDimensions()
+    },
+    '$auth.isAuthenticated': function() {
+      this.checkAuthentication()
     }
   },
   mounted() {
@@ -49,6 +51,10 @@ export default {
       this.isDesktop = this.$vssWidth > 700 && this.$vssHeight > 700
       this.isHorizontal = this.$vssWidth > this.$vssHeight
       this.isTooOld = this.$vssWidth < 300 && this.$vssHeight < 560
+    },
+    async checkAuthentication() {
+      const jwt_token = await this.$auth.getTokenSilently()
+      localStorage.setItem('jwt_token', jwt_token)
     }
   }
 }

@@ -1,19 +1,31 @@
 <template>
-    <div class="feature-view">
-        <FeatureViewHeaderBar />
-        <FeatureViewContent />
-    </div>
+  <div class="feature-view">
+    <HeaderBar />
+    <FeatureViewContent />
+  </div>
 </template>
 
 <script>
-import FeatureViewHeaderBar from './FeatureViewHeaderBar'
+import HeaderBar from '@/components/ui/GHeaderBar.vue'
 import FeatureViewContent from './FeatureViewContent'
 
 export default {
-    name: 'FeatureView',
-    components: {
-        FeatureViewHeaderBar,
-        FeatureViewContent
-    }
+  name: 'FeatureView',
+  components: {
+    HeaderBar,
+    FeatureViewContent
+  },
+  updated() {
+    console.log('activated' + this.$auth.isAuthenticated)
+  }
 }
 </script>
+
+<style lang="scss" scoped>
+.feature-view {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+</style>

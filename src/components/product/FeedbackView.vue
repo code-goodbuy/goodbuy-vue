@@ -1,7 +1,8 @@
 <template lang="html">
   <div class="feedback-view-recommended-item">
     <div class="feedback-icon">
-      <RecommendedItemIcon v-if="feedback==='recommended'" data-cy="recommendet-item" />
+      <BlacklistIcon v-if="feedback==='blacklist'"/>
+      <RecommendedItemIcon v-else-if="feedback==='recommended'" data-cy="recommendet-item" />
       <PositiveFeedbackIcon v-else-if="feedback==='good'" data-cy="positive-item" />
       <NegativeFeedbackIcon v-else-if="feedback==='bad'" data-cy="negative-item" />
       <MissingItemIcon v-else />
@@ -43,6 +44,7 @@ import PositiveFeedbackIcon from '@/assets/product/PositiveFeebackIcon.vue'
 import FeedbackViewBackButton from './FeedbackViewBackButton.vue'
 import FeedbackViewInfoButton from './FeedbackViewInfoButton.vue'
 import RecommendedItemIcon from '@/assets/product/RecommendedItemIcon.vue'
+import BlacklistIcon from '@/assets/product/Blacklist.vue'
 
 export default {
   name: 'FeedbackView',
@@ -54,6 +56,7 @@ export default {
     'BackButton': FeedbackViewBackButton,
     'InfoButton': FeedbackViewInfoButton,
     RecommendedItemIcon,
+    BlacklistIcon,
   },
   props: {
     feedback: {
@@ -80,6 +83,8 @@ export default {
         return 'Nah...'
       } else if (this.feedback === 'unchecked') {
         return 'Well...'
+      } else if (this.feedback === 'blacklist') {
+        return 'Blacklisted...'
       } else {
         return 'Well...'
       }
@@ -93,6 +98,8 @@ export default {
         return `The product that you scanned is from <b>${this.productCorporation}</b>`
       } else if (this.feedback === 'unchecked') {
         return 'Great, the product you scanned was recently added to our database by a user but we are currently validating that information'
+      } else if (this.feedback === 'blacklist') {
+        return 'The product you scanned belongs to one of the companies you blacklisted!'
       } else {
         return 'Sorry, the product you scanned cannot be found in our database.  Be our Hero and insert the missing information to contribute to our Goodbuy community!'
       }
