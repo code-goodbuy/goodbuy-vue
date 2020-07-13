@@ -5,41 +5,45 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build-staging": "vue-cli-service build --mode staging",
+    "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "build-staging": "vue-cli-service build --mode staging",
+    "docs:build": "vuepress build docs",
+    "docs:dev": "vuepress dev docs"
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.7.0",
     "@ericblade/quagga2": "0.0.7",
     "auth0-js": "^9.13.1",
-    "axios": "^0.19.0",
-    "core-js": "^2.6.5",
-    "eventemitter3": "^4.0.0",
+    "axios": "^0.19.2",
+    "core-js": "^2.6.11",
+    "eventemitter3": "^4.0.4",
     "quagga": "^0.12.1",
-    "scandit-sdk": "^4.6.1",
-    "vue": "^2.6.10",
+    "scandit-sdk": "^4.6.3",
+    "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
-    "vue-input-autowidth": "^1.0.9",
+    "vue-input-autowidth": "^1.0.10",
     "vue-quaggajs": "^1.0.10",
-    "vue-router": "^3.1.3",
-    "vue-screen-size": "^1.0.0",
-    "vuex": "^3.0.1"
+    "vue-router": "^3.3.4",
+    "vue-screen-size": "^1.0.1",
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",
     "@vue/cli-plugin-eslint": "^3.11.0",
+    "@vue/cli-plugin-unit-jest": "^4.4.6",
     "@vue/cli-service": "^3.11.0",
-    "babel-eslint": "^10.0.1",
-    "cypress": "^3.6.1",
+    "@vue/test-utils": "^1.0.3",
+    "babel-eslint": "^10.1.0",
+    "cypress": "^3.8.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "node-sass": "^4.13.0",
-    "sass-loader": "^8.0.0",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^8.0.2",
+    "vue-jest": "^3.0.6",
     "vue-svg-loader": "^0.14.0",
-    "vue-template-compiler": "^2.6.10",
-    "vuepress": "^1.2.0"
+    "vue-template-compiler": "^2.6.11",
+    "vuepress": "^1.5.2"
   },
   "eslintConfig": {
     "root": true,
@@ -55,7 +59,27 @@
     },
     "parserOptions": {
       "parser": "babel-eslint"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "**/__tests__/*.{j,t}s?(x)",
+          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+        ],
+        "env": {
+          "jest": true
+        }
+      },
+      {
+        "files": [
+          "**/__tests__/*.{j,t}s?(x)",
+          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+        ],
+        "env": {
+          "jest": true
+        }
+      }
+    ]
   },
   "postcss": {
     "plugins": {
